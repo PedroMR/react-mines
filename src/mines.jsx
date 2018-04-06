@@ -1,5 +1,6 @@
 function Square(props) {
-    return <div className="square">{props.value}</div>;
+    const className = "square" + (props.seen ? "": " square-unseen");
+    return <div className={className} onClick={props.onClick}>{props.value}</div>;
 }
 
 class Board extends React.Component {
@@ -9,7 +10,9 @@ class Board extends React.Component {
     }
 
     makeSquare(x, y) {
-        return <Square key={x+","+y} value={x+y}/>
+        const seen = this.props.seen[x + y*this.props.size.x];
+        let value = seen ? "!" : "";
+        return <Square key={x+","+y} onClick={() => this.props.onClick(x, y)} seen={seen} value={value}/>
     }
 
     render() {
@@ -29,15 +32,31 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
 
+        let cols = 10;
+        let rows = 6;
         this.state = {}
-        this.state.size = {x: 10, y: 6};
+        this.state.size = {x: cols, y: rows};
+        this.state.seen = Array(cols*rows).fill(false);
+        this.state.around = Array(cols*rows).fill("x");
 
+    }
+
+    handleClick(x, y) {
+        const index = x + y * this.state.size.x;
+        let seen = this.state.seen.slice();
+        seen[index] = true;
+        this.setState({seen: seen});
     }
 
     render() {
         return <div
             ><h1>REACT Minesweeper</h1>
-            <Board size={this.state.size}/>
+            <Board
+             size={this.state.size}
+             seen={this.state.seen}
+             around={this.state.around}
+             onClick={(x,y) => this.handleClick(x,y)}
+             />
             </div>;
     }
 }
