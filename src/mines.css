@@ -22,6 +22,9 @@ body {
 .square-unseen {
     background-color: lightgray;
 }
+.square-mine {
+    background-color: red;
+}
 .board-row::after {
     clear:both;
     content: "";

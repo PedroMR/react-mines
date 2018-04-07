@@ -1,5 +1,7 @@
 function Square(props) {
-    const className = "square" + (props.seen ? "": " square-unseen");
+    let className = "square";
+    if (props.mine) className += " square-mine";
+    else if (!props.seen) className += " square-unseen";
     return <button className={className} onClick={props.onClick}>{props.value}</button>;
 }
 
@@ -10,9 +12,17 @@ class Board extends React.Component {
     }
 
     makeSquare(x, y) {
-        const seen = this.props.seen[x + y*this.props.config.x];
-        let value = seen ? "!" : "";
-        return <Square key={x+","+y} onClick={() => this.props.onClick(x, y)} seen={seen} value={value}/>
+        const pos = x + y*this.props.config.x;
+        const seen = this.props.seen[pos];
+        const around = this.props.around[pos];
+        const mine = seen && this.props.mines[pos];
+        let value = seen ? (mine ? "*" : around) : "";
+        return <Square key={x+","+y} 
+            onClick={() => this.props.onClick(x, y)}
+            mine={mine}
+            seen={seen}
+            around={around}
+            value={value}/>
     }
 
     render() {
@@ -38,17 +48,35 @@ class Game extends React.Component {
         this.state = {}
         this.state.config = {x: cols, y: rows};
         this.state.seen = Array(cols*rows).fill(false);
-        this.state.around = Array(cols*rows).fill(null);
+        this.state.around = Array(cols*rows).fill(0);
         this.state.mines = Array(cols*rows).fill(false);
 
-        // while(nMines > 8)
+        while(nMines > 0) {
+            let randX = getRandomInt(cols);
+            let randY = getRandomInt(rows);
+            let pos = randX+cols*randY;
+            if (!this.state.mines[pos]) {
+                nMines--;
+                this.state.mines[pos] = true;
+                for (let dy=-1; dy <= 1; dy++) {
+                    if (randY + dy < 0 || randY + dy >= cols) continue;
+                    for (let dx=-1; dx <= 1; dx++) {
+                        if (randX + dx < 0 || randX + dx >= cols) continue;                        
+                        let neighborPos =  pos + dx + dy*cols;
+                        this.state.around[neighborPos]++;
+                    }
+                }
+            }
+        }
     }
 
     handleClick(x, y) {
         const index = x + y * this.state.config.x;
         let seen = this.state.seen.slice();
-        seen[index] = true;
-        this.setState({seen: seen});
+        if (!seen[index]) {
+            seen[index] = true;
+            this.setState({seen: seen});
+        }
     }
 
     render() {
@@ -57,6 +85,7 @@ class Game extends React.Component {
             <Board
              config={this.state.config}
              seen={this.state.seen}
+             mines={this.state.mines}
              around={this.state.around}
              onClick={(x,y) => this.handleClick(x,y)}
              />
@@ -64,6 +93,9 @@ class Game extends React.Component {
     }
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
 ReactDOM.render(<Game/>,
 document.getElementById('root')
