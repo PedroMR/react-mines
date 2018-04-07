@@ -16,16 +16,20 @@ body {
     font-size: 26px;
     background-color: white;
 }
+.square:focus {
+    outline: none;
+}
 .square-unseen {
     background-color: lightgray;
 }
-.board-row {
-    clear:left;
+.board-row::after {
+    clear:both;
+    content: "";
+    display: table;
 }
 .board {
     border: 5px solid black;
-    width: 310px;
-    height: 185px;
     padding: 0px;
     margin: 0px;
+    display:inline-block;
 }
