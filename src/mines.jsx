@@ -16,12 +16,14 @@ class Board extends React.Component {
         const seen = this.props.seen[pos];
         const around = this.props.around[pos];
         const mine = seen && this.props.mines[pos];
-        let value = seen ? (mine ? "*" : around) : "";
+        const flag = this.props.flags[pos];        
+        let value = seen ? (mine ? "*" : around) : (flag? "F" : "");
         return <Square key={x+","+y} 
             onClick={() => this.props.onClick(x, y)}
             mine={mine}
             seen={seen}
             around={around}
+            flag={flag}
             value={value}/>
     }
 
@@ -38,6 +40,23 @@ class Board extends React.Component {
     }
 }
 
+class ControlPanel extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    onClickFlag() {
+        this.props.options.placingFlag = !this.props.options.placingFlag;
+        this.props.onChange(this.props.options);
+    }
+
+    render() {
+        return <div id="#controlPanel">
+            <input type="checkbox" onClick={()=>this.onClickFlag()} />Placing Flag
+        </div>;
+    }
+}
+
 class Game extends React.Component {
     constructor(props) {
         super(props);
@@ -46,10 +65,12 @@ class Game extends React.Component {
         let rows = 6;
         let nMines = 8;
         this.state = {}
+        this.state.options = { placingFlag: false };
         this.state.config = {x: cols, y: rows};
         this.state.seen = Array(cols*rows).fill(false);
         this.state.around = Array(cols*rows).fill(0);
         this.state.mines = Array(cols*rows).fill(false);
+        this.state.flags = Array(cols*rows).fill(false);
 
         while(nMines > 0) {
             let randX = getRandomInt(cols);
@@ -71,12 +92,23 @@ class Game extends React.Component {
     }
 
     handleClick(x, y) {
-        const index = x + y * this.state.config.x;
-        let seen = this.state.seen.slice();
-        if (!seen[index]) {
-            seen[index] = true;
-            this.setState({seen: seen});
+        const pos = x + y * this.state.config.x;
+
+        if (this.state.options.placingFlag) {
+            let flags = this.state.flags.slice();
+            flags[pos] = !flags[pos];
+            this.setState({flags: flags});
+        } else {
+            let seen = this.state.seen.slice();
+            if (!seen[pos]) {
+                seen[pos] = true;
+                this.setState({seen: seen});
+            }
         }
+    }
+
+    handleOptionsChanged(newOptions) {
+        this.setState({options: newOptions});
     }
 
     render() {
@@ -87,8 +119,13 @@ class Game extends React.Component {
              seen={this.state.seen}
              mines={this.state.mines}
              around={this.state.around}
+             flags={this.state.flags}
              onClick={(x,y) => this.handleClick(x,y)}
              />
+             <ControlPanel
+             options={this.state.options}
+             onChange={(newOptions) => this.handleOptionsChanged(newOptions)}
+              />
             </div>;
     }
 }
