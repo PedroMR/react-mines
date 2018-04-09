@@ -36,3 +36,9 @@ body {
     margin: 0px;
     display:inline-block;
 }
+#newGameOpt {
+    border: 1px solid blue;
+}
+#controlPanel {
+    float:right;
+}
