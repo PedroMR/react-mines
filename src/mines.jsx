@@ -40,6 +40,10 @@ class Board extends React.Component {
     }
 }
 
+function NumericInput(defaultValue, handleChanged) {
+    return <input type="text" className="numInput" defaultValue={defaultValue} onChange={(e)=>handleChanged(e.target.value)}/>
+}
+
 class ControlPanel extends React.Component {
     constructor(props) {
         super(props);
@@ -50,6 +54,10 @@ class ControlPanel extends React.Component {
             y: props.config.y,
             mines: props.config.mines,
         }
+
+        this.handleXChanged = this.handleXChanged.bind(this);
+        this.handleYChanged = this.handleYChanged.bind(this);
+        this.handleMinesChanged = this.handleMinesChanged.bind(this);
     }
 
     handleXChanged(val) {
@@ -79,21 +87,23 @@ class ControlPanel extends React.Component {
     }
 
     render() {
-        const mode = this.props.options.placingFlag ? "Placing Flag" : "Peeking";
+        const mode = this.props.options.placingFlag ? "Flags" : "Inspecting";
         const config = this.props.config;
 
         const newGame = this.state.choosingGameOptions ?
             <div id="newGameOpt"> 
                 New game<br/>
-                Rows: <input type="text" defaultValue={config.y} onChange={(e)=>this.handleYChanged(e.target.value)}/><br/>
-                Columns: <input type="text" defaultValue={config.x} onChange={(e)=>this.handleXChanged(e.target.value)}/><br/>
-                Mines: <input type="text" defaultValue={config.mines} onChange={(e)=>this.handleMinesChanged(e.target.value)}/><br/>
+                <table><thead></thead><tbody>
+                    <tr><td>Rows:</td><td>{NumericInput(config.y, this.handleYChanged)}</td></tr>
+                    <tr><td>Columns:</td><td>{NumericInput(config.x, this.handleXChanged)}</td></tr>
+                    <tr><td>Mines:</td><td>{NumericInput(config.mines, this.handleMinesChanged)}</td></tr>
+                </tbody></table>
                 <button onClick={()=>this.onCreateGameButton()}>Create Game</button>
             </div> 
             : <button onClick={()=>this.onNewGameButton()}>New Game</button>;
 
         return <div id="controlPanel">
-            <button onClick={()=>this.onClickFlag()}>Change Mode</button> {mode} <br/>
+            <button onClick={()=>this.onClickFlag()}>Change Mode [F]</button> {mode} <br/>
             {config.x}x{config.y}, {config.mines} mines<br/><br/><br/>
             {newGame}
         </div>;
@@ -109,6 +119,9 @@ class Game extends React.Component {
         let nMines = 8;
         let config = {x: cols, y: rows, mines: nMines};
         this.createGame(config);
+
+        this.onKeyPress = this.onKeyPress.bind(this);
+        this.onKeyUp = this.onKeyUp.bind(this);
     }
 
     createGame(config) {
@@ -211,8 +224,20 @@ class Game extends React.Component {
         this.setState({options: newOptions});
     }
 
+    onKeyPress(e) {
+        console.log("PRESS", e.key, e.altKey);
+        if (e.key == "f") {
+            let newOptions = Object.assign(this.state.options, {placingFlag: !this.state.options.placingFlag});
+            console.log(newOptions);
+            this.handleOptionsChanged(newOptions);
+        }
+    }
+    onKeyUp(e) {
+        console.log("UP", e.key, e.altKey);
+    }
+
     render() {
-        return <div
+        return <div onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp}
             ><h1>REACT Minesweeper</h1>
             <Board
              config={this.state.config}
