@@ -20,11 +20,16 @@ body {
 .square:focus {
     outline: none;
 }
-.square-unseen:hover {
+.square:hover {
     background-color: #eea;
     transition: all 0.5s ease-out;
 }
 .square:active {
+    border-color: #eea;
+    transition: all 0.5s ease-out;
+}
+
+.square-unseen:active {
     background-color: darkgray;
     border-bottom: 1px solid white;
     border-right: 1px solid white;
