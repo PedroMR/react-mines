@@ -4,12 +4,19 @@ body {
     text-align: center;
 }
 
+.square-mode-flag {
+    /* cursor:crosshair; */
+    cursor: url('img/minefield.png'), auto;
+}
+.square-mode-inspect {
+     cursor:alias; 
+    /* cursor: url('img/magnifying-glass.png'), auto; */
+}
+
 .square {
     border: 1px solid lightgray;
     text-align: center;
     padding: 0;
-    zmargin-right: -1px;
-    zmargin-top: -1px;
     line-height: 30px;
     float: left;
     width: 30px;
@@ -30,7 +37,7 @@ body {
     background-blend-mode: color-burn;
 }
 .square-unseen:hover {
-    background-image: url('img/magnifying-glass.svg');    
+     background-image: url('img/magnifying-glass.svg');     
     /* background-blend-mode: color-burn; */
 }
 .square-flag {

@@ -3,7 +3,7 @@ import "./mines.css";
 import imgMinefield from "./img/minefield.svg";
 
 function Square(props) {
-    let className = "square";
+    let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
     if (props.mine) className += " square-mine";
     else if (props.flag) className += " square-flag square-unseen" + (props.placingFlag ? "-flagging" : "");
     else if (!props.seen) className += " square-unseen" + (props.placingFlag ? "-flagging" : "");
@@ -19,6 +19,7 @@ class Board extends React.Component {
         const flag = this.props.flags[pos];        
         let value = seen ? (mine ? "*" : around) : "";// (flag? "F" : "");
         if (value == 0) value = "";
+        // value = <i class="fas fa-search"></i>;
         // if (value == "F") value = <img src={imgMinefield} className="squareImg"/>;
         return <Square key={x+","+y} 
             onClick={() => this.props.onClick(x, y)}
@@ -176,6 +177,9 @@ class Game extends React.Component {
                 flags[pos] = !flags[pos];
                 this.setState({flags: flags});
             } else {
+                if (this.state.flags[pos]) // clicked a flag! no-no
+                    return;
+                
                 seen[pos] = true;
                 if (this.state.around[pos] == 0)
                     this.expandAround(x, y, seen);
@@ -199,6 +203,8 @@ class Game extends React.Component {
             if (y + dy < 0 || y + dy >= rows) continue;
             for (let dx=-1; dx <= 1; dx++) {
                 if (x + dx < 0 || x + dx >= cols) continue;                        
+                if (dx == dy && dx == 0) continue;
+
                 let neighborPos =  x + dx + (y+dy)*cols;
                 if (this.state.flags[neighborPos])
                     n++; // count flag
@@ -219,6 +225,8 @@ class Game extends React.Component {
             if (y + dy < 0 || y + dy >= rows) continue;
             for (let dx=-1; dx <= 1; dx++) {
                 if (x + dx < 0 || x + dx >= cols) continue;                        
+                if (dx == dy && dx == 0) continue;
+
                 let neighborPos =  x + dx + (y+dy)*cols;
                 if (!this.state.flags[neighborPos] && !seen[neighborPos]) {
                     seen[neighborPos] = true;
