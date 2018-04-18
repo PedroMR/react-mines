@@ -11,7 +11,7 @@ function NumericInput(defaultValue, handleChanged) {
 class ControlPanel extends React.Component {
     constructor(props) {
         super(props);
-
+//20x15,40
         this.state = {
             choosingGameOptions: false,
             x: props.config.x,

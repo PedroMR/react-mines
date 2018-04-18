@@ -96,6 +96,8 @@ function handleUserSelected(state, x, y) {
             return Object.assign({}, state, {seen: seen});
         }
     }
+
+    return state;
 }
 
 function expandAround(state, x, y, seen) {
