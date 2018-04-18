@@ -81,99 +81,32 @@ class Game extends React.Component {
 
         this.onKeyPress = this.onKeyPress.bind(this);
         this.onKeyUp = this.onKeyUp.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
+        window.onKeyDown = this.onKeyDown;
         window.onKeyPress = this.onKeyPress;
     }
 
-    handleClick(x, y) {
-        console.log("old click handler returning");
-        return;
-
-        const pos = x + y * this.state.config.x;
-        let seen = this.state.seen.slice();
-
-        if (!seen[pos]) {
-            if (this.state.options.placingFlag) {
-                let flags = this.state.flags.slice();
-                flags[pos] = !flags[pos];
-                this.setState({flags: flags});
-            } else {
-                if (this.state.flags[pos]) // clicked a flag! no-no
-                    return;
-                
-                seen[pos] = true;
-                if (this.state.around[pos] === 0)
-                    this.expandAround(x, y, seen);
-                this.setState({seen: seen});
-            }
-        } else {
-            //expand
-            var flagsAround = this.countFlagsAndVisibleMinesAround(x, y);
-            if (flagsAround === this.state.around[pos]) {
-                this.expandAround(x,y);
-            }
-        }
-    }
-
-    countFlagsAndVisibleMinesAround(x, y) {
-        let n = 0;
-        let cols = this.state.config.x;
-        let rows = this.state.config.y;
-
-        for (let dy=-1; dy <= 1; dy++) {
-            if (y + dy < 0 || y + dy >= rows) continue;
-            for (let dx=-1; dx <= 1; dx++) {
-                if (x + dx < 0 || x + dx >= cols) continue;                        
-                if (dx == dy && dx == 0) continue;
-
-                let neighborPos =  x + dx + (y+dy)*cols;
-                if (this.state.flags[neighborPos])
-                    n++; // count flag
-                else if (this.state.mines[neighborPos] && this.state.seen[neighborPos])
-                    n++; // count visible mine
-            }
-        }
-
-        return n;
-    }
-
-    expandAround(x, y, seen) {
-        let cols = this.state.config.x;
-        let rows = this.state.config.y;
-        seen = seen || this.state.seen.slice();        
-
-        for (let dy=-1; dy <= 1; dy++) {
-            if (y + dy < 0 || y + dy >= rows) continue;
-            for (let dx=-1; dx <= 1; dx++) {
-                if (x + dx < 0 || x + dx >= cols) continue;                        
-                if (dx == dy && dx == 0) continue;
-
-                let neighborPos =  x + dx + (y+dy)*cols;
-                if (!this.state.flags[neighborPos] && !seen[neighborPos]) {
-                    seen[neighborPos] = true;
-                    if (this.state.around[neighborPos] == 0) {
-                        this.expandAround(x+dx,y+dy, seen);
-                    }
-                }
-            }
-        }
-        this.setState({seen: seen});
-    }
-
-    handleOptionsChanged(newOptions) {
-        this.setState({options: newOptions});
+    isHoldForFlagKey(e) {
+        return e.key && (e.key === "Shift" || e.key === "Control") ;
     }
 
     onKeyPress(e) {
         console.log("PRESS", e.key, e.altKey);
         if (e.key === "f") {
             this.props.dispatch({type: "TOGGLEFLAG"});
-            // let newOptions = Object.assign(this.state.options, {placingFlag: !this.state.options.placingFlag});
-            // console.log(newOptions);
-            // this.handleOptionsChanged(newOptions);
         }
     }
+
     onKeyUp(e) {
         console.log("UP", e.key, e.altKey);
+        if (this.isHoldForFlagKey(e))
+            this.props.dispatch({type: "TOGGLEFLAG"});
+    }
+
+    onKeyDown(e) {
+        console.log("DOWN", e.key, e.altKey);
+        if (this.isHoldForFlagKey(e))
+            this.props.dispatch({type: "TOGGLEFLAG"});
     }
 
     createNewGame(config) {
@@ -182,7 +115,7 @@ class Game extends React.Component {
     }
 
     render() {
-        return <div onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp}
+        return <div onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}
             ><h1>REACT Minesweeper</h1>
             <Board     
              onClick={(x,y) => this.handleClick(x,y)}
