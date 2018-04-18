@@ -101,7 +101,8 @@ class ControlPanel extends React.Component {
             : <button onClick={()=>this.onNewGameButton()}>New Game</button>;
 
         return <div id="controlPanel">
-            <button onClick={()=>this.onClickFlag()}>Change Mode [F]</button> {mode} <br/>
+            <button onClick={()=>this.onClickFlag()} autoFocus
+                >Change Mode [F]</button> {mode} <br/>
             {config.x}x{config.y}, {config.mines} mines<br/><br/><br/>
             {newGame}
         </div>;
@@ -121,6 +122,7 @@ class Game extends React.Component {
 
         this.onKeyPress = this.onKeyPress.bind(this);
         this.onKeyUp = this.onKeyUp.bind(this);
+        window.onKeyPress = this.onKeyPress;
     }
 
     createGameState(config) {

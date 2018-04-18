@@ -1,6 +1,7 @@
 body {
     font-family:  'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    
+    align-content: center;
+    text-align: center;
 }
 
 .square {
@@ -62,7 +63,8 @@ body {
 }
 #newGameOpt {
     border: 1px solid blue;
+    display:inline-block;
 }
 #controlPanel {
-    float:right;
+    float:center;
 }
