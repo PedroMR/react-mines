@@ -1,22 +1,14 @@
 body {
     font-family:  'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    align-content: center;
     text-align: center;
-}
-
-.square-mode-flag {
-     cursor:crosshair; 
-    /* cursor: url('img/minefield.png'), auto; */
-}
-.square-mode-inspect {
-     cursor:pointer; 
-    /* cursor: url('img/magnifying-glass.png'), auto; */
 }
 
 .square {
     border: 1px solid lightgray;
     text-align: center;
     padding: 0;
+    zmargin-right: -1px;
+    zmargin-top: -1px;
     line-height: 30px;
     float: left;
     width: 30px;
@@ -29,33 +21,22 @@ body {
     outline: none;
 }
 .square:hover {
-    background-color: #EEAA00;
+    background-color: #eea;
     transition: all 0.5s ease-out;
-}
-.square-unseen-flagging:hover {
-    background-image: url('img/minefield.svg');    
-    background-blend-mode: color-burn;
-}
-.square-unseen:hover {
-     background-image: url('img/magnifying-glass.svg');     
-    /* background-blend-mode: color-burn; */
-}
-.square-flag {
-    background-image: url('img/minefield.svg');
 }
 .square:active {
     border-color: #eea;
     transition: all 0.5s ease-out;
 }
 
-.square-unseen-flagging:active,.square-unseen:active {
+.square-unseen:active {
     background-color: darkgray;
     border-bottom: 1px solid white;
     border-right: 1px solid white;
     border-left: 1px solid black;
     border-top: 1px solid black;
 }
-.square-unseen-flagging,.square-unseen {
+.square-unseen {
     background-color: lightgray;
     border-top: 1px solid white;
     border-left: 1px solid white;
@@ -81,8 +62,7 @@ body {
 }
 #newGameOpt {
     border: 1px solid blue;
-    display:inline-block;
 }
 #controlPanel {
-    float:center;
+    float:left;
 }
