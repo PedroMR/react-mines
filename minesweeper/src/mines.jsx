@@ -46,8 +46,7 @@ class ControlPanel extends React.Component {
     }
 
     onClickFlag() {
-        this.props.options.placingFlag = !this.props.options.placingFlag;
-        this.props.onChange(this.props.options);
+        this.props.onToggleFlag();
     }
 
     render() {
@@ -86,6 +85,10 @@ class Game extends React.Component {
         window.onKeyPress = this.onKeyPress;
     }
 
+    onToggleFlag() {
+        this.props.dispatch({type: "TOGGLEFLAG"});
+    }
+
     isHoldForFlagKey(e) {
         return e.key && (e.key === "Shift" || e.key === "Control") ;
     }
@@ -93,25 +96,24 @@ class Game extends React.Component {
     onKeyPress(e) {
         console.log("PRESS", e.key, e.altKey);
         if (e.key === "f") {
-            this.props.dispatch({type: "TOGGLEFLAG"});
+            this.onToggleFlag();
         }
     }
 
     onKeyUp(e) {
         console.log("UP", e.key, e.altKey);
         if (this.isHoldForFlagKey(e))
-            this.props.dispatch({type: "TOGGLEFLAG"});
+             this.onToggleFlag();
     }
 
     onKeyDown(e) {
         console.log("DOWN", e.key, e.altKey);
         if (this.isHoldForFlagKey(e))
-            this.props.dispatch({type: "TOGGLEFLAG"});
+             this.onToggleFlag();
     }
 
     createNewGame(config) {
-        var state = this.createGameState(config);
-        this.setState(state);
+        this.props.dispatch({type:"NEWGAME", config: config});
     }
 
     render() {
@@ -123,8 +125,8 @@ class Game extends React.Component {
              <ControlPanel
              options={this.props.options}
              config={this.props.config}
-             onChange={(newOptions) => this.handleOptionsChanged(newOptions)}
              onNewGame={(c) => this.createNewGame(c)}
+             onToggleFlag={() => this.onToggleFlag()}
               />
             </div>;
     }
@@ -137,5 +139,3 @@ function mapStateToProps(state) {
     return retVal;
 }
 export default connect(mapStateToProps)(Game);
-
-// export default Game;

@@ -5,11 +5,11 @@ body {
 }
 
 .square-mode-flag {
-    /* cursor:crosshair; */
-    cursor: url('img/minefield.png'), auto;
+     cursor:crosshair; 
+    /* cursor: url('img/minefield.png'), auto; */
 }
 .square-mode-inspect {
-     cursor:alias; 
+     cursor:pointer; 
     /* cursor: url('img/magnifying-glass.png'), auto; */
 }
 
