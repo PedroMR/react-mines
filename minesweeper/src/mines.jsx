@@ -1,10 +1,12 @@
 import React from 'react';
 import "./mines.css";
+import imgMinefield from "./img/minefield.svg";
 
 function Square(props) {
     let className = "square";
     if (props.mine) className += " square-mine";
-    else if (!props.seen) className += " square-unseen";
+    else if (props.flag) className += " square-flag square-unseen" + (props.placingFlag ? "-flagging" : "");
+    else if (!props.seen) className += " square-unseen" + (props.placingFlag ? "-flagging" : "");
     return <button className={className} onClick={props.onClick}>{props.value}</button>;
 }
 
@@ -15,9 +17,12 @@ class Board extends React.Component {
         const around = this.props.around[pos];
         const mine = seen && this.props.mines[pos];
         const flag = this.props.flags[pos];        
-        let value = seen ? (mine ? "*" : around) : (flag? "F" : "");
+        let value = seen ? (mine ? "*" : around) : "";// (flag? "F" : "");
+        if (value == 0) value = "";
+        // if (value == "F") value = <img src={imgMinefield} className="squareImg"/>;
         return <Square key={x+","+y} 
             onClick={() => this.props.onClick(x, y)}
+            placingFlag={this.props.options.placingFlag}
             mine={mine}
             seen={seen}
             around={around}
@@ -172,18 +177,20 @@ class Game extends React.Component {
                 this.setState({flags: flags});
             } else {
                 seen[pos] = true;
+                if (this.state.around[pos] == 0)
+                    this.expandAround(x, y, seen);
                 this.setState({seen: seen});
             }
         } else {
             //expand
-            var flagsAround = this.countFlagsAround(x, y);
+            var flagsAround = this.countFlagsAndVisibleMinesAround(x, y);
             if (flagsAround === this.state.around[pos]) {
                 this.expandAround(x,y);
             }
         }
     }
 
-    countFlagsAround(x, y) {
+    countFlagsAndVisibleMinesAround(x, y) {
         let n = 0;
         let cols = this.state.config.x;
         let rows = this.state.config.y;
@@ -194,25 +201,31 @@ class Game extends React.Component {
                 if (x + dx < 0 || x + dx >= cols) continue;                        
                 let neighborPos =  x + dx + (y+dy)*cols;
                 if (this.state.flags[neighborPos])
-                    n++;
+                    n++; // count flag
+                else if (this.state.mines[neighborPos] && this.state.seen[neighborPos])
+                    n++; // count visible mine
             }
         }
 
         return n;
     }
 
-    expandAround(x, y) {
+    expandAround(x, y, seen) {
         let cols = this.state.config.x;
         let rows = this.state.config.y;
-        let seen = this.state.seen.slice();        
+        seen = seen || this.state.seen.slice();        
 
         for (let dy=-1; dy <= 1; dy++) {
             if (y + dy < 0 || y + dy >= rows) continue;
             for (let dx=-1; dx <= 1; dx++) {
                 if (x + dx < 0 || x + dx >= cols) continue;                        
                 let neighborPos =  x + dx + (y+dy)*cols;
-                if (!this.state.flags[neighborPos])
+                if (!this.state.flags[neighborPos] && !seen[neighborPos]) {
                     seen[neighborPos] = true;
+                    if (this.state.around[neighborPos] == 0) {
+                        this.expandAround(x+dx,y+dy, seen);
+                    }
+                }
             }
         }
         this.setState({seen: seen});
@@ -248,6 +261,7 @@ class Game extends React.Component {
              mines={this.state.mines}
              around={this.state.around}
              flags={this.state.flags}
+             options={this.state.options}             
              onClick={(x,y) => this.handleClick(x,y)}
              />
              <ControlPanel
