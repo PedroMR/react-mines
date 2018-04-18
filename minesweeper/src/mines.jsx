@@ -1,48 +1,8 @@
 import React from 'react';
 import "./mines.css";
 import imgMinefield from "./img/minefield.svg";
-
-function Square(props) {
-    let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
-    if (props.mine) className += " square-mine";
-    else if (props.flag) className += " square-flag square-unseen" + (props.placingFlag ? "-flagging" : "");
-    else if (!props.seen) className += " square-unseen" + (props.placingFlag ? "-flagging" : "");
-    return <button className={className} onClick={props.onClick}>{props.value}</button>;
-}
-
-class Board extends React.Component {
-    makeSquare(x, y) {
-        const pos = x + y*this.props.config.x;
-        const seen = this.props.seen[pos];
-        const around = this.props.around[pos];
-        const mine = seen && this.props.mines[pos];
-        const flag = this.props.flags[pos];        
-        let value = seen ? (mine ? "*" : around) : "";// (flag? "F" : "");
-        if (value == 0) value = "";
-        // value = <i class="fas fa-search"></i>;
-        // if (value == "F") value = <img src={imgMinefield} className="squareImg"/>;
-        return <Square key={x+","+y} 
-            onClick={() => this.props.onClick(x, y)}
-            placingFlag={this.props.options.placingFlag}
-            mine={mine}
-            seen={seen}
-            around={around}
-            flag={flag}
-            value={value}/>
-    }
-
-    render() {
-        let rows = []
-        for(let i=0; i < this.props.config.y; i++) {
-            let row = [] 
-            for(let j=0; j < this.props.config.x; j++) {
-                row.push(this.makeSquare(j, i));
-            }
-            rows.push(<div className="board-row" key={i}>{row}</div>);
-        }
-        return <div className="board">{rows}</div>;
-    }
-}
+import { connect } from 'react-redux';
+import Board from "./Board";
 
 function NumericInput(defaultValue, handleChanged) {
     return <input type="text" className="numInput" defaultValue={defaultValue} onChange={(e)=>handleChanged(e.target.value)}/>
@@ -119,55 +79,15 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
 
-        let cols = 10;
-        let rows = 6;
-        let nMines = 8;
-        let config = {x: cols, y: rows, mines: nMines};
-        this.state = this.createGameState(config);
-        
-
         this.onKeyPress = this.onKeyPress.bind(this);
         this.onKeyUp = this.onKeyUp.bind(this);
         window.onKeyPress = this.onKeyPress;
     }
 
-    createGameState(config) {
-        let cols = config.x;
-        let rows = config.y;
-        config.mines = Math.min(config.mines, cols * rows);
-
-        let nMines = config.mines;
-
-        let state = {}
-        state.options = { placingFlag: false };
-        state.config = {x: cols, y: rows, mines: nMines};
-        state.seen = Array(cols*rows).fill(false);
-        state.around = Array(cols*rows).fill(0);
-        state.mines = Array(cols*rows).fill(false);
-        state.flags = Array(cols*rows).fill(false);
-
-        while(nMines > 0) {
-            let randX = getRandomInt(cols);
-            let randY = getRandomInt(rows);
-            let pos = randX+cols*randY;
-            if (!state.mines[pos]) {
-                nMines--;
-                state.mines[pos] = true;
-                for (let dy=-1; dy <= 1; dy++) {
-                    if (randY + dy < 0 || randY + dy >= rows) continue;
-                    for (let dx=-1; dx <= 1; dx++) {
-                        if (randX + dx < 0 || randX + dx >= cols) continue;                        
-                        let neighborPos =  pos + dx + dy*cols;
-                        state.around[neighborPos]++;
-                    }
-                }
-            }
-        }
-
-        return state;
-    }
-
     handleClick(x, y) {
+        console.log("old click handler returning");
+        return;
+
         const pos = x + y * this.state.config.x;
         let seen = this.state.seen.slice();
 
@@ -181,7 +101,7 @@ class Game extends React.Component {
                     return;
                 
                 seen[pos] = true;
-                if (this.state.around[pos] == 0)
+                if (this.state.around[pos] === 0)
                     this.expandAround(x, y, seen);
                 this.setState({seen: seen});
             }
@@ -246,9 +166,10 @@ class Game extends React.Component {
     onKeyPress(e) {
         console.log("PRESS", e.key, e.altKey);
         if (e.key === "f") {
-            let newOptions = Object.assign(this.state.options, {placingFlag: !this.state.options.placingFlag});
-            console.log(newOptions);
-            this.handleOptionsChanged(newOptions);
+            this.props.dispatch({type: "TOGGLEFLAG"});
+            // let newOptions = Object.assign(this.state.options, {placingFlag: !this.state.options.placingFlag});
+            // console.log(newOptions);
+            // this.handleOptionsChanged(newOptions);
         }
     }
     onKeyUp(e) {
@@ -263,18 +184,12 @@ class Game extends React.Component {
     render() {
         return <div onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp}
             ><h1>REACT Minesweeper</h1>
-            <Board
-             config={this.state.config}
-             seen={this.state.seen}
-             mines={this.state.mines}
-             around={this.state.around}
-             flags={this.state.flags}
-             options={this.state.options}             
+            <Board     
              onClick={(x,y) => this.handleClick(x,y)}
              />
              <ControlPanel
-             options={this.state.options}
-             config={this.state.config}
+             options={this.props.options}
+             config={this.props.config}
              onChange={(newOptions) => this.handleOptionsChanged(newOptions)}
              onNewGame={(c) => this.createNewGame(c)}
               />
@@ -282,10 +197,12 @@ class Game extends React.Component {
     }
 }
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
+function mapStateToProps(state) {
+    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options'];
+    let retVal = {}
+    propNames.forEach(name => { retVal[name] = state[name]});
+    return retVal;
 }
+export default connect(mapStateToProps)(Game);
 
-//ReactDOM.render(<Game/>, document.getElementById('root'));
-
-export default Game;
+// export default Game;
