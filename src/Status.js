@@ -13,13 +13,14 @@ class Status extends React.PureComponent {
         const nUnknown = this.props.seen.length - nSeen - nFlags;
 
         let topLine = <span className="status end">&nbsp;</span>
-        let bottomLine = <span className="status">{nFlags} flags / {nHiddenMines} hidden mines &mdash; {nUnknown} tiles</span>;
+        let bottomLine = <span className="status">{nFlags} flag{nFlags===1?"":"s"} / {nHiddenMines} hidden mine{nHiddenMines===1?"":"s"} &mdash; {nUnknown} tiles</span>;
 
         if (nUnknown <= 0) {
             let nCorrectFlags = 0;
             this.props.mines.forEach((val, index) => { if (val && this.props.flags[index]) nCorrectFlags++; });
+            const nDetonated = nTotalMines - nHiddenMines;
             topLine = <span className="status end">GAME OVER!</span>;
-            bottomLine = <span className="status">{nCorrectFlags} mines found; {nTotalMines - nHiddenMines} mines detonated.</span>;
+            bottomLine = <span className="status">{nCorrectFlags} mine{nCorrectFlags===1?"":"s"} found; {nDetonated} mine{nDetonated===1?"":"s"} detonated.</span>;
         }
 
         return <div>{topLine}{bottomLine}</div>;

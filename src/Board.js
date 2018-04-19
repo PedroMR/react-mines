@@ -26,7 +26,6 @@ class Board extends React.Component {
         return <Square key={x+","+y} 
              onClick={() => {
                  this.props.dispatch({type:'INSPECT', x:x, y:y});
-                 console.log("dispatched");
             }}
             placingFlag={this.props.options.placingFlag}
             mine={mine}
