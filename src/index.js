@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 //import './index.css';
 //import App from './App';
 import './mines.css';
-import Game from './mines.jsx';
+import Game from './Mines';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';

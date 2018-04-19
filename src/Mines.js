@@ -5,35 +5,57 @@ import Board from "./Board";
 import Status from "./Status";
 
 function NumericInput(defaultValue, handleChanged) {
-    return <input type="text" className="numInput" defaultValue={defaultValue} onChange={(e)=>handleChanged(e.target.value)}/>
+    return <input type="text" className="numInput" value={defaultValue} onChange={(e)=>handleChanged(e.target.value)}/>
 }
 
 class ControlPanel extends React.Component {
     constructor(props) {
         super(props);
-//20x15,40
+
         this.state = {
             choosingGameOptions: false,
-            x: props.config.x,
-            y: props.config.y,
-            mines: props.config.mines,
+            newGameConfig: {x: props.config.y, y: props.config.y, mines: props.config.mines},
+            // x: props.config.x,
+            // y: props.config.y,
+            // mines: props.config.mines,
+            currentPreset: -1, // -1 = custom
+            presets: [
+                {x: 10, y: 6, mines: 8},
+                {x: 20, y: 15, mines: 40},
+                {x: 15, y: 25, mines: 36},
+            ]
         }
 
         this.handleXChanged = this.handleXChanged.bind(this);
         this.handleYChanged = this.handleYChanged.bind(this);
         this.handleMinesChanged = this.handleMinesChanged.bind(this);
+        this.handlePresetChanged = this.handlePresetChanged.bind(this);
     }
 
     handleXChanged(val) {
-        this.setState({x: val});
+        let newGameConfig = Object.assign({}, this.state.newGameConfig, {x: val});
+        this.setState({newGameConfig: newGameConfig, currentPreset: -1});
     }
 
     handleYChanged(val) {
-        this.setState({y: val});
+        let newGameConfig = Object.assign({}, this.state.newGameConfig, {y: val});
+        this.setState({newGameConfig: newGameConfig, currentPreset: -1});
     }
 
     handleMinesChanged(val) {
-        this.setState({mines: val});
+        let newGameConfig = Object.assign({}, this.state.newGameConfig, {mines: val});
+        this.setState({newGameConfig: newGameConfig, currentPreset: -1});
+    }
+
+    handlePresetChanged(changeEvent) {
+        let presetIndex = changeEvent.target.value;
+        if (presetIndex < 0) {
+            this.setState({currentPreset: presetIndex});
+            return; // custom
+        } 
+        var preset = this.state.presets[presetIndex];
+        let newGameConfig = Object.assign({}, preset);
+        this.setState({currentPreset: presetIndex, newGameConfig: newGameConfig});
     }
 
     onNewGameButton() {
@@ -42,7 +64,7 @@ class ControlPanel extends React.Component {
 
     onCreateGameButton() {
         this.setState({choosingGameOptions: false});
-        this.props.onNewGame(this.state);
+        this.props.onNewGame(this.state.newGameConfig);
     }
 
     onClickFlag() {
@@ -51,24 +73,29 @@ class ControlPanel extends React.Component {
 
     render() {
         const mode = this.props.options.placingFlag ? "Flags" : "Inspecting";
-        const config = this.props.config;
 
         const newGame = this.state.choosingGameOptions ?
             <div id="newGameOpt"> 
+                <form>
                 New game<br/>
-                <table><thead></thead><tbody>
-                    <tr><td>Rows:</td><td>{NumericInput(config.y, this.handleYChanged)}</td></tr>
-                    <tr><td>Columns:</td><td>{NumericInput(config.x, this.handleXChanged)}</td></tr>
-                    <tr><td>Mines:</td><td>{NumericInput(config.mines, this.handleMinesChanged)}</td></tr>
+                <table><thead></thead><tbody><tr><td>
+                        <label><input id="option" type="radio" name="field" value="-1" checked={this.state.currentPreset==-1} onChange={this.handlePresetChanged} />Custom</label><br/>
+                        <label><input id="option" type="radio" name="field" value="0" checked={this.state.currentPreset==0} onChange={this.handlePresetChanged} />Beginner</label><br/>
+                        <label><input id="option" type="radio" name="field" value="1" checked={this.state.currentPreset==1} onChange={this.handlePresetChanged} />Advanced</label><br/>
+                    </td></tr> 
+                    <tr><td>Rows:</td><td>{NumericInput(this.state.newGameConfig.y, this.handleYChanged)}</td></tr>
+                    <tr><td>Columns:</td><td>{NumericInput(this.state.newGameConfig.x, this.handleXChanged)}</td></tr>
+                    <tr><td>Mines:</td><td>{NumericInput(this.state.newGameConfig.mines, this.handleMinesChanged)}</td></tr>
                 </tbody></table>
                 <button onClick={()=>this.onCreateGameButton()}>Create Game</button>
+                </form>
             </div> 
             : <button onClick={()=>this.onNewGameButton()}>New Game</button>;
 
         return <div id="controlPanel">
             <button onClick={()=>this.onClickFlag()} autoFocus
                 >Change Mode [F]</button> {mode} <br/>
-            {config.x}x{config.y}, {config.mines} mines<br/><br/><br/>
+            {this.props.config.x}x{this.props.config.y}, {this.props.config.mines} mines<br/><br/><br/>
             {newGame}
         </div>;
     }
