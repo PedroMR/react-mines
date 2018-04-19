@@ -64,6 +64,7 @@ body {
 }
 .square-mine {
     background-color: red;
+    background-image: url('img/mine-explosion.svg');
 }
 .square-mine:hover {
     background-color: red;

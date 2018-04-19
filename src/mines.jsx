@@ -1,6 +1,5 @@
 import React from 'react';
 import "./mines.css";
-import imgMinefield from "./img/minefield.svg";
 import { connect } from 'react-redux';
 import Board from "./Board";
 
