@@ -7,7 +7,7 @@ import Game from './mines.jsx';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './reducers';
+import reducer from './reducers.js';
 
 const store = createStore(reducer);
 

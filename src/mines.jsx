@@ -2,6 +2,7 @@ import React from 'react';
 import "./mines.css";
 import { connect } from 'react-redux';
 import Board from "./Board";
+import Status from "./Status";
 
 function NumericInput(defaultValue, handleChanged) {
     return <input type="text" className="numInput" defaultValue={defaultValue} onChange={(e)=>handleChanged(e.target.value)}/>
@@ -118,6 +119,7 @@ class Game extends React.Component {
     render() {
         return <div onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}
             ><h1>REACT Minesweeper</h1>
+            <Status />
             <Board     
              onClick={(x,y) => this.handleClick(x,y)}
              />
@@ -132,7 +134,7 @@ class Game extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options'];
+    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state[name]});
     return retVal;

@@ -12,6 +12,9 @@ body {
      cursor:pointer; 
     /* cursor: url('img/magnifying-glass.png'), auto; */
 }
+.square-mode-over {
+    cursor: default;
+}
 
 .square {
     border: 1px solid lightgray;
@@ -86,4 +89,8 @@ body {
 }
 #controlPanel {
     float:center;
+}
+.status {
+    display: block;
+    font-size: 15pt;
 }

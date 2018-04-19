@@ -1,10 +1,10 @@
 import React from 'react';
 import "./mines.css";
-import imgMinefield from "./img/minefield.svg";
 import { connect } from 'react-redux';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
+    if (props.gameOver) className = "square square-mode-over";
     if (props.mine) className += " square-mine";
     else if (props.flag) className += " square-flag square-unseen" + (props.placingFlag ? "-flagging" : "");
     else if (!props.seen) className += " square-unseen" + (props.placingFlag ? "-flagging" : "");
@@ -31,6 +31,7 @@ class Board extends React.Component {
             placingFlag={this.props.options.placingFlag}
             mine={mine}
             seen={seen}
+            gameOver={this.props.gameOver}
             around={around}
             flag={flag}
             value={value}/>
@@ -51,7 +52,7 @@ class Board extends React.Component {
 
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options'];
+    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state[name]});
     return retVal;
