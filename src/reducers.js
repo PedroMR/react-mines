@@ -64,7 +64,7 @@ function tilesRemaining(state) {
 function flagsRemaining(state) {
     const countDefined = (acc,val) => (val ? acc+1 : acc);
     const nMines = state.mines.reduce(countDefined, 0);
-    const nMinesVisible = state.mines.reduce((acc, val, index) => (val && state.seen[index]) ? acc+1 : 1, 0);
+    const nMinesVisible = state.mines.reduce((acc, val, index) => (val && state.seen[index]) ? acc+1 : acc, 0);
     const nFlagsPlaced = state.flags.reduce(countDefined, 0);
 
     return nMines - nMinesVisible - nFlagsPlaced;

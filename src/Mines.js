@@ -5,7 +5,14 @@ import Board from "./Board";
 import Status from "./Status";
 
 function NumericInput(defaultValue, handleChanged) {
-    return <input type="text" className="numInput" value={defaultValue} onChange={(e)=>handleChanged(e.target.value)}/>
+    console.log("Making num input val "+defaultValue);
+    return <input type="text" className="numInput" value={defaultValue} onChange={(e)=> {
+        let val = Math.floor(e.target.value);
+        if (!isNaN(val) && val !== undefined) {
+             handleChanged(val);
+        }
+        e.preventDefault();
+        } }/>
 }
 
 class ControlPanel extends React.Component {
@@ -14,17 +21,19 @@ class ControlPanel extends React.Component {
 
         this.state = {
             choosingGameOptions: false,
-            newGameConfig: {x: props.config.y, y: props.config.y, mines: props.config.mines},
+            newGameConfig: {x: props.config.x, y: props.config.y, mines: props.config.mines},
             // x: props.config.x,
             // y: props.config.y,
             // mines: props.config.mines,
-            currentPreset: -1, // -1 = custom
+            currentPreset: 0,
             presets: [
-                {x: 10, y: 6, mines: 8},
-                {x: 20, y: 15, mines: 40},
-                {x: 15, y: 25, mines: 36},
-            ]
+                {x: 10, y: 6, mines: 8, name: "Beginner"},
+                {x: 20, y: 15, mines: 40, name: "Advanced"},
+                {x: 15, y: 25, mines: 36, name: "Mobile"},
+                {name: "Custom"},
+            ],
         }
+        this.state.customPresetIndex = this.state.presets.length-1;
 
         this.handleXChanged = this.handleXChanged.bind(this);
         this.handleYChanged = this.handleYChanged.bind(this);
@@ -34,26 +43,27 @@ class ControlPanel extends React.Component {
 
     handleXChanged(val) {
         let newGameConfig = Object.assign({}, this.state.newGameConfig, {x: val});
-        this.setState({newGameConfig: newGameConfig, currentPreset: -1});
+        this.setState({newGameConfig: newGameConfig, currentPreset: this.state.customPresetIndex});
     }
 
     handleYChanged(val) {
         let newGameConfig = Object.assign({}, this.state.newGameConfig, {y: val});
-        this.setState({newGameConfig: newGameConfig, currentPreset: -1});
+        this.setState({newGameConfig: newGameConfig, currentPreset: this.state.customPresetIndex});
     }
 
     handleMinesChanged(val) {
         let newGameConfig = Object.assign({}, this.state.newGameConfig, {mines: val});
-        this.setState({newGameConfig: newGameConfig, currentPreset: -1});
+        this.setState({newGameConfig: newGameConfig, currentPreset: this.state.customPresetIndex});
     }
 
     handlePresetChanged(changeEvent) {
-        let presetIndex = changeEvent.target.value;
-        if (presetIndex < 0) {
-            this.setState({currentPreset: presetIndex});
-            return; // custom
+        const presetName = changeEvent.target.value;
+        const presetIndex = this.state.presets.findIndex(e => e.name === presetName);
+        const preset = this.state.presets[presetIndex];
+        if (presetIndex === this.state.customPresetIndex) {//FIXME
+            this.setState({currentPreset: this.state.customPresetIndex});
+            return; // custom preset, don't change the numbers
         } 
-        var preset = this.state.presets[presetIndex];
         let newGameConfig = Object.assign({}, preset);
         this.setState({currentPreset: presetIndex, newGameConfig: newGameConfig});
     }
@@ -74,14 +84,20 @@ class ControlPanel extends React.Component {
     render() {
         const mode = this.props.options.placingFlag ? "Flags" : "Inspecting";
 
+        const makeRadioOption = ((preset, index) => {
+            const strKey = "k"+index;
+            return <label key={strKey}><input id="option" type="radio" name="field"
+                value={preset.name} 
+                checked={this.state.currentPreset===index} onChange={this.handlePresetChanged} 
+                />{preset.name}<br/></label>
+            });
+        let radioOptions = this.state.presets.map(makeRadioOption);
+
         const newGame = this.state.choosingGameOptions ?
             <div id="newGameOpt"> 
                 <form>
                 New game<br/>
-                <table><thead></thead><tbody><tr><td>
-                        <label><input id="option" type="radio" name="field" value="-1" checked={this.state.currentPreset==-1} onChange={this.handlePresetChanged} />Custom</label><br/>
-                        <label><input id="option" type="radio" name="field" value="0" checked={this.state.currentPreset==0} onChange={this.handlePresetChanged} />Beginner</label><br/>
-                        <label><input id="option" type="radio" name="field" value="1" checked={this.state.currentPreset==1} onChange={this.handlePresetChanged} />Advanced</label><br/>
+                <table><thead></thead><tbody><tr><td>{radioOptions}
                     </td></tr> 
                     <tr><td>Rows:</td><td>{NumericInput(this.state.newGameConfig.y, this.handleYChanged)}</td></tr>
                     <tr><td>Columns:</td><td>{NumericInput(this.state.newGameConfig.x, this.handleXChanged)}</td></tr>
