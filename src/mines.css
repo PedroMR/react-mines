@@ -87,6 +87,9 @@ body {
     border: 1px solid blue;
     display:inline-block;
 }
+.gamePresets {
+    text-align: left;
+}
 #controlPanel {
     float:center;
 }

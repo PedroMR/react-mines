@@ -1,7 +1,7 @@
 
 const initialConfig = {
     x: 10,
-    y: 10,
+    y: 6,
     mines: 8,
 };
 

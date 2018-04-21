@@ -28,8 +28,8 @@ class ControlPanel extends React.Component {
             currentPreset: 0,
             presets: [
                 {x: 10, y: 6, mines: 8, name: "Beginner"},
-                {x: 20, y: 15, mines: 40, name: "Advanced"},
-                {x: 15, y: 25, mines: 36, name: "Mobile"},
+                {x: 20, y: 15, mines: 60, name: "Advanced"},
+                {x: 15, y: 25, mines: 60, name: "Mobile"},
                 {name: "Custom"},
             ],
         }
@@ -60,7 +60,7 @@ class ControlPanel extends React.Component {
         const presetName = changeEvent.target.value;
         const presetIndex = this.state.presets.findIndex(e => e.name === presetName);
         const preset = this.state.presets[presetIndex];
-        if (presetIndex === this.state.customPresetIndex) {//FIXME
+        if (presetIndex === this.state.customPresetIndex) {
             this.setState({currentPreset: this.state.customPresetIndex});
             return; // custom preset, don't change the numbers
         } 
@@ -97,7 +97,7 @@ class ControlPanel extends React.Component {
             <div id="newGameOpt"> 
                 <form>
                 New game<br/>
-                <table><thead></thead><tbody><tr><td>{radioOptions}
+                <table><thead></thead><tbody><tr className="gamePresets"><td colSpan='2'>{radioOptions}
                     </td></tr> 
                     <tr><td>Rows:</td><td>{NumericInput(this.state.newGameConfig.y, this.handleYChanged)}</td></tr>
                     <tr><td>Columns:</td><td>{NumericInput(this.state.newGameConfig.x, this.handleXChanged)}</td></tr>
