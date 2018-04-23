@@ -18,11 +18,8 @@ class Board extends React.Component {
         const around = this.props.around[pos];
         const mine = seen && this.props.mines[pos];
         const flag = this.props.flags[pos];        
-        let value = seen ? (mine ? "*" : around) : "";// (flag? "F" : "");
+        let value = seen ? (mine ? "*" : around) : "";
         if (value === 0) value = "";
-        // value = <i class="fas fa-search"></i>;
-        // if (value == "F") value = <img src={imgMinefield} className="squareImg"/>;
-//             {/* onClick={() => this.props.onClick(x, y)}  */}
         return <Square key={x+","+y} 
              onClick={() => {
                  this.props.dispatch({type:'INSPECT', x:x, y:y});

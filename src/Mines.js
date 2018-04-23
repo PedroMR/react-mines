@@ -22,14 +22,11 @@ class ControlPanel extends React.Component {
         this.state = {
             choosingGameOptions: false,
             newGameConfig: {x: props.config.x, y: props.config.y, mines: props.config.mines},
-            // x: props.config.x,
-            // y: props.config.y,
-            // mines: props.config.mines,
             currentPreset: 0,
             presets: [
                 {x: 10, y: 6, mines: 8, name: "Beginner"},
                 {x: 20, y: 15, mines: 60, name: "Advanced"},
-                {x: 15, y: 25, mines: 60, name: "Mobile"},
+                {x: 11, y: 16, mines: 45, name: "Mobile"},
                 {name: "Custom"},
             ],
         }
