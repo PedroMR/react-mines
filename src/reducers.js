@@ -99,11 +99,13 @@ function reducer(state = initialState, action) {
             checkGameOver(newState);
             return newState;
 
-        case "TOGGLEFLAG":
+        case types.SET_UI_MODE:
             if (state.gameOver) return state;
 
-            let options = Object.assign({}, state.options, {placingFlag: !state.options.placingFlag});
-            return Object.assign({}, state, {options: options});
+            const placingFlag = payload.mode == types.UI_MODE_FLAG;
+            const options = newVersionOf(state.options, {placingFlag});
+            return newVersionOf(state, {options});
+
         default:
             return state;
     }

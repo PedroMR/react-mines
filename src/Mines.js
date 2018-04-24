@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import Board from "./Board";
 import Status from "./Status";
 import ControlPanel from "./ControlPanel";
-import { startNewGame } from './actions';
+import { startNewGame, setUiMode } from './actions';
+import * as types from './types';
 
 class Game extends React.Component {
     constructor(props) {
@@ -18,7 +19,9 @@ class Game extends React.Component {
     }
 
     onToggleFlag() {
-        this.props.dispatch({type: "TOGGLEFLAG"});
+        const newMode = this.props.options.placingFlag ? types.UI_MODE_REVEAL : types.UI_MODE_FLAG;
+
+        this.props.dispatch(setUiMode(newMode));
     }
 
     isHoldForFlagKey(e) {
