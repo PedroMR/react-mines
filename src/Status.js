@@ -29,7 +29,7 @@ class Status extends React.PureComponent {
 
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'flags', 'mines', 'options'];
+    const propNames = [ 'config', 'seen', 'flags', 'mines' ];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state[name]});
     return retVal;

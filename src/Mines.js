@@ -19,7 +19,7 @@ class Game extends React.Component {
     }
 
     onToggleFlag() {
-        const newMode = this.props.options.placingFlag ? types.UI_MODE_REVEAL : types.UI_MODE_FLAG;
+        const newMode = this.props.options.uiMode == types.UI_MODE_FLAG ? types.UI_MODE_REVEAL : types.UI_MODE_FLAG;
 
         this.props.dispatch(setUiMode(newMode));
     }

@@ -2,6 +2,7 @@ import React from 'react';
 import "./mines.css";
 import { connect } from 'react-redux';
 import { flagTile, revealTile } from './actions';
+import * as types from './types';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
@@ -23,13 +24,17 @@ class Board extends React.Component {
         if (value === 0) value = "";
         return <Square key={x+","+y} 
              onClick={() => this.handleClick(x, y, pos, seen, around, flag, mine)}
-            placingFlag={this.props.options.placingFlag}
+            placingFlag={this.isPlacingFlag()}
             mine={mine}
             seen={seen}
             gameOver={this.props.gameOver}
             around={around}
             flag={flag}
             value={value}/>
+    }
+
+    isPlacingFlag() {
+        return this.props.options.uiMode == types.UI_MODE_FLAG;
     }
 
     handleClick(x, y, pos, seen, around, flag, mine) {        
@@ -42,7 +47,7 @@ class Board extends React.Component {
             return;
         }
 
-        if (this.props.options.placingFlag)
+        if (this.isPlacingFlag())
             this.props.dispatch(flagTile(x, y));
         else if (!flag) {
             this.props.dispatch(revealTile(x, y));

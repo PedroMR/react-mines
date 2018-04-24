@@ -20,7 +20,7 @@ function createGameState(config) {
     let nMines = config.mines;
 
     let state = {}
-    state.options = { placingFlag: false };
+    state.options = { uiMode: types.UI_MODE_REVEAL };
     state.config = {x: cols, y: rows, mines: nMines};
     state.seen = Array(cols*rows).fill(false);
     state.around = Array(cols*rows).fill(0);
@@ -102,8 +102,13 @@ function reducer(state = initialState, action) {
         case types.SET_UI_MODE:
             if (state.gameOver) return state;
 
-            const placingFlag = payload.mode == types.UI_MODE_FLAG;
-            const options = newVersionOf(state.options, {placingFlag});
+            const modes = [ types.UI_MODE_FLAG, types.UI_MODE_REVEAL ];
+            if (modes.indexOf(payload.mode) < 0) {
+                console.log("invalid ui mode. ", action);
+                return state;
+            }
+            
+            const options = newVersionOf(state.options, {uiMode: payload.mode});
             return newVersionOf(state, {options});
 
         default:
