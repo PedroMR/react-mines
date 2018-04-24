@@ -20,6 +20,7 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "gh-pages": "^1.1.0"
   }
 }

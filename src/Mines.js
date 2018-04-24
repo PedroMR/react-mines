@@ -71,12 +71,24 @@ class Game extends React.Component {
     }
 }
 
-function DebugMenu(props) {
-    const featureList = [ types.FEATURE_EXPAND, types.FEATURE_ZERO_OUT, types.FEATURE_CUSTOM_MODE, types.FEATURE_PRESET_SELECTION ];
-    const featureButtons = featureList.map( (ft) => {
-        return <button name={ft} onClick={() => props.toggleFeature(ft)} key={ft}>{ft}</button>;
-    });
-    return featureButtons;
+class DebugMenu extends React.PureComponent {
+    constructor (props) {
+        super(props);
+        this.state = {shown: true};
+    }
+    render() {
+        const shown = this.state.shown;
+
+        const featureList = [ types.FEATURE_EXPAND, types.FEATURE_ZERO_OUT, types.FEATURE_CUSTOM_MODE, types.FEATURE_PRESET_SELECTION ];
+        const featureButtons = featureList.map( (ft) => {
+            return <label key={ft}>
+                <input type="checkbox" name={ft} onChange={() => this.props.toggleFeature(ft)}/>{ft}<br/></label>;
+            // return <button name={ft} onClick={() => props.toggleFeature(ft)} key={ft}>{ft}</button>;
+        });
+        return <div className="debugMenu">
+            <a onClick={() => { this.setState(...this.state, {shown: !shown})}}><b>&nbsp;*&nbsp;Debug Menu</b></a>
+            <br/>{shown ? featureButtons:null}</div>
+    }
 }
 
 function mapStateToProps(state) {
