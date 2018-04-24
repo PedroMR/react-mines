@@ -1,7 +1,7 @@
 import React from 'react';
 import "./mines.css";
 import { connect } from 'react-redux';
-import { flagTile } from './actions';
+import { flagTile, revealTile } from './actions';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
@@ -22,12 +22,7 @@ class Board extends React.Component {
         let value = seen ? (mine ? "*" : around) : "";
         if (value === 0) value = "";
         return <Square key={x+","+y} 
-             onClick={() => {
-                if (this.props.options.placingFlag)
-                    this.props.dispatch(flagTile(x, y));
-                else
-                    this.props.dispatch({type:'INSPECT', x:x, y:y});
-            }}
+             onClick={() => this.handleClick(x, y, pos, seen, around, flag, mine)}
             placingFlag={this.props.options.placingFlag}
             mine={mine}
             seen={seen}
@@ -35,6 +30,66 @@ class Board extends React.Component {
             around={around}
             flag={flag}
             value={value}/>
+    }
+
+    handleClick(x, y, pos, seen, around, flag, mine) {        
+        if (seen) {
+            if (mine) return;
+
+            if (around == this.countFlagsAndVisibleMinesAround(x, y)) {
+                this.expandAround(x, y);                
+            }
+            return;
+        }
+
+        if (this.props.options.placingFlag)
+            this.props.dispatch(flagTile(x, y));
+        else if (!flag)
+            this.props.dispatch(revealTile(x, y));
+    }
+
+    countFlagsAndVisibleMinesAround(x, y) {
+        let n = 0;
+        let cols = this.props.config.x;
+        let rows = this.props.config.y;
+
+        for (let dy=-1; dy <= 1; dy++) {
+            if (y + dy < 0 || y + dy >= rows) continue;
+            for (let dx=-1; dx <= 1; dx++) {
+                if (x + dx < 0 || x + dx >= cols) continue;                        
+                if (dx === dy && dx === 0) continue;
+
+                let neighborPos =  x + dx + (y+dy)*cols;
+                if (this.props.flags[neighborPos])
+                    n++; // count flag
+                else if (this.props.mines[neighborPos] && this.props.seen[neighborPos])
+                    n++; // count visible mine
+            }
+        }
+
+        return n;
+    }
+
+    expandAround(x, y, queued = []) {
+        let cols = this.props.config.x;
+        let rows = this.props.config.y;
+
+        for (let dy=-1; dy <= 1; dy++) {
+            if (y + dy < 0 || y + dy >= rows) continue;
+            for (let dx=-1; dx <= 1; dx++) {
+                if (x + dx < 0 || x + dx >= cols) continue;                        
+                if (dx === dy && dx === 0) continue;
+
+                let neighborPos =  x + dx + (y+dy)*cols;
+                if (!this.props.flags[neighborPos] && !this.props.seen[neighborPos] && !queued[neighborPos]) {
+                    queued[neighborPos] = true;
+                    this.props.dispatch(revealTile(x+dx, y+dy));
+                    if (this.props.around[neighborPos] === 0) {
+                        this.expandAround(x+dx,y+dy, queued);
+                    }
+                }
+            }
+        }
     }
 
     render() {
@@ -49,6 +104,8 @@ class Board extends React.Component {
         return <div className="board">{rows}</div>;
     }
 }
+
+
 
 
 function mapStateToProps(state) {

@@ -84,22 +84,21 @@ function reducer(state = initialState, action) {
     switch(action.type) {
         case types.NEW_GAME:
             return createGameState(action.config);
+            
         case types.FLAG_TILE:
             if (state.gameOver) return state;
 
-            var newState = handleFlagTile(state, payload.x, payload.y);
+            const flaggedState = handleFlagTile(state, payload.x, payload.y);
+            checkGameOver(flaggedState);
+            return flaggedState;
+            
+        case types.REVEAL_TILE:
+            if (state.gameOver) return state;
+
+            const newState = handleUserSelected(state, payload.x, payload.y);
             checkGameOver(newState);
             return newState;
             
-        case "INSPECT":
-            if (state.gameOver) return state;
-
-            var newState = handleUserSelected(state, action.x, action.y);
-            checkGameOver(newState);
-            return newState;
-            // let seen = state.seen.slice();
-            // seen[getPos(state, action.x, action.y)] = true;
-            // return Object.assign({}, state, {seen: seen});
         case "TOGGLEFLAG":
             if (state.gameOver) return state;
 
@@ -133,29 +132,14 @@ function handleUserSelected(state, x, y) {
     const pos = getPos(state, x, y);
     let seen = state.seen.slice();
 
-    if (state.options.placingFlag) {
-        return handleFlagTile(state, x, y);
-    }
-    
     if (!seen[pos]) {
-        if (state.options.placingFlag) {
-            if (!state.flags[pos] && flagsRemaining(state) <= 0) {
-                // can't place flag here! too many flags down.
-                return state;
-            }
-
-            let flags = state.flags.slice();
-            flags[pos] = !flags[pos];
-            return newVersionOf(state, {flags});
-        } else {
-            if (state.flags[pos]) // clicked a flag! no-no
-                return state;
-            
-            seen[pos] = true;
-            if (state.around[pos] === 0)
-                expandAround(state, x, y, seen);
-            return newVersionOf(state, {seen});
-        }
+        if (state.flags[pos]) // clicked a flag! no-no
+            return state;
+        
+        seen[pos] = true;
+        if (state.around[pos] === 0)
+            expandAround(state, x, y, seen);
+        return newVersionOf(state, {seen});
     } else {
         //expand
         var flagsAround = countFlagsAndVisibleMinesAround(state, x, y);
