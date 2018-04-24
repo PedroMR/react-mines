@@ -20,6 +20,7 @@ function createGameState(config) {
     let nMines = config.mines;
 
     let state = {}
+    state.features = {};
     state.options = { uiMode: types.UI_MODE_REVEAL };
     state.config = {x: cols, y: rows, mines: nMines};
     state.seen = Array(cols*rows).fill(false);
@@ -110,6 +111,12 @@ function reducer(state = initialState, action) {
             
             const options = newVersionOf(state.options, {uiMode: payload.mode});
             return newVersionOf(state, {options});
+
+        case types.DEBUG_TOGGLE_FEATURE:
+            const feature = payload.feature;
+            const features = newVersionOf(state.features, {[feature]: !state.features[feature]});
+            console.log(feature, features, state);
+            return newVersionOf(state, {features});
 
         default:
             return state;

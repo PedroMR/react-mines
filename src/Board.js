@@ -34,14 +34,18 @@ class Board extends React.Component {
     }
 
     isPlacingFlag() {
-        return this.props.options.uiMode == types.UI_MODE_FLAG;
+        return this.props.options.uiMode === types.UI_MODE_FLAG;
+    }
+
+    hasFeature(feature) {
+        return this.props.features[feature];
     }
 
     handleClick(x, y, pos, seen, around, flag, mine) {        
         if (seen) {
             if (mine) return;
 
-            if (around == this.countFlagsAndVisibleMinesAround(x, y)) {
+            if (this.hasFeature(types.FEATURE_EXPAND) && around === this.countFlagsAndVisibleMinesAround(x, y)) {
                 this.expandAround(x, y);                
             }
             return;
@@ -51,7 +55,7 @@ class Board extends React.Component {
             this.props.dispatch(flagTile(x, y));
         else if (!flag) {
             this.props.dispatch(revealTile(x, y));
-            if (around == 0) {
+            if (this.hasFeature(types.FEATURE_ZERO_OUT) && around === 0) {
                 this.expandAround(x, y);
             }
         }
@@ -93,7 +97,7 @@ class Board extends React.Component {
                 if (!this.props.flags[neighborPos] && !this.props.seen[neighborPos] && !queued[neighborPos]) {
                     queued[neighborPos] = true;
                     this.props.dispatch(revealTile(x+dx, y+dy));
-                    if (this.props.around[neighborPos] === 0) {
+                    if (this.hasFeature(types.FEATURE_ZERO_OUT) && this.props.around[neighborPos] === 0) {
                         this.expandAround(x+dx,y+dy, queued);
                     }
                 }
@@ -118,7 +122,7 @@ class Board extends React.Component {
 
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver'];
+    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'features'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state[name]});
     return retVal;

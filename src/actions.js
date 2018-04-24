@@ -19,3 +19,8 @@ export const setUiMode = (mode) => ({
     type: types.SET_UI_MODE,
     payload: { mode }
 });
+
+export const debugToggleFeature = (feature) => ({
+    type: types.DEBUG_TOGGLE_FEATURE,
+    payload: { feature }
+});

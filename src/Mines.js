@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Board from "./Board";
 import Status from "./Status";
 import ControlPanel from "./ControlPanel";
-import { startNewGame, setUiMode } from './actions';
+import { startNewGame, setUiMode, debugToggleFeature } from './actions';
 import * as types from './types';
 
 class Game extends React.Component {
@@ -19,7 +19,7 @@ class Game extends React.Component {
     }
 
     onToggleFlag() {
-        const newMode = this.props.options.uiMode == types.UI_MODE_FLAG ? types.UI_MODE_REVEAL : types.UI_MODE_FLAG;
+        const newMode = this.props.options.uiMode === types.UI_MODE_FLAG ? types.UI_MODE_REVEAL : types.UI_MODE_FLAG;
 
         this.props.dispatch(setUiMode(newMode));
     }
@@ -62,8 +62,17 @@ class Game extends React.Component {
              onNewGame={(c) => this.createNewGame(c)}
              onToggleFlag={() => this.onToggleFlag()}
               />
+              <DebugMenu toggleFeature={(feature) => { this.props.dispatch(debugToggleFeature(feature)); }} />
             </div>;
     }
+}
+
+function DebugMenu(props) {
+    const featureList = [ types.FEATURE_EXPAND, types.FEATURE_ZERO_OUT ];
+    const featureButtons = featureList.map( (ft) => {
+        return <button name={ft} onClick={() => props.toggleFeature(ft)} key={ft}>{ft}</button>;
+    });
+    return featureButtons;
 }
 
 function mapStateToProps(state) {

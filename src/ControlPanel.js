@@ -1,4 +1,5 @@
 import React from 'react';
+import * as types from './types';
 
 function NumericInput(defaultValue, handleChanged) {
     console.log("Making num input val "+defaultValue);
@@ -75,7 +76,7 @@ class ControlPanel extends React.Component {
     }
 
     render() {
-        const mode = this.props.options.placingFlag ? "Flags" : "Inspecting";
+        const mode = this.props.options.uiMode === types.UI_MODE_FLAG ? "Flags" : "Inspecting";
 
         const makeRadioOption = ((preset, index) => {
             const strKey = "k"+index;
