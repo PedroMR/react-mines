@@ -95,10 +95,10 @@ function reducer(state = initialState, action) {
         case types.REVEAL_TILE:
             if (state.gameOver) return state;
 
-            const newState = handleUserSelected(state, payload.x, payload.y);
+            const newState = handleRevealTile(state, payload.x, payload.y);
             checkGameOver(newState);
             return newState;
-            
+
         case "TOGGLEFLAG":
             if (state.gameOver) return state;
 
@@ -128,72 +128,13 @@ function newVersionOf(obj, newProps) {
     return Object.assign({}, obj, newProps);
 }
 
-function handleUserSelected(state, x, y) {
+function handleRevealTile(state, x, y) {
     const pos = getPos(state, x, y);
+    if (state.seen[pos]) return state; // revealing a seen tile
+
     let seen = state.seen.slice();
-
-    if (!seen[pos]) {
-        if (state.flags[pos]) // clicked a flag! no-no
-            return state;
-        
-        seen[pos] = true;
-        if (state.around[pos] === 0)
-            expandAround(state, x, y, seen);
-        return newVersionOf(state, {seen});
-    } else {
-        //expand
-        var flagsAround = countFlagsAndVisibleMinesAround(state, x, y);
-        if (flagsAround === state.around[pos]) {
-            expandAround(state, x, y, seen);
-            return newVersionOf(state, {seen});
-        }
-    }
-
-    return state;
-}
-
-function expandAround(state, x, y, seen) {
-    let cols = state.config.x;
-    let rows = state.config.y;
-    seen = seen || state.seen.slice();        
-
-    for (let dy=-1; dy <= 1; dy++) {
-        if (y + dy < 0 || y + dy >= rows) continue;
-        for (let dx=-1; dx <= 1; dx++) {
-            if (x + dx < 0 || x + dx >= cols) continue;                        
-            if (dx === dy && dx === 0) continue;
-
-            let neighborPos =  x + dx + (y+dy)*cols;
-            if (!state.flags[neighborPos] && !seen[neighborPos]) {
-                seen[neighborPos] = true;
-                if (state.around[neighborPos] === 0) {
-                    expandAround(state, x+dx,y+dy, seen);
-                }
-            }
-        }
-    }
-}
-
-function countFlagsAndVisibleMinesAround(state, x, y) {
-    let n = 0;
-    let cols = state.config.x;
-    let rows = state.config.y;
-
-    for (let dy=-1; dy <= 1; dy++) {
-        if (y + dy < 0 || y + dy >= rows) continue;
-        for (let dx=-1; dx <= 1; dx++) {
-            if (x + dx < 0 || x + dx >= cols) continue;                        
-            if (dx === dy && dx === 0) continue;
-
-            let neighborPos =  x + dx + (y+dy)*cols;
-            if (state.flags[neighborPos])
-                n++; // count flag
-            else if (state.mines[neighborPos] && state.seen[neighborPos])
-                n++; // count visible mine
-        }
-    }
-
-    return n;
+    seen[pos] = true;
+    return newVersionOf(state, {seen});
 }
 
 export default reducer;

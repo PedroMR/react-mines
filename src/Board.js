@@ -44,8 +44,12 @@ class Board extends React.Component {
 
         if (this.props.options.placingFlag)
             this.props.dispatch(flagTile(x, y));
-        else if (!flag)
+        else if (!flag) {
             this.props.dispatch(revealTile(x, y));
+            if (around == 0) {
+                this.expandAround(x, y);
+            }
+        }
     }
 
     countFlagsAndVisibleMinesAround(x, y) {
