@@ -82,8 +82,7 @@ class DebugMenu extends React.PureComponent {
         const featureList = [ types.FEATURE_EXPAND, types.FEATURE_ZERO_OUT, types.FEATURE_CUSTOM_MODE, types.FEATURE_PRESET_SELECTION ];
         const featureButtons = featureList.map( (ft) => {
             return <label key={ft}>
-                <input type="checkbox" name={ft} onChange={() => this.props.toggleFeature(ft)}/>{ft}<br/></label>;
-            // return <button name={ft} onClick={() => props.toggleFeature(ft)} key={ft}>{ft}</button>;
+                <input type="checkbox" checked={this.props.features[ft]} name={ft} onChange={() => this.props.toggleFeature(ft)}/>{ft}<br/></label>;
         });
         return <div className="debugMenu">
             <a onClick={() => { this.setState(...this.state, {shown: !shown})}}><b>&nbsp;*&nbsp;Debug Menu</b></a>
@@ -93,7 +92,7 @@ class DebugMenu extends React.PureComponent {
 
 function mapStateToProps(state) {
     console.log(state);
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'features'];
+    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state.game[name]});
     retVal.features = state.meta.features;
