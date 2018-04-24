@@ -22,10 +22,8 @@ const initialConfig = {
     mines: 8,
 };
 
-const initialState = { 
-    game: createGameState(initialConfig), 
-    meta: {features: {}},
-}
+const initialGameState = createGameState(initialConfig);
+const initialMetaState = {features: { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true }};
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -98,16 +96,12 @@ function checkGameOver(newState) {
     return newState;
 }
 
-function reducer(state = initialState, action) {
-    let newState = {
-        meta: metaReducer(state.meta, action),
-        game: gameReducer(state.game, action)
-    };
+const reducer = combineReducers({
+    meta: metaReducer,
+    game: gameReducer
+});
 
-    return newState;
-}
-
-function gameReducer(state = initialState, action) {
+function gameReducer(state = initialGameState, action) {
     const payload = action.payload;
     console.log(action);
     switch(action.type) {
@@ -145,7 +139,7 @@ function gameReducer(state = initialState, action) {
     }
 }
 
-function metaReducer(state, action) {
+function metaReducer(state = initialMetaState, action) {
     const payload = action.payload;
     switch (action.type) {
         case types.DEBUG_TOGGLE_FEATURE:
