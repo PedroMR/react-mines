@@ -1,6 +1,7 @@
 import React from 'react';
 import "./mines.css";
 import { connect } from 'react-redux';
+import { flagTile } from './actions';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
@@ -22,7 +23,10 @@ class Board extends React.Component {
         if (value === 0) value = "";
         return <Square key={x+","+y} 
              onClick={() => {
-                 this.props.dispatch({type:'INSPECT', x:x, y:y});
+                if (this.props.options.placingFlag)
+                    this.props.dispatch(flagTile(x, y));
+                else
+                    this.props.dispatch({type:'INSPECT', x:x, y:y});
             }}
             placingFlag={this.props.options.placingFlag}
             mine={mine}

@@ -1,3 +1,4 @@
+import * as types from './types';
 
 const initialConfig = {
     x: 10,
@@ -70,18 +71,31 @@ function flagsRemaining(state) {
     return nMines - nMinesVisible - nFlagsPlaced;
 }
 
+function checkGameOver(newState) {
+    if (tilesRemaining(newState) <= 0) {
+        newState.gameOver = true;
+    }
+    return newState;
+}
+
 function reducer(state = initialState, action) {
+    const payload = action.payload;
     console.log(action);
     switch(action.type) {
-        case "NEWGAME":
+        case types.NEW_GAME:
             return createGameState(action.config);
+        case types.FLAG_TILE:
+            if (state.gameOver) return state;
+
+            var newState = handleFlagTile(state, payload.x, payload.y);
+            checkGameOver(newState);
+            return newState;
+            
         case "INSPECT":
             if (state.gameOver) return state;
 
             var newState = handleUserSelected(state, action.x, action.y);
-            if (tilesRemaining(newState) <= 0) {
-                newState.gameOver = true;
-            }
+            checkGameOver(newState);
             return newState;
             // let seen = state.seen.slice();
             // seen[getPos(state, action.x, action.y)] = true;
@@ -96,10 +110,33 @@ function reducer(state = initialState, action) {
     }
 }
 
+function handleFlagTile(state, x, y) {
+    const pos = getPos(state, x, y);
+
+    if (state.seen[pos]) return state; // can't flag seen tile
+
+    if (!state.flags[pos] && flagsRemaining(state) <= 0) {
+        // can't place flag here! too many flags down.
+        return state;
+    }
+
+    let flags = state.flags.slice();
+    flags[pos] = !flags[pos];
+    return newVersionOf(state, {flags});
+}
+
+function newVersionOf(obj, newProps) {
+    return Object.assign({}, obj, newProps);
+}
+
 function handleUserSelected(state, x, y) {
     const pos = getPos(state, x, y);
     let seen = state.seen.slice();
 
+    if (state.options.placingFlag) {
+        return handleFlagTile(state, x, y);
+    }
+    
     if (!seen[pos]) {
         if (state.options.placingFlag) {
             if (!state.flags[pos] && flagsRemaining(state) <= 0) {
@@ -109,7 +146,7 @@ function handleUserSelected(state, x, y) {
 
             let flags = state.flags.slice();
             flags[pos] = !flags[pos];
-            return Object.assign({}, state, {flags: flags});
+            return newVersionOf(state, {flags});
         } else {
             if (state.flags[pos]) // clicked a flag! no-no
                 return state;
@@ -117,14 +154,14 @@ function handleUserSelected(state, x, y) {
             seen[pos] = true;
             if (state.around[pos] === 0)
                 expandAround(state, x, y, seen);
-            return Object.assign({}, state, {seen: seen});
+            return newVersionOf(state, {seen});
         }
     } else {
         //expand
         var flagsAround = countFlagsAndVisibleMinesAround(state, x, y);
         if (flagsAround === state.around[pos]) {
             expandAround(state, x, y, seen);
-            return Object.assign({}, state, {seen: seen});
+            return newVersionOf(state, {seen});
         }
     }
 
