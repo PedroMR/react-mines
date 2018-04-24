@@ -61,14 +61,18 @@ class Game extends React.Component {
              config={this.props.config}
              onNewGame={(c) => this.createNewGame(c)}
              onToggleFlag={() => this.onToggleFlag()}
+             features={this.props.features}
               />
-              <DebugMenu toggleFeature={(feature) => { this.props.dispatch(debugToggleFeature(feature)); }} />
+              <DebugMenu 
+                toggleFeature={(feature) => { this.props.dispatch(debugToggleFeature(feature)); }}
+                features={this.props.features}
+                />
             </div>;
     }
 }
 
 function DebugMenu(props) {
-    const featureList = [ types.FEATURE_EXPAND, types.FEATURE_ZERO_OUT ];
+    const featureList = [ types.FEATURE_EXPAND, types.FEATURE_ZERO_OUT, types.FEATURE_CUSTOM_MODE, types.FEATURE_PRESET_SELECTION ];
     const featureButtons = featureList.map( (ft) => {
         return <button name={ft} onClick={() => props.toggleFeature(ft)} key={ft}>{ft}</button>;
     });
@@ -76,9 +80,10 @@ function DebugMenu(props) {
 }
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver'];
+    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'features'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state[name]});
     return retVal;
 }
+
 export default connect(mapStateToProps)(Game);

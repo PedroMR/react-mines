@@ -87,16 +87,21 @@ class ControlPanel extends React.Component {
             });
         let radioOptions = this.state.presets.map(makeRadioOption);
 
+        const presets =  <tbody><tr className="gamePresets"><td colSpan='2'>{radioOptions}</td></tr></tbody>;
+        const customValueSelector = <tbody>
+                    <tr><td>Rows:</td><td>{NumericInput(this.state.newGameConfig.y, this.handleYChanged)}</td></tr>
+                    <tr><td>Columns:</td><td>{NumericInput(this.state.newGameConfig.x, this.handleXChanged)}</td></tr>
+                    <tr><td>Mines:</td><td>{NumericInput(this.state.newGameConfig.mines, this.handleMinesChanged)}</td></tr>
+                    </tbody>;
+
         const newGame = this.state.choosingGameOptions ?
             <div id="newGameOpt"> 
                 <form>
                 New game<br/>
-                <table><thead></thead><tbody><tr className="gamePresets"><td colSpan='2'>{radioOptions}
-                    </td></tr> 
-                    <tr><td>Rows:</td><td>{NumericInput(this.state.newGameConfig.y, this.handleYChanged)}</td></tr>
-                    <tr><td>Columns:</td><td>{NumericInput(this.state.newGameConfig.x, this.handleXChanged)}</td></tr>
-                    <tr><td>Mines:</td><td>{NumericInput(this.state.newGameConfig.mines, this.handleMinesChanged)}</td></tr>
-                </tbody></table>
+                <table><thead></thead>
+                    { this.props.features[types.FEATURE_PRESET_SELECTION] ? presets : null }
+                    { this.props.features[types.FEATURE_CUSTOM_MODE] ? customValueSelector : null }
+                </table>
                 <button onClick={()=>this.onCreateGameButton()}>Create Game</button>
                 </form>
             </div> 

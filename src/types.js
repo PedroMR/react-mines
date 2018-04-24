@@ -11,3 +11,5 @@ export const UI_MODE_REVEAL = "ui.mode.reveal";
 
 export const FEATURE_EXPAND = "feature.expand";
 export const FEATURE_ZERO_OUT = "feature.zeroOut";
+export const FEATURE_PRESET_SELECTION = "feature.presets";
+export const FEATURE_CUSTOM_MODE = "feature.custom";
