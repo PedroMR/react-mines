@@ -92,7 +92,6 @@ class Board extends React.Component {
             for (let dx=-1; dx <= 1; dx++) {
                 if (x + dx < 0 || x + dx >= cols) continue;                        
                 if (dx === dy && dx === 0) continue;
-
                 let neighborPos =  x + dx + (y+dy)*cols;
                 if (!this.props.flags[neighborPos] && !this.props.seen[neighborPos] && !queued[neighborPos]) {
                     queued[neighborPos] = true;
@@ -124,7 +123,9 @@ class Board extends React.Component {
 function mapStateToProps(state) {
     const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'features'];
     let retVal = {}
-    propNames.forEach(name => { retVal[name] = state[name]});
+    propNames.forEach(name => { retVal[name] = state.game[name]});
+
+    retVal.features = state.meta.features;
     return retVal;
 }
 export default connect(mapStateToProps)(Board);

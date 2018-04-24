@@ -1,4 +1,20 @@
+import {combineReducers} from 'redux';
 import * as types from './types';
+
+
+/* config layoutL:
+ * state.
+ *   .meta
+ *      .features
+ *   .game
+ *      .seen
+ *      .around
+ *      .mines
+ *      .flags
+ *      .gameOver
+ *      .options
+ *      .config //static, was used to create current game
+ */
 
 const initialConfig = {
     x: 10,
@@ -6,7 +22,10 @@ const initialConfig = {
     mines: 8,
 };
 
-const initialState = createGameState(initialConfig);
+const initialState = { 
+    game: createGameState(initialConfig), 
+    meta: {features: {}},
+}
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -80,6 +99,15 @@ function checkGameOver(newState) {
 }
 
 function reducer(state = initialState, action) {
+    let newState = {
+        meta: metaReducer(state.meta, action),
+        game: gameReducer(state.game, action)
+    };
+
+    return newState;
+}
+
+function gameReducer(state = initialState, action) {
     const payload = action.payload;
     console.log(action);
     switch(action.type) {
@@ -112,6 +140,14 @@ function reducer(state = initialState, action) {
             const options = newVersionOf(state.options, {uiMode: payload.mode});
             return newVersionOf(state, {options});
 
+        default:
+            return state;
+    }
+}
+
+function metaReducer(state, action) {
+    const payload = action.payload;
+    switch (action.type) {
         case types.DEBUG_TOGGLE_FEATURE:
             const feature = payload.feature;
             const features = newVersionOf(state.features, {[feature]: !state.features[feature]});

@@ -31,7 +31,7 @@ class Status extends React.PureComponent {
 function mapStateToProps(state) {
     const propNames = [ 'config', 'seen', 'flags', 'mines' ];
     let retVal = {}
-    propNames.forEach(name => { retVal[name] = state[name]});
+    propNames.forEach(name => { retVal[name] = state.game[name]});
     return retVal;
 }
 

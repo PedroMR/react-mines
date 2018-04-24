@@ -92,9 +92,11 @@ class DebugMenu extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
+    console.log(state);
     const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'features'];
     let retVal = {}
-    propNames.forEach(name => { retVal[name] = state[name]});
+    propNames.forEach(name => { retVal[name] = state.game[name]});
+    retVal.features = state.meta.features;
     return retVal;
 }
 

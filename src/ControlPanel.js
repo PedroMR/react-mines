@@ -15,10 +15,11 @@ function NumericInput(defaultValue, handleChanged) {
 class ControlPanel extends React.Component {
     constructor(props) {
         super(props);
+        const config = props.config;
 
         this.state = {
             choosingGameOptions: false,
-            newGameConfig: {x: props.config.x, y: props.config.y, mines: props.config.mines},
+            newGameConfig: {x: config.x, y: config.y, mines: config.mines},
             currentPreset: 0,
             presets: [
                 {x: 10, y: 6, mines: 8, name: "Beginner"},
