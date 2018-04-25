@@ -93,7 +93,7 @@ class DebugMenu extends React.PureComponent {
         const featureList = [ types.FEATURE_EXPAND, types.FEATURE_ZERO_OUT, types.FEATURE_CUSTOM_MODE, types.FEATURE_PRESET_SELECTION ];
         const featureButtons = featureList.map( (ft) => {
             return <label key={ft}>
-                <input type="checkbox" checked={this.props.features[ft]?true:false} name={ft} onChange={(e) => { this.props.toggleFeature(ft, !this.props.features[ft]); }}/>{ft}<br/></label>;
+                <input type="checkbox" checked={this.props.features[ft]?true:false} name={ft} onChange={(e) => { this.props.toggleFeature(ft); }}/>{ft}<br/></label>;
         });
         const resetButton = <button name="Reset" key="reset" onClick={this.props.handleResetProfile}>Reset Profile</button>;
         const allButtons = featureButtons.concat(resetButton);

@@ -37,7 +37,6 @@ function createGameState(config) {
     let nMines = config.mines;
 
     let state = {}
-    state.features = {};
     state.options = { uiMode: types.UI_MODE_REVEAL };
     state.config = {x: cols, y: rows, mines: nMines};
     state.seen = Array(cols*rows).fill(false);
@@ -145,9 +144,11 @@ function gameReducer(state = initialGameState, action) {
 function metaReducer(state = initialMetaState, action) {
     const payload = action.payload;
     switch (action.type) {
+
         case types.DEBUG_TOGGLE_FEATURE:
             const feature = payload.feature;
-            const features = newVersionOf(state.features, {[feature]: payload.turnOn});
+            const turnOn = payload.turnOn === undefined ? !state.features[feature] : payload.turnOn;
+            const features = newVersionOf(state.features, {[feature]: turnOn});
             console.log(feature, features, state);
             return newVersionOf(state, {features});
 
