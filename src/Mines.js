@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Board from "./Board";
 import Status from "./Status";
 import ControlPanel from "./ControlPanel";
-import { startNewGame, setUiMode, debugToggleFeature } from './actions';
+import { resetProfile, startNewGame, setUiMode, debugToggleFeature } from './actions';
 import * as types from './types';
 
 class Game extends React.Component {
@@ -50,10 +50,16 @@ class Game extends React.Component {
     createNewGame(config) {
         this.props.dispatch(startNewGame(config));
     }
+    
+    handleResetProfile() {
+        this.props.dispatch(resetProfile());
+        this.forceUpdate();
+    }
 
     render() {
         return <div onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}
             ><h1>REACT Minesweeper</h1>
+            <Version/>
             <Status />
             <Board />
              <ControlPanel
@@ -64,11 +70,16 @@ class Game extends React.Component {
              features={this.props.features}
               />
               <DebugMenu 
-                toggleFeature={(feature) => { this.props.dispatch(debugToggleFeature(feature)); }}
+                toggleFeature={(feature, turnOn) => { this.props.dispatch(debugToggleFeature(feature, turnOn)); }}
                 features={this.props.features}
+                handleResetProfile={() => this.handleResetProfile()}
                 />
             </div>;
     }
+}
+
+function Version(props) {
+    return <div className="version">v0.0.1</div>;
 }
 
 class DebugMenu extends React.PureComponent {
@@ -82,11 +93,13 @@ class DebugMenu extends React.PureComponent {
         const featureList = [ types.FEATURE_EXPAND, types.FEATURE_ZERO_OUT, types.FEATURE_CUSTOM_MODE, types.FEATURE_PRESET_SELECTION ];
         const featureButtons = featureList.map( (ft) => {
             return <label key={ft}>
-                <input type="checkbox" checked={this.props.features[ft]} name={ft} onChange={() => this.props.toggleFeature(ft)}/>{ft}<br/></label>;
+                <input type="checkbox" checked={this.props.features[ft]?true:false} name={ft} onChange={(e) => { this.props.toggleFeature(ft, !this.props.features[ft]); }}/>{ft}<br/></label>;
         });
+        const resetButton = <button name="Reset" key="reset" onClick={this.props.handleResetProfile}>Reset Profile</button>;
+        const allButtons = featureButtons.concat(resetButton);
         return <div className="debugMenu">
             <a onClick={() => { this.setState(...this.state, {shown: !shown})}}><b>&nbsp;*&nbsp;Debug Menu</b></a>
-            <br/>{shown ? featureButtons:null}</div>
+            <br/>{shown ? allButtons : null}</div>
     }
 }
 

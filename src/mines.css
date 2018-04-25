@@ -102,8 +102,17 @@ body {
     text-align: left;
     display: block;
     float: left;
-    position: absolute;
+    position: sticky;
     top: 10px;
     left: 5px;
     font-family: 'Times New Roman', Times, serif;
+}
+.version {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    align-content: right;
+    float: right;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 8pt;
 }

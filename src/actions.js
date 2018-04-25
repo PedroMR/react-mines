@@ -2,7 +2,7 @@ import * as types from "./types";
 
 export const startNewGame = (config) => ({
     type: types.NEW_GAME,
-    config
+    payload: { config }
 });
 
 export const flagTile = (x, y) => ({
@@ -20,7 +20,11 @@ export const setUiMode = (mode) => ({
     payload: { mode }
 });
 
-export const debugToggleFeature = (feature) => ({
+export const debugToggleFeature = (feature, turnOn) => ({
     type: types.DEBUG_TOGGLE_FEATURE,
-    payload: { feature }
+    payload: { feature, turnOn }
+});
+
+export const resetProfile = () => ({
+    type: types.RESET_PROFILE,
 });

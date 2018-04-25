@@ -106,7 +106,7 @@ function gameReducer(state = initialGameState, action) {
     console.log(action);
     switch(action.type) {
         case types.NEW_GAME:
-            return createGameState(action.config);
+            return createGameState(payload.config);
             
         case types.FLAG_TILE:
             if (state.gameOver) return state;
@@ -134,6 +134,9 @@ function gameReducer(state = initialGameState, action) {
             const options = newVersionOf(state.options, {uiMode: payload.mode});
             return newVersionOf(state, {options});
 
+        case types.RESET_PROFILE:
+            return initialGameState;
+
         default:
             return state;
     }
@@ -144,9 +147,12 @@ function metaReducer(state = initialMetaState, action) {
     switch (action.type) {
         case types.DEBUG_TOGGLE_FEATURE:
             const feature = payload.feature;
-            const features = newVersionOf(state.features, {[feature]: !state.features[feature]});
+            const features = newVersionOf(state.features, {[feature]: payload.turnOn});
             console.log(feature, features, state);
             return newVersionOf(state, {features});
+
+        case types.RESET_PROFILE:
+            return initialMetaState;
 
         default:
             return state;
