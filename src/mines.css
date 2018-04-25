@@ -116,3 +116,27 @@ body {
     font-family: 'Times New Roman', Times, serif;
     font-size: 8pt;
 }
+
+.scoreTally td {
+    margin: 0px;
+    padding: 8px;
+    border: 1px solid darkgray;
+}
+
+.scoreTally {
+    margin: 20px;
+    text-align: center;
+    display: inline-block;
+}
+.scoreTallyNames {
+    text-align: right;
+}
+.scoreTallyPoints {
+    text-align: left;
+}
+.scoreTallyTotal  {
+    border-top: 1px solid black;
+    color: white;
+    text-transform: uppercase;
+    background-color: indigo;
+}

@@ -22,8 +22,14 @@ const initialConfig = {
     mines: 8,
 };
 
-const initialGameState = createGameState(initialConfig);
-const initialMetaState = {features: { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true }};
+export const initialGameState = createGameState(initialConfig);
+export const initialMetaState = {
+    features: { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
+    score: {
+        perMineFound: 5,
+        perMineDetonated: -10,
+    },
+};
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));

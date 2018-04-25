@@ -6,6 +6,7 @@ import Status from "./Status";
 import ControlPanel from "./ControlPanel";
 import { resetProfile, startNewGame, setUiMode, debugToggleFeature } from './actions';
 import * as types from './types';
+import * as tools from './Tools';
 
 class Game extends React.Component {
     constructor(props) {
@@ -60,6 +61,7 @@ class Game extends React.Component {
         return <div onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}
             ><h1>REACT Minesweeper</h1>
             <Version/>
+            <MetaInfo meta={this.props.meta}/>
             <Status />
             <Board />
              <ControlPanel
@@ -67,11 +69,11 @@ class Game extends React.Component {
              config={this.props.config}
              onNewGame={(c) => this.createNewGame(c)}
              onToggleFlag={() => this.onToggleFlag()}
-             features={this.props.features}
+             features={this.props.meta.features}
               />
               <DebugMenu 
                 toggleFeature={(feature, turnOn) => { this.props.dispatch(debugToggleFeature(feature, turnOn)); }}
-                features={this.props.features}
+                features={this.props.meta.features}
                 handleResetProfile={() => this.handleResetProfile()}
                 />
             </div>;
@@ -80,6 +82,12 @@ class Game extends React.Component {
 
 function Version(props) {
     return <div className="version">v0.0.1</div>;
+}
+
+function MetaInfo(props) {
+    const credits = tools.getCredits(props.meta);
+    if (credits <= 0) return null;
+    return credits+" Credits";
 }
 
 class DebugMenu extends React.PureComponent {
@@ -108,7 +116,7 @@ function mapStateToProps(state) {
     const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state.game[name]});
-    retVal.features = state.meta.features;
+    retVal.meta = state.meta;
     return retVal;
 }
 
