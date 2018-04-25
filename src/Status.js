@@ -8,19 +8,22 @@ function ScoreArea(props) {
     let totalScore = 0;
 
     const scoreTypes = [
-        {name: "Mines found", method: tools.scoreForMinesFound, param: [results.nCorrectFlags]},
-        {name: "Mines detonated", method: tools.scoreForMinesDetonated, param: [results.nDetonated]},
+        {name: "Mines found", method: tools.scoreForMinesFound, param: [results.nCorrectFlags], mult: tools.scoreMultiplierForMinesFound},
+        {name: "Mines detonated", method: tools.scoreForMinesDetonated, param: [results.nDetonated], mult: tools.scoreMultiplierForMinesDetonated},
     ];
 
     const scoreRows = scoreTypes.map(item => {
         const pointsWorth = item.method(props.score, ...item.param);
         totalScore += pointsWorth;
-        return <tr><td className="scoreTallyNames">{item.name}</td><td className="scoreTallyPoints">{pointsWorth}</td></tr>;
+        const amount = item.param[0];
+        const ratio = item.mult(props.score);
+
+        return <tr><td className="scoreTallyNames">{item.name}</td><td>{ratio}</td><td>x{amount}</td><td className="scoreTallyPoints">{pointsWorth}</td></tr>;
     })
 
-    return <table className="scoreTally"><thead><th className="scoreTallyNames"/><th className="scoreTallyPoints"/></thead><tbody>
+    return <table className="scoreTally"><thead><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></thead><tbody>
                 {scoreRows}
-                <tr><td className="scoreTallyNames scoreTallyTotal">Total</td><td className="scoreTallyTotal scoreTallyPoints">{totalScore}</td></tr>
+                <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{totalScore}</td></tr>
                 </tbody>
             </table>;
 }

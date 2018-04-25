@@ -1,6 +1,7 @@
 # TODO
 
-- [ ] Currency system and purchasing menu
+- [ ] Claimable currency from the score tally
+- [ ] Purchasing menu for features
 - [ ] Sounds
 - [ ] Narrator text box
 - [ ] First-click never-boom

@@ -3,16 +3,23 @@ import { initialMetaState } from './reducers';
 
 export function scoreForMinesFound(score, amount) {
     console.log('found',score, initialMetaState);
-    // let ratio = score != undefined ? score.perMineFound : initialMetaState.score.perMineFound;
-    let ratio = initialMetaState.score.perMineFound;
+    const ratio = scoreMultiplierForMinesFound(score);
+
     return ratio * amount;
 }
 
+export function scoreMultiplierForMinesFound(score) {
+    return score != undefined ? score.perMineFound : initialMetaState.score.perMineFound;
+}
+
 export function scoreForMinesDetonated(score, amount) {
-    // let ratio = score != undefined ? score.perMineDetonated : initialMetaState.score.perMineDetonated;
-    let ratio = initialMetaState.score.perMineDetonated;
+    const ratio = scoreMultiplierForMinesDetonated(score);
     
     return ratio * amount;
+}
+
+export function scoreMultiplierForMinesDetonated(score) {
+    return score != undefined ? score.perMineDetonated : initialMetaState.score.perMineDetonated;
 }
 
 export function getCredits(meta) {

@@ -132,7 +132,7 @@ body {
     text-align: right;
 }
 .scoreTallyPoints {
-    text-align: left;
+    /* text-align: left; */
 }
 .scoreTallyTotal  {
     border-top: 1px solid black;
