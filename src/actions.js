@@ -28,3 +28,8 @@ export const debugToggleFeature = (feature, turnOn) => ({
 export const resetProfile = () => ({
     type: types.RESET_PROFILE,
 });
+
+export const claimCredits = (amount) => ({
+    type: types.CLAIM_CREDITS,
+    payload: { amount }
+});

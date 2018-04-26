@@ -124,19 +124,32 @@ body {
 }
 
 .scoreTally {
+    color: black;
     margin: 20px;
     text-align: center;
     display: inline-block;
 }
+ .scoreTallyClaim button {
+    width: 20em;
+    font-size: 10pt;
+    height: 2em;
+    /* background-color: lightgreen; */
+}
+button:hover {
+    background-color: lightyellow; 
+} 
 .scoreTallyNames {
     text-align: right;
 }
 .scoreTallyPoints {
     /* text-align: left; */
 }
+.scoreTallyClaim  {
+    background-color: lightgreen;    
+}
 .scoreTallyTotal  {
     border-top: 1px solid black;
-    color: white;
+    color: black;
     text-transform: uppercase;
-    background-color: indigo;
+    background-color: lightgrey;
 }

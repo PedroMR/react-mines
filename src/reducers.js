@@ -98,6 +98,7 @@ function checkGameOver(newState) {
     if (newState.gameOver !== true && tilesRemaining(newState) <= 0) {
         // calculateScore(newState);
         newState.gameOver = true;
+        newState.claimedRewards = false;
     }
     return newState;
 }
@@ -160,6 +161,9 @@ function gameReducer(state = initialGameState, action) {
             const options = newVersionOf(state.options, {uiMode: payload.mode});
             return newVersionOf(state, {options});
 
+        case types.CLAIM_CREDITS:
+            return newVersionOf(state, {claimedRewards: true});
+
         case types.RESET_PROFILE:
             return initialGameState;
 
@@ -181,6 +185,9 @@ function metaReducer(state = initialMetaState, action) {
 
         case types.RESET_PROFILE:
             return initialMetaState;
+
+        case types.CLAIM_CREDITS:
+            return tools.addCredits(state, action.payload.amount);
 
         default:
             return state;
