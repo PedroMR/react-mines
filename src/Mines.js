@@ -1,15 +1,15 @@
 import React from 'react';
-import "./mines.css";
+// import "./mines.css";
 import { connect } from 'react-redux';
 import Board from "./Board";
-import DebugMenu from "./DebugMenu";
+// import DebugMenu from "./DebugMenu";
 import Status from "./Status";
 import ControlPanel from "./ControlPanel";
-import { resetProfile, startNewGame, setUiMode, debugToggleFeature } from './actions';
+import { startNewGame, setUiMode } from './actions';
 import * as types from './types';
-import * as tools from './Tools';
+// import * as tools from './Tools';
 
-class Game extends React.Component {
+class Mines extends React.Component {
     constructor(props) {
         super(props);
 
@@ -52,37 +52,27 @@ class Game extends React.Component {
     createNewGame(config) {
         this.props.dispatch(startNewGame(config));
     }
+
+    renderCurrentScreen() {
+        if (true) {
+            
+        }
+        return null;
+    }
     
     render() {
-        return <div onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}
-            ><h1>REACT Minesweeper</h1>
-            <Version/>
-            <MetaInfo meta={this.props.meta}/>
-            <Status />
-            <Board />
-             <ControlPanel
-             options={this.props.options}
-             config={this.props.config}
-             onNewGame={(c) => this.createNewGame(c)}
-             onToggleFlag={() => this.onToggleFlag()}
-             features={this.props.meta.features}
-              />
-              <DebugMenu 
-                handleResetProfile={() => this.handleResetProfile()}
+        return <div  onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}>
+                <Status />
+                <Board />
+                <ControlPanel
+                options={this.props.options}
+                config={this.props.config}
+                onNewGame={(c) => this.createNewGame(c)}
+                onToggleFlag={() => this.onToggleFlag()}
+                features={this.props.meta.features}
                 />
             </div>;
     }
-}
-
-function Version(props) {
-    return <div className="version">v0.0.1</div>;
-}
-
-function MetaInfo(props) {
-    const credits = tools.getCredits(props.meta);
-    const creditString = (credits <= 0) ? '\u00A0' : credits+" Credits";
-
-    return <span className='creditDisplay'>{creditString}</span>;
 }
 
 function mapStateToProps(state) {
@@ -94,4 +84,4 @@ function mapStateToProps(state) {
     return retVal;
 }
 
-export default connect(mapStateToProps)(Game);
+export default connect(mapStateToProps)(Mines);

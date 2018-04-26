@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 //import './index.css';
 //import App from './App';
 import './mines.css';
-import Game from './Mines';
+import Main from './Main';
 import registerServiceWorker from './registerServiceWorker';
 import { compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -27,5 +27,5 @@ const rehydratedReducer = compose(
 
 const store = createStore(rehydratedReducer, enhancer);
 
-ReactDOM.render(<Provider store={store}><Game /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><Main /></Provider>, document.getElementById('root'));
 registerServiceWorker();
