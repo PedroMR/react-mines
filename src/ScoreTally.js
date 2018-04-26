@@ -2,7 +2,7 @@ import React from 'react';
 import "./mines.css";
 import { connect } from 'react-redux';
 import * as tools from './Tools';
-import {claimCredits}  from './actions';
+import {claimCredits, gotoMainMenu}  from './actions';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {
@@ -33,8 +33,10 @@ class ScoreTally extends React.PureComponent {
     }
 
     claimCredits() {
-        if (this.state.totalScore > 0)
+        if (this.state.totalScore > 0 && !this.props.claimedRewards) {
             this.props.dispatch(claimCredits(this.state.totalScore));
+        }
+        this.props.dispatch(gotoMainMenu());
     }
 
     render() {

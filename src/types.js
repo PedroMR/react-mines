@@ -9,6 +9,7 @@ export const DEBUG_TOGGLE_FEATURE = "debug.toggleFeature";
 export const DEBUG_ADD_CREDITS = "debug.addCredits";
 
 export const RESET_PROFILE = "config.resetProfile";
+export const GOTO_MAINMENU = "ui.goto.main";
 
 export const CLAIM_CREDITS = "claimCredits";
 

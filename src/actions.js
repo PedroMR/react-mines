@@ -38,3 +38,7 @@ export const claimCredits = (amount) => ({
     type: types.CLAIM_CREDITS,
     payload: { amount }
 });
+
+export const gotoMainMenu = () => ({
+    type: types.GOTO_MAINMENU,
+});

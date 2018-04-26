@@ -137,7 +137,7 @@ div.scoreTally {
     animation-delay: 5s;
 }
 
-.scoreTally {
+table.scoreTally {
     color: black;
     margin: 20px;
     text-align: center;
