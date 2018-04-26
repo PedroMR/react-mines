@@ -1,13 +1,10 @@
 import React from 'react';
-// import "./mines.css";
 import { connect } from 'react-redux';
 import Board from "./Board";
-// import DebugMenu from "./DebugMenu";
 import Status from "./Status";
 import ControlPanel from "./ControlPanel";
-import { startNewGame, setUiMode } from './actions';
-import * as types from './types';
-// import * as tools from './Tools';
+import { startNewGame, setUiMode } from './MinesActions';
+import * as types from '../types';
 
 class Mines extends React.Component {
     constructor(props) {

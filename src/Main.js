@@ -1,7 +1,7 @@
 import React from 'react';
 import "./mines.css";
 import { connect } from 'react-redux';
-import Mines from "./Mines";
+import Mines from "./mines/Mines";
 import DebugMenu from "./DebugMenu";
 import * as types from './types';
 import * as tools from './Tools';

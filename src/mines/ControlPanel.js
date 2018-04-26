@@ -1,5 +1,5 @@
 import React from 'react';
-import * as types from './types';
+import * as types from '../types';
 
 function NumericInput(defaultValue, handleChanged) {
     console.log("Making num input val "+defaultValue);

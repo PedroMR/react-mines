@@ -1,8 +1,7 @@
 import React from 'react';
-import "./mines.css";
 import { connect } from 'react-redux';
-import { flagTile, revealTile } from './actions';
-import * as types from './types';
+import { flagTile, revealTile } from './MinesActions';
+import * as types from '../types';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");

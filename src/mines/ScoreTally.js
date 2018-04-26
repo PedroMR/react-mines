@@ -1,8 +1,7 @@
 import React from 'react';
-import "./mines.css";
 import { connect } from 'react-redux';
-import * as tools from './Tools';
-import {claimCredits, gotoMainMenu}  from './actions';
+import * as tools from '../Tools';
+import {claimCredits, gotoMainMenu}  from '../actions';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {

@@ -1,7 +1,6 @@
 import React from 'react';
-import "./mines.css";
 import { connect } from 'react-redux';
-import * as tools from './Tools';
+import * as tools from '../Tools';
 import ScoreTally from './ScoreTally';
 
 class Status extends React.PureComponent {
