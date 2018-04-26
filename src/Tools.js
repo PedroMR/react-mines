@@ -43,3 +43,11 @@ export function addCredits(meta, amount) {
 
     return {...meta, wallet};
 }
+
+export function newVersionOf(obj, newProps) {
+    return Object.assign({}, obj, newProps);
+}
+
+export function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
