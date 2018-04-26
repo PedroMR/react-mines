@@ -18,6 +18,7 @@ const storage = adapter(window.localStorage);
 
 const enhancer = compose(
     persistState(storage, 'mines'),
+    window.devToolsExtension ? window.devToolsExtension() : f => f,
 )
 
 const rehydratedReducer = compose(

@@ -18,10 +18,10 @@ function ScoreArea(props) {
         const amount = item.param[0];
         const ratio = item.mult(props.score);
 
-        return <tr><td className="scoreTallyNames">{item.name}</td><td>{ratio}</td><td>x{amount}</td><td className="scoreTallyPoints">{pointsWorth}</td></tr>;
+        return <tr key={item.name}><td className="scoreTallyNames">{item.name}</td><td>{ratio}</td><td>x{amount}</td><td className="scoreTallyPoints">{pointsWorth}</td></tr>;
     })
 
-    return <table className="scoreTally"><thead><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></thead><tbody>
+    return <table className="scoreTally"><thead></thead><tbody><tr><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></tr>
                 {scoreRows}
                 <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{totalScore}</td></tr>
                 </tbody>
