@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import * as types from './types';
-
+import * as tools from './Tools';
 
 /* config layoutL:
  * state.
@@ -95,10 +95,31 @@ function flagsRemaining(state) {
 }
 
 function checkGameOver(newState) {
-    if (tilesRemaining(newState) <= 0) {
+    if (newState.gameOver !== true && tilesRemaining(newState) <= 0) {
+        // calculateScore(newState);
         newState.gameOver = true;
     }
     return newState;
+}
+
+/**
+ * 
+ * @param {*} state -- will be mutated
+ */
+function calculateScore(state) {
+    const countDefined = (acc,val) => (val ? acc+1 : acc);
+
+    let results = {};
+    state.results = results;
+    const nMines = state.mines.reduce(countDefined, 0);
+    const nMinesVisible = state.mines.reduce((acc, val, index) => (val && state.seen[index]) ? acc+1 : acc, 0);
+    results.nMinesFound = nMines - nMinesVisible;
+    results.nMinesDetonated = nMinesVisible;
+    results.totalScore = tools.totalScoreFor(state.meta.score, results);
+    console.log("tot score " + results.totalScore);
+    tools.addCredits(state.meta, results.totalScore);
+
+    return state;
 }
 
 const reducer = combineReducers({
