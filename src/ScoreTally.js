@@ -33,7 +33,8 @@ class ScoreTally extends React.PureComponent {
     }
 
     claimCredits() {
-        this.props.dispatch(claimCredits(this.state.totalScore));
+        if (this.state.totalScore > 0)
+            this.props.dispatch(claimCredits(this.state.totalScore));
     }
 
     render() {
@@ -41,12 +42,13 @@ class ScoreTally extends React.PureComponent {
         const claimButtonTitle = this.state.totalScore > 0 ? "Claim Credits" : "Move On";
         const claimButton = <button name="claim" disabled={this.props.claimedRewards} onClick={this.claimCredits}>{claimButtonTitle}</button>;
 
-        return <table className="scoreTally"><thead></thead><tbody><tr><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></tr>
+        return <div className="scoreTally"><table className="scoreTally"><thead></thead><tbody>
+            {/* <tr><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></tr> */}
                     {this.state.scoreRows}
-                    <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{this.state.totalScore}</td></tr>
+                    <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">${this.state.totalScore}</td></tr>
                     <tr><td colSpan='4' className="scoreTallyClaim">{claimButton}</td></tr>
                     </tbody>
-                </table>;
+                </table></div>;
     }
 }
 

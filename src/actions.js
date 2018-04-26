@@ -25,6 +25,11 @@ export const debugToggleFeature = (feature, turnOn) => ({
     payload: { feature, turnOn }
 });
 
+export const debugAddCredits = (amount) => ({
+    type: types.DEBUG_ADD_CREDITS,
+    payload: { amount }
+});
+
 export const resetProfile = () => ({
     type: types.RESET_PROFILE,
 });

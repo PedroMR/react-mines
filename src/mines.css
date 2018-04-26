@@ -107,6 +107,11 @@ body {
     left: 5px;
     font-family: 'Times New Roman', Times, serif;
 }
+.debugMenu button {
+    float: left;
+    clear: both;
+    width: 8em;
+}
 .version {
     position: absolute;
     top: 0px;
@@ -123,11 +128,21 @@ body {
     border: 1px solid darkgray;
 }
 
+div.scoreTally {
+    -webkit-transition: max-height 2s ease;
+    -moz-transition: max-height 2s ease;
+    transition: max-height 2s ease;
+    max-height: 300px;
+    overflow: hidden;
+    animation-delay: 5s;
+}
+
 .scoreTally {
     color: black;
     margin: 20px;
     text-align: center;
     display: inline-block;
+    overflow: hidden;
 }
  .scoreTallyClaim button {
     width: 20em;

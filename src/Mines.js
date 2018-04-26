@@ -2,6 +2,7 @@ import React from 'react';
 import "./mines.css";
 import { connect } from 'react-redux';
 import Board from "./Board";
+import DebugMenu from "./DebugMenu";
 import Status from "./Status";
 import ControlPanel from "./ControlPanel";
 import { resetProfile, startNewGame, setUiMode, debugToggleFeature } from './actions';
@@ -52,11 +53,6 @@ class Game extends React.Component {
         this.props.dispatch(startNewGame(config));
     }
     
-    handleResetProfile() {
-        this.props.dispatch(resetProfile());
-        this.forceUpdate();
-    }
-
     render() {
         return <div onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}
             ><h1>REACT Minesweeper</h1>
@@ -72,8 +68,6 @@ class Game extends React.Component {
              features={this.props.meta.features}
               />
               <DebugMenu 
-                toggleFeature={(feature, turnOn) => { this.props.dispatch(debugToggleFeature(feature, turnOn)); }}
-                features={this.props.meta.features}
                 handleResetProfile={() => this.handleResetProfile()}
                 />
             </div>;
@@ -86,29 +80,9 @@ function Version(props) {
 
 function MetaInfo(props) {
     const credits = tools.getCredits(props.meta);
-    if (credits <= 0) return null;
-    return credits+" Credits";
-}
+    const creditString = (credits <= 0) ? '\u00A0' : credits+" Credits";
 
-class DebugMenu extends React.PureComponent {
-    constructor (props) {
-        super(props);
-        this.state = {shown: true};
-    }
-    render() {
-        const shown = this.state.shown;
-
-        const featureList = [ types.FEATURE_EXPAND, types.FEATURE_ZERO_OUT, types.FEATURE_CUSTOM_MODE, types.FEATURE_PRESET_SELECTION ];
-        const featureButtons = featureList.map( (ft) => {
-            return <label key={ft}>
-                <input type="checkbox" checked={this.props.features[ft]?true:false} name={ft} onChange={(e) => { this.props.toggleFeature(ft); }}/>{ft}<br/></label>;
-        });
-        const resetButton = <button name="Reset" key="reset" onClick={this.props.handleResetProfile}>Reset Profile</button>;
-        const allButtons = featureButtons.concat(resetButton);
-        return <div className="debugMenu">
-            <a onClick={() => { this.setState(...this.state, {shown: !shown})}}><b>&nbsp;*&nbsp;Debug Menu</b></a>
-            <br/>{shown ? allButtons : null}</div>
-    }
+    return <span className='creditDisplay'>{creditString}</span>;
 }
 
 function mapStateToProps(state) {

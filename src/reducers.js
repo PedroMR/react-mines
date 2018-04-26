@@ -186,6 +186,7 @@ function metaReducer(state = initialMetaState, action) {
         case types.RESET_PROFILE:
             return initialMetaState;
 
+        case types.DEBUG_ADD_CREDITS:
         case types.CLAIM_CREDITS:
             return tools.addCredits(state, action.payload.amount);
 
