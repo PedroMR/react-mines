@@ -36,7 +36,7 @@ export function getCredits(meta) {
 }
 
 export function addCredits(meta, amount) {
-    let wallet = meta.wallet;
+    let wallet = {...meta.wallet};
     if (!meta.wallet) wallet = {credits: 0};
     if (!wallet.credits) wallet.credits = 0;
     wallet.credits += amount;
