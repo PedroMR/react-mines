@@ -5,6 +5,8 @@ import * as types from '../types';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
+    if (props.completelyOkay) className += " square-okay";
+    if (props.completelySurrounded) className += " square-surrounded";
     if (props.gameOver) className = "square square-mode-over";
     if (props.mine) className += " square-mine";
     else if (props.flag) className += " square-flag square-unseen" + (props.placingFlag ? "-flagging" : "");
@@ -21,11 +23,15 @@ class Board extends React.Component {
         const flag = this.props.flags[pos];        
         let value = seen ? (mine ? "*" : around) : "";
         if (value === 0) value = "";
+
+        const okay = this.props.features[types.FEATURE_COLOR_NUMBERS] && around === this.countFlagsAndVisibleMinesAround(x, y);
+
         return <Square key={x+","+y} 
              onClick={() => this.handleClick(x, y, pos, seen, around, flag, mine)}
             placingFlag={this.isPlacingFlag()}
             mine={mine}
             seen={seen}
+            completelyOkay={okay}
             gameOver={this.props.gameOver}
             around={around}
             flag={flag}

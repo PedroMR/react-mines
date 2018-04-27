@@ -23,7 +23,8 @@ export const SCREEN_PLAY_MINES = "screen-play-mines";
 export const SCREEN_CREATE_MINES = "screen-create-mines";
 
 // Feature flags
-export const FEATURE_EXPAND = "feature-expand";
-export const FEATURE_ZERO_OUT = "feature-zeroOut";
-export const FEATURE_PRESET_SELECTION = "feature-presets";
-export const FEATURE_CUSTOM_MODE = "feature-custom";
+export const FEATURE_EXPAND = "mines-feature-expand";
+export const FEATURE_ZERO_OUT = "mines-feature-zeroOut";
+export const FEATURE_PRESET_SELECTION = "mines-feature-presets";
+export const FEATURE_CUSTOM_MODE = "mines-feature-custom";
+export const FEATURE_COLOR_NUMBERS = "mines-feature-color-numbers";
