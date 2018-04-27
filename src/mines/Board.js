@@ -24,7 +24,10 @@ class Board extends React.Component {
         let value = seen ? (mine ? "*" : around) : "";
         if (value === 0) value = "";
 
-        const okay = this.props.features[types.FEATURE_COLOR_NUMBERS] && around === this.countFlagsAndVisibleMinesAround(x, y);
+        const features = this.props.features;
+
+        const resolved = this.countNeighbors(x, y, (pos) => !this.props.seen[pos] && !this.props.flags[pos]) === 0;
+        const okay = (!resolved || !features[types.FEATURE_DONT_COLOR_DONE]) && features[types.FEATURE_COLOR_NUMBERS] && around === this.countFlagsAndVisibleMinesAround(x, y);
 
         return <Square key={x+","+y} 
              onClick={() => this.handleClick(x, y, pos, seen, around, flag, mine)}
@@ -36,6 +39,26 @@ class Board extends React.Component {
             around={around}
             flag={flag}
             value={value}/>
+    }
+
+    countNeighbors(x, y, fn) {
+        let n = 0;
+        let cols = this.props.config.x;
+        let rows = this.props.config.y;
+
+        for (let dy=-1; dy <= 1; dy++) {
+            if (y + dy < 0 || y + dy >= rows) continue;
+            for (let dx=-1; dx <= 1; dx++) {
+                if (x + dx < 0 || x + dx >= cols) continue;                        
+                if (dx === dy && dx === 0) continue;
+
+                let neighborPos =  x + dx + (y+dy)*cols;
+                if (fn(neighborPos, x+dx, y+dy))
+                    n++;
+            }
+        }
+
+        return n;
     }
 
     isPlacingFlag() {

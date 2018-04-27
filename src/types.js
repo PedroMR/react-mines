@@ -28,3 +28,4 @@ export const FEATURE_ZERO_OUT = "mines-feature-zeroOut";
 export const FEATURE_PRESET_SELECTION = "mines-feature-presets";
 export const FEATURE_CUSTOM_MODE = "mines-feature-custom";
 export const FEATURE_COLOR_NUMBERS = "mines-feature-color-numbers";
+export const FEATURE_DONT_COLOR_DONE = "mines-feature-dont-color-done";
