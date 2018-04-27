@@ -1,5 +1,5 @@
 import * as types from './types';
-import { initialMetaState } from './reducers';
+import { initialMetaState } from './meta/MetaReducer';
 
 export function scoreForMinesFound(score, amount) {
     console.log('found',score, initialMetaState);

@@ -1,7 +1,6 @@
 import {combineReducers} from 'redux';
-import * as types from './types';
-import * as tools from './Tools';
-import {initialGameState, gameReducer} from './mines/MinesReducer';
+import gameReducer from './mines/MinesReducer';
+import metaReducer from './meta/MetaReducer';
 
 /* config layoutL:
  * state.
@@ -21,42 +20,12 @@ import {initialGameState, gameReducer} from './mines/MinesReducer';
  */
 
 
-export const initialMetaState = {
-    features: { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
-    score: {
-        perMineFound: 5,
-        perMineDetonated: -10,
-    },
-};
-
 const reducer = combineReducers({
     meta: metaReducer,
     game: gameReducer
 });
 
 
-function metaReducer(state = initialMetaState, action) {
-    const payload = action.payload;
-    switch (action.type) {
-
-        case types.DEBUG_TOGGLE_FEATURE:
-            const feature = payload.feature;
-            const turnOn = payload.turnOn === undefined ? !state.features[feature] : payload.turnOn;
-            const features = tools.newVersionOf(state.features, {[feature]: turnOn});
-            console.log(feature, features, state);
-            return tools.newVersionOf(state, {features});
-
-        case types.RESET_PROFILE:
-            return initialMetaState;
-
-        case types.DEBUG_ADD_CREDITS:
-        case types.CLAIM_CREDITS:
-            return tools.addCredits(state, action.payload.amount);
-
-        default:
-            return state;
-    }
-}
 
 
 export default reducer;

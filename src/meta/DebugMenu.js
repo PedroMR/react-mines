@@ -1,6 +1,6 @@
 import React from 'react';
-import { resetProfile, debugAddCredits, debugToggleFeature } from './actions';
-import * as types from './types';
+import { resetProfile, debugAddCredits, debugToggleFeature } from './MetaActions';
+import * as types from '../types';
 import { connect } from 'react-redux';
 
 class DebugMenu extends React.PureComponent {
