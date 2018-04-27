@@ -1,5 +1,6 @@
 # TODO
 
+- [ ] BUG: Initializing preset mode should change config to be beginner if it was custom (or leave custom if that's available)
 - [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
 - [ ] Purchasing menu for features
 - [ ] Sounds

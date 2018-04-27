@@ -27,10 +27,19 @@ class ScreenCreateMines extends React.Component {
                 {x: 10, y: 6, mines: 8, name: "Beginner"},
                 {x: 20, y: 15, mines: 60, name: "Advanced"},
                 {x: 11, y: 16, mines: 45, name: "Mobile"},
-                {name: "Custom"},
             ],
         }
-        this.state.customPresetIndex = this.state.presets.length-1;
+
+        if (this.props.features[types.FEATURE_CUSTOM_MODE]) {
+            this.state.presets.push({name: "Custom"});
+            this.state.customPresetIndex = this.state.presets.length-1;
+            this.state.currentPreset = this.state.customPresetIndex;
+        } else if (this.props.features[types.FEATURE_PRESET_SELECTION]) {
+            this.state.newGameConfig = {...this.state.presets[this.state.currentPreset]};
+        }
+
+        this.state.presets.forEach((preset, index) => { if (this.configMatches(preset)) this.state.currentPreset = index;})
+
 
         this.handleXChanged = this.handleXChanged.bind(this);
         this.handleYChanged = this.handleYChanged.bind(this);
@@ -41,6 +50,10 @@ class ScreenCreateMines extends React.Component {
             // why stay here?
             this.props.dispatch(startNewGame(this.state.presets[0]));
         }
+    }
+
+    configMatches(preset) {
+        return (this.x === preset.x && this.y === preset.y && this.mines === preset.mines);
     }
 
     handleXChanged(val) {

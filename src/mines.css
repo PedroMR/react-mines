@@ -126,6 +126,7 @@ body {
     margin: 0px;
     padding: 8px;
     border: 1px solid darkgray;
+    opacity: 1;
 }
 
 div.scoreTally {
@@ -135,14 +136,21 @@ div.scoreTally {
     max-height: 300px;
     overflow: hidden;
     animation-delay: 5s;
+    z-index: 2;
+    position: absolute;
+    background-color: white;
+    opacity: 0.9;
+    left: 10%;
+    right: 10%;
 }
 
 table.scoreTally {
+    opacity: 1;
     color: black;
-    margin: 20px;
     text-align: center;
     display: inline-block;
     overflow: hidden;
+    border: 2px solid white;
 }
  .scoreTallyClaim button {
     width: 20em;
