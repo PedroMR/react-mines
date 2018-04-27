@@ -42,7 +42,6 @@ class Main extends React.Component {
 }
 
 function Version(props) {
-    console.log("p", packageJson);
     return <div className="version">{packageJson.version}</div>;
 }
 
@@ -54,7 +53,6 @@ function MetaInfo(props) {
 }
 
 function mapStateToProps(state) {
-    console.log(state);
     const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state.game[name]});

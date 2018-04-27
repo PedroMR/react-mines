@@ -8,7 +8,7 @@ export function scoreForMinesFound(score, amount) {
 }
 
 export function scoreMultiplierForMinesFound(score) {
-    if (score == undefined || score.perMineFound == undefined) return initialMetaState.score.perMineFound;
+    if (score === undefined || score.perMineFound === undefined) return initialMetaState.score.perMineFound;
     else return score.perMineFound;
 }
 
@@ -19,7 +19,7 @@ export function scoreForMinesDetonated(score, amount) {
 }
 
 export function scoreMultiplierForMinesDetonated(score) {
-    if (score == undefined || score.perMineDetonated == undefined) return initialMetaState.score.perMineDetonated;
+    if (score === undefined || score.perMineDetonated === undefined) return initialMetaState.score.perMineDetonated;
     else return score.perMineDetonated;
 }
 

@@ -1,3 +1,4 @@
+import * as dotProp from 'dot-prop-immutable'
 import * as types from '../types';
 import * as tools from '../Tools';
 
@@ -35,10 +36,10 @@ export function metaReducer(state = initialMetaState, action) {
 
         case types.DEBUG_TOGGLE_FEATURE:
             const feature = payload.feature;
-            const turnOn = payload.turnOn === undefined ? !state.features[feature] : payload.turnOn;
-            const features = tools.newVersionOf(state.features, {[feature]: turnOn});
-            console.log(feature, features, state);
-            return tools.newVersionOf(state, {features});
+            const dotPath = "features."+feature;
+
+            const turnOn = payload.turnOn === undefined ? !dotProp.get(state, dotPath) : payload.turnOn;
+            return dotProp.set(state, dotPath, turnOn);
 
         case types.RESET_PROFILE:
             return initialMetaState;

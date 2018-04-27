@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://pedromr.github.io/react-mines",
   "dependencies": {
+    "dot-prop-immutable": "^1.4.0",
     "npm": "^5.8.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
