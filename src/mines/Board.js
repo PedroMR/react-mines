@@ -90,46 +90,19 @@ class Board extends React.Component {
     }
 
     countFlagsAndVisibleMinesAround(x, y) {
-        let n = 0;
-        let cols = this.props.config.x;
-        let rows = this.props.config.y;
-
-        for (let dy=-1; dy <= 1; dy++) {
-            if (y + dy < 0 || y + dy >= rows) continue;
-            for (let dx=-1; dx <= 1; dx++) {
-                if (x + dx < 0 || x + dx >= cols) continue;                        
-                if (dx === dy && dx === 0) continue;
-
-                let neighborPos =  x + dx + (y+dy)*cols;
-                if (this.props.flags[neighborPos])
-                    n++; // count flag
-                else if (this.props.mines[neighborPos] && this.props.seen[neighborPos])
-                    n++; // count visible mine
-            }
-        }
-
-        return n;
+        return this.countNeighbors(x, y, (pos) => (this.props.flags[pos] || (this.props.mines[pos] && this.props.seen[pos])));
     }
 
     expandAround(x, y, queued = []) {
-        let cols = this.props.config.x;
-        let rows = this.props.config.y;
-
-        for (let dy=-1; dy <= 1; dy++) {
-            if (y + dy < 0 || y + dy >= rows) continue;
-            for (let dx=-1; dx <= 1; dx++) {
-                if (x + dx < 0 || x + dx >= cols) continue;                        
-                if (dx === dy && dx === 0) continue;
-                let neighborPos =  x + dx + (y+dy)*cols;
-                if (!this.props.flags[neighborPos] && !this.props.seen[neighborPos] && !queued[neighborPos]) {
-                    queued[neighborPos] = true;
-                    this.props.dispatch(revealTile(x+dx, y+dy));
-                    if (this.hasFeature(types.FEATURE_ZERO_OUT) && this.props.around[neighborPos] === 0) {
-                        this.expandAround(x+dx,y+dy, queued);
-                    }
+        return this.countNeighbors(x, y, (pos, nx, ny) => {
+            if (!this.props.flags[pos] && !this.props.seen[pos] && !queued[pos]) {
+                queued[pos] = true;
+                this.props.dispatch(revealTile(nx, ny));
+                if (this.hasFeature(types.FEATURE_ZERO_OUT) && this.props.around[pos] === 0) {
+                    this.expandAround(nx,ny, queued);
                 }
             }
-        }
+        });
     }
 
     render() {
