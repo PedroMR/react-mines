@@ -9,13 +9,17 @@ export const DEBUG_TOGGLE_FEATURE = "debug.toggleFeature";
 export const DEBUG_ADD_CREDITS = "debug.addCredits";
 
 export const RESET_PROFILE = "config.resetProfile";
-export const GOTO_MAINMENU = "ui.goto.main";
+export const CHANGE_SCREEN = "ui.goto";
 
 export const CLAIM_CREDITS = "claimCredits";
 
 // UI Modes
 export const UI_MODE_FLAG = "ui.mode.flag";
 export const UI_MODE_REVEAL = "ui.mode.reveal";
+
+// Screens
+export const SCREEN_MAIN = "screen.main";
+export const SCREEN_MINES = "screen.mines";
 
 // Feature flags
 export const FEATURE_EXPAND = "feature.expand";

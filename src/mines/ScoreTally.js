@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as tools from '../Tools';
-import {claimCredits, gotoMainMenu}  from '../meta/MetaActions';
+import * as types from '../types';
+import {claimCredits, changeScreen}  from '../meta/MetaActions';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {
@@ -35,7 +36,7 @@ class ScoreTally extends React.PureComponent {
         if (this.state.totalScore > 0 && !this.props.claimedRewards) {
             this.props.dispatch(claimCredits(this.state.totalScore));
         }
-        this.props.dispatch(gotoMainMenu());
+        this.props.dispatch(changeScreen(types.SCREEN_MAIN));
     }
 
     render() {

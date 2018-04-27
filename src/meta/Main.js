@@ -2,28 +2,47 @@ import React from 'react';
 import "../mines.css";
 import { connect } from 'react-redux';
 import Mines from "../mines/Mines";
+import ScreenMainMenu from "./ScreenMainMenu";
 import DebugMenu from "./DebugMenu";
+import * as types from '../types';
 import * as tools from '../Tools';
 import { startNewGame } from '../mines/MinesActions';
+import packageJson from '../package.alias.json';
 
 class Main extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     createNewGame(config) {
         this.props.dispatch(startNewGame(config));
     }
-    
+
+    renderCurrentScreen() {
+        switch(this.props.meta.screen) {
+            case types.SCREEN_MAIN:
+                return <ScreenMainMenu/>;
+            case types.SCREEN_MINES:
+                return <Mines/>;
+            default:
+                return <p>Uh-oh</p>;
+        }
+    }
+
     render() {
         return <div
-            ><h1>REACT Minesweeper</h1>
+            ><h1>Mine Game</h1>
             <Version/>
             <MetaInfo meta={this.props.meta}/>
-            <Mines /> 
+            {this.renderCurrentScreen()} 
             <DebugMenu />
             </div>;
     }
 }
 
 function Version(props) {
-    return <div className="version">v0.0.1</div>;
+    console.log("p", packageJson);
+    return <div className="version">{packageJson.version}</div>;
 }
 
 function MetaInfo(props) {

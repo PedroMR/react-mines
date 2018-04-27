@@ -20,6 +20,7 @@ import * as tools from '../Tools';
 
 
 export const initialMetaState = {
+    screen: types.SCREEN_MAIN,
     features: { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
     score: {
         perMineFound: 5,
@@ -41,6 +42,9 @@ export function metaReducer(state = initialMetaState, action) {
 
         case types.RESET_PROFILE:
             return initialMetaState;
+
+        case types.CHANGE_SCREEN:
+            return tools.newVersionOf(state, {screen: payload.screen});
 
         case types.DEBUG_ADD_CREDITS:
         case types.CLAIM_CREDITS:

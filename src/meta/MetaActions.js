@@ -19,6 +19,7 @@ export const claimCredits = (amount) => ({
     payload: { amount }
 });
 
-export const gotoMainMenu = () => ({
-    type: types.GOTO_MAINMENU,
+export const changeScreen = ( screen ) => ({
+    type: types.CHANGE_SCREEN,
+    payload: { screen }
 });
