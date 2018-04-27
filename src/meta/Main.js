@@ -1,5 +1,6 @@
 import React from 'react';
 import "../mines.css";
+import "./meta.css";
 import { connect } from 'react-redux';
 import Mines from "../mines/Mines";
 import ScreenMainMenu from "./ScreenMainMenu";
@@ -49,7 +50,7 @@ function MetaInfo(props) {
     const credits = tools.getCredits(props.meta);
     const creditString = (credits <= 0) ? '\u00A0' : credits+" Credits";
 
-    return <span className='creditDisplay'>{creditString}</span>;
+    return <div className='metaInfo'><span className='creditDisplay'>{creditString}</span></div>;
 }
 
 function mapStateToProps(state) {

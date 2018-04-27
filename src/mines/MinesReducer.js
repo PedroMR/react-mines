@@ -10,6 +10,8 @@ const initialConfig = {
 export const initialGameState = createGameState(initialConfig);
 
 function createGameState(config) {
+    if (!config) config = initialConfig;
+    
     let cols = config.x;
     let rows = config.y;
     config.mines = Math.min(config.mines, cols * rows);
