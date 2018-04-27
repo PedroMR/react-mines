@@ -53,6 +53,9 @@ body {
 .square-okay {
     color: green;
 }
+.square-resolved {
+    color: lightgrey;
+}
 .square-surrounded {
     color: red;    
 }

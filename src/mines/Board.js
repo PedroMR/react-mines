@@ -5,8 +5,11 @@ import * as types from '../types';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
-    if (props.completelyOkay) className += " square-okay";
-    if (props.completelySurrounded) className += " square-surrounded";
+    if (!props.mine) {
+        if (props.completelyOkay) className += " square-okay";
+        else if (props.completelySurrounded) className += " square-surrounded";
+        else if (props.resolved) className += " square-resolved";
+    }
     if (props.gameOver) className = "square square-mode-over";
     if (props.mine) className += " square-mine";
     else if (props.flag) className += " square-flag square-unseen" + (props.placingFlag ? "-flagging" : "");
@@ -26,15 +29,21 @@ class Board extends React.Component {
 
         const features = this.props.features;
 
+        const flagsAndMinesAround = this.countFlagsAndVisibleMinesAround(x, y);
         const resolved = this.countNeighbors(x, y, (pos) => !this.props.seen[pos] && !this.props.flags[pos]) === 0;
-        const okay = (!resolved || !features[types.FEATURE_DONT_COLOR_DONE]) && features[types.FEATURE_COLOR_NUMBERS] && around === this.countFlagsAndVisibleMinesAround(x, y);
+        const okay = (!resolved || !features[types.FEATURE_DONT_COLOR_DONE]) && features[types.FEATURE_COLOR_NUMBERS] && around === flagsAndMinesAround;
+        const unseenAround = this.countNeighbors(x, y, (pos) => !this.props.seen[pos] && !this.props.flags[pos]);
+        const surrounded = (!resolved || !features[types.FEATURE_DONT_COLOR_DONE]) && features[types.FEATURE_COLOR_NUMBERS] && (unseenAround + flagsAndMinesAround) === around;
 
+        // value = safeAround;
         return <Square key={x+","+y} 
              onClick={() => this.handleClick(x, y, pos, seen, around, flag, mine)}
             placingFlag={this.isPlacingFlag()}
             mine={mine}
             seen={seen}
+            resolved={resolved && features[types.FEATURE_COLOR_NUMBERS] && features[types.FEATURE_DONT_COLOR_DONE]}
             completelyOkay={okay}
+            completelySurrounded={surrounded}
             gameOver={this.props.gameOver}
             around={around}
             flag={flag}
