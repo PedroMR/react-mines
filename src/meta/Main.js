@@ -4,15 +4,18 @@ import "./meta.css";
 import { connect } from 'react-redux';
 import Mines from "../mines/Mines";
 import ScreenMainMenu from "./ScreenMainMenu";
+import ScreenCreateMines from "./ScreenCreateMines";
 import DebugMenu from "./DebugMenu";
 import * as types from '../types';
 import * as tools from '../Tools';
 import { startNewGame } from '../mines/MinesActions';
 import packageJson from '../package.alias.json';
+import { changeScreen } from './MetaActions';
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
+        this.handleBackButton = this.handleBackButton.bind(this);
     }
 
     createNewGame(config) {
@@ -23,17 +26,29 @@ class Main extends React.Component {
         switch(this.props.meta.screen) {
             case types.SCREEN_MAIN:
                 return <ScreenMainMenu/>;
-            case types.SCREEN_MINES:
+            case types.SCREEN_PLAY_MINES:
                 return <Mines/>;
+            case types.SCREEN_CREATE_MINES:
+                return <ScreenCreateMines config={this.props.config} features={this.props.features}/>;
             default:
                 return <p>Uh-oh</p>;
         }
     }
+    
+    handleBackButton() {
+        this.props.dispatch(changeScreen(types.SCREEN_MAIN));
+    }
+
+    canGoBack() {
+        return this.props.meta.screen !== types.SCREEN_MAIN;
+    }
 
     render() {
+        const backButton = <button className="backButton" onClick={this.handleBackButton}>Back</button>;
         return <div
             ><h1>Mine Game</h1>
             <Version/>
+            {this.canGoBack() ? backButton : null}
             <MetaInfo meta={this.props.meta}/>
             {this.renderCurrentScreen()} 
             <DebugMenu />

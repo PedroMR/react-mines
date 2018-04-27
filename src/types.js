@@ -18,8 +18,9 @@ export const UI_MODE_FLAG = "ui.mode.flag";
 export const UI_MODE_REVEAL = "ui.mode.reveal";
 
 // Screens
-export const SCREEN_MAIN = "screen.main";
-export const SCREEN_MINES = "screen.mines";
+export const SCREEN_MAIN = "screen-main";
+export const SCREEN_PLAY_MINES = "screen-play-mines";
+export const SCREEN_CREATE_MINES = "screen-create-mines";
 
 // Feature flags
 export const FEATURE_EXPAND = "feature-expand";

@@ -47,6 +47,9 @@ export function metaReducer(state = initialMetaState, action) {
         case types.CHANGE_SCREEN:
             return tools.newVersionOf(state, {screen: payload.screen});
 
+        case types.NEW_GAME: //TODO rename this to work for multiple games
+            return dotProp.set( state, 'screen', types.SCREEN_PLAY_MINES);    
+        
         case types.DEBUG_ADD_CREDITS:
         case types.CLAIM_CREDITS:
             return tools.addCredits(state, action.payload.amount);

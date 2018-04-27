@@ -1,6 +1,6 @@
 # TODO
 
-- [ ] Claimable currency from the score tally
+- [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
 - [ ] Purchasing menu for features
 - [ ] Sounds
 - [ ] Narrator text box
@@ -14,3 +14,4 @@
     - (read up on redux first)
 - [X] Feature selector (for evo)
 - [X] Profile system (w/ reset button) for store
+- [X] Claimable currency from the score tally

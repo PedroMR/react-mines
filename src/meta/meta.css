@@ -3,6 +3,10 @@ button {
     font-family:  'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.backButton {
+    float: left;
+}
+
 .mainMenu {
     clear: both;
     padding: 100px;

@@ -9,8 +9,8 @@ import {startNewGame}  from '../mines/MinesActions';
 class ScreenMainMenu extends React.PureComponent {
 
     onPlayMines() {
-        this.props.dispatch(changeScreen(types.SCREEN_MINES));
-        this.props.dispatch(startNewGame());
+        this.props.dispatch(changeScreen(types.SCREEN_CREATE_MINES));
+        // this.props.dispatch(startNewGame());
     }
 
     render() {
