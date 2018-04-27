@@ -25,3 +25,18 @@ test('adding credits does not mutate wallet', ()=> {
     expect(tools.addCredits(baseWallet, amount)).toEqual(baseWalletPlusAmount);
     expect(baseWallet).not.toEqual(baseWalletPlusAmount);
 })
+
+test('scoring a mines game', () => {
+    const results = {nMinesFound: 5, nMinesDetonated: 1};
+    
+    const score1 = undefined;
+    const score2 = {};
+    const score3 = {perMineFound: 5};
+    expect(tools.totalScoreFor(score1, results)).toEqual(15);
+    expect(tools.totalScoreFor(score2, results)).toEqual(15);
+    expect(tools.totalScoreFor(score3, results)).toEqual(15);
+
+    const score4 = {perMineFound: 10};
+    expect(tools.totalScoreFor(score4, results)).toEqual(40);
+
+})
