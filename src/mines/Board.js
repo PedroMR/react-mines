@@ -35,15 +35,21 @@ class Board extends React.Component {
         const unseenAround = this.countNeighbors(x, y, (pos) => !this.props.seen[pos] && !this.props.flags[pos]);
         const surrounded = (!resolved || !features[types.FEATURE_DONT_COLOR_DONE]) && features[types.FEATURE_COLOR_NUMBERS] && (unseenAround + flagsAndMinesAround) === around;
 
+        let error = null;
+
+        if (seen && features[types.FEATURE_ERROR_DETECTION] && around < flagsAndMinesAround) {
+            value += "!";
+            error = true;
+        } 
         // value = safeAround;
         return <Square key={x+","+y} 
              onClick={() => this.handleClick(x, y, pos, seen, around, flag, mine)}
             placingFlag={this.isPlacingFlag()}
             mine={mine}
             seen={seen}
-            resolved={resolved && features[types.FEATURE_COLOR_NUMBERS] && features[types.FEATURE_DONT_COLOR_DONE]}
-            completelyOkay={okay}
-            completelySurrounded={surrounded}
+            resolved={!error && resolved && features[types.FEATURE_COLOR_NUMBERS] && features[types.FEATURE_DONT_COLOR_DONE]}
+            completelyOkay={!error && okay}
+            completelySurrounded={error|| surrounded}
             gameOver={this.props.gameOver}
             around={around}
             flag={flag}

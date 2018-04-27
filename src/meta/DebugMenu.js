@@ -28,6 +28,7 @@ class DebugMenu extends React.PureComponent {
             types.FEATURE_PRESET_SELECTION,
             types.FEATURE_COLOR_NUMBERS,
             types.FEATURE_DONT_COLOR_DONE,
+            types.FEATURE_ERROR_DETECTION,
         ];
         const featureButtons = featureList.map( (ft) => {
             return <label key={ft}>
