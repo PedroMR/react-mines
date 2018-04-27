@@ -1,4 +1,3 @@
-import * as types from './types';
 import { initialMetaState } from './meta/MetaReducer';
 
 export function scoreForMinesFound(score, amount) {
@@ -9,7 +8,7 @@ export function scoreForMinesFound(score, amount) {
 }
 
 export function scoreMultiplierForMinesFound(score) {
-    return score != undefined ? score.perMineFound : initialMetaState.score.perMineFound;
+    return score !== undefined ? score.perMineFound : initialMetaState.score.perMineFound;
 }
 
 export function scoreForMinesDetonated(score, amount) {
@@ -19,13 +18,14 @@ export function scoreForMinesDetonated(score, amount) {
 }
 
 export function scoreMultiplierForMinesDetonated(score) {
-    return score != undefined ? score.perMineDetonated : initialMetaState.score.perMineDetonated;
+    return score !== undefined ? score.perMineDetonated : initialMetaState.score.perMineDetonated;
 }
 
 export function totalScoreFor(score, results) {
     let totalScore = 0;
     totalScore += scoreForMinesFound(score, results.nMinesFound);
     totalScore += scoreForMinesDetonated(score, results.nMinesDetonated);
+    return totalScore;
 }
 
 export function getCredits(meta) {

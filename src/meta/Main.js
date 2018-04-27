@@ -3,15 +3,10 @@ import "../mines.css";
 import { connect } from 'react-redux';
 import Mines from "../mines/Mines";
 import DebugMenu from "./DebugMenu";
-import * as types from '../types';
 import * as tools from '../Tools';
 import { startNewGame } from '../mines/MinesActions';
 
 class Main extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     createNewGame(config) {
         this.props.dispatch(startNewGame(config));
     }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as tools from '../Tools';
 import ScoreTally from './ScoreTally';
 
 class Status extends React.PureComponent {
