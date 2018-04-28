@@ -1,10 +1,8 @@
 import './meta.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import * as tools from '../Tools';
 import * as types from '../types';
 import {changeScreen}  from './MetaActions';
-import {startNewGame}  from '../mines/MinesActions';
 
 class ScreenMainMenu extends React.PureComponent {
 

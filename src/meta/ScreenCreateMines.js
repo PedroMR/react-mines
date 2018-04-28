@@ -2,8 +2,6 @@ import React from 'react';
 import * as types from '../types';
 import { connect } from 'react-redux';
 import { startNewGame } from '../mines/MinesActions';
-import { changeScreen } from './MetaActions';
-import { start } from 'pretty-error';
 import dotProp from 'dot-prop-immutable';
 
 function NumericInput(props) { 
