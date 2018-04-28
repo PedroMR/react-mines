@@ -102,11 +102,16 @@ class ScreenCreateMines extends React.Component {
 
         const presets =  <tbody><tr className="gamePresets"><td colSpan='2'>{radioOptions}</td></tr></tbody>;
         const enableCustomValues = this.props.features[types.FEATURE_CUSTOM_MODE];
-        const customValueSelector = <tbody>
-                    <tr><td>Rows:</td><td><NumericInput propertyName="newGameConfig.y" defaultValue={this.state.newGameConfig.y} onChange={this.handleNumericInputChanged} enabled={enableCustomValues}/></td></tr>
-                    <tr><td>Columns:</td><td><NumericInput propertyName="newGameConfig.x" defaultValue={this.state.newGameConfig.x} onChange={this.handleNumericInputChanged} enabled={enableCustomValues}/></td></tr>
-                    <tr><td>Mines:</td><td><NumericInput propertyName="newGameConfig.mines" defaultValue={this.state.newGameConfig.mines} onChange={this.handleNumericInputChanged} enabled={enableCustomValues}/></td></tr>
-                    </tbody>;
+        const customValueSelector = <tbody>{[
+                {name: "Rows", prop: "y"},
+                {name: "Columns", prop: "x"},
+                {name: "Mines", prop: "mines"},
+            ].map(({name, prop}) => <tr key={prop}><td>{name}:</td><td><NumericInput
+                propertyName={"newGameConfig."+prop}
+                defaultValue={this.state.newGameConfig[prop]}
+                onChange={this.handleNumericInputChanged}
+                enabled={enableCustomValues}/></td></tr>)
+                }</tbody>;
 
         const newGame = 
             <div id="newGameOpt"> 
