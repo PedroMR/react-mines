@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { startNewGame } from '../mines/MinesActions';
 import { changeScreen } from './MetaActions';
 import { start } from 'pretty-error';
+import dotProp from 'dot-prop-immutable';
 
-function NumericInput(defaultValue, handleChanged, enabled) {
-    return <input type="text" className="numInput" disabled={!enabled} value={defaultValue} onChange={(e)=> {
+function NumericInput(dataObject, propertyName, handleChanged, enabled) {
+    const defaultValue = dotProp.get(dataObject, propertyName); 
+    return <input type="text" name={propertyName} className="numInput" disabled={!enabled} value={defaultValue} onChange={(e)=> {
         let val = Math.floor(e.target.value);
         if (!isNaN(val) && val !== undefined) {
-             handleChanged(val);
+             handleChanged(e.target, val);
         }
         e.preventDefault();
      } }/>
@@ -40,10 +42,8 @@ class ScreenCreateMines extends React.Component {
 
         this.state.presets.forEach((preset, index) => { if (this.configMatches(preset)) this.state.currentPreset = index;})
 
-
-        this.handleXChanged = this.handleXChanged.bind(this);
-        this.handleYChanged = this.handleYChanged.bind(this);
-        this.handleMinesChanged = this.handleMinesChanged.bind(this);
+        
+        this.handleNumericInputChanged = this.handleNumericInputChanged.bind(this);
         this.handlePresetChanged = this.handlePresetChanged.bind(this);
 
         if (!this.props.features[types.FEATURE_PRESET_SELECTION] && !this.props.features[types.FEATURE_CUSTOM_MODE]) {
@@ -56,19 +56,11 @@ class ScreenCreateMines extends React.Component {
         return (this.x === preset.x && this.y === preset.y && this.mines === preset.mines);
     }
 
-    handleXChanged(val) {
-        let newGameConfig = Object.assign({}, this.state.newGameConfig, {x: val});
-        this.setState({newGameConfig: newGameConfig, currentPreset: this.state.customPresetIndex});
-    }
-
-    handleYChanged(val) {
-        let newGameConfig = Object.assign({}, this.state.newGameConfig, {y: val});
-        this.setState({newGameConfig: newGameConfig, currentPreset: this.state.customPresetIndex});
-    }
-
-    handleMinesChanged(val) {
-        let newGameConfig = Object.assign({}, this.state.newGameConfig, {mines: val});
-        this.setState({newGameConfig: newGameConfig, currentPreset: this.state.customPresetIndex});
+    handleNumericInputChanged(target, val) {
+        const name = target.name;
+        let newState = dotProp.set(this.state, name, val);
+        newState.currentPreset = newState.customPresetIndex;
+        this.setState(newState);
     }
 
     handlePresetChanged(changeEvent) {
@@ -104,9 +96,9 @@ class ScreenCreateMines extends React.Component {
         const presets =  <tbody><tr className="gamePresets"><td colSpan='2'>{radioOptions}</td></tr></tbody>;
         const enableCustomValues = this.props.features[types.FEATURE_CUSTOM_MODE];
         const customValueSelector = <tbody>
-                    <tr><td>Rows:</td><td>{NumericInput(this.state.newGameConfig.y, this.handleYChanged, enableCustomValues)}</td></tr>
-                    <tr><td>Columns:</td><td>{NumericInput(this.state.newGameConfig.x, this.handleXChanged, enableCustomValues)}</td></tr>
-                    <tr><td>Mines:</td><td>{NumericInput(this.state.newGameConfig.mines, this.handleMinesChanged, enableCustomValues)}</td></tr>
+                    <tr><td>Rows:</td><td>{NumericInput(this.state, "newGameConfig.y", this.handleNumericInputChanged, enableCustomValues)}</td></tr>
+                    <tr><td>Columns:</td><td>{NumericInput(this.state, "newGameConfig.x", this.handleNumericInputChanged, enableCustomValues)}</td></tr>
+                    <tr><td>Mines:</td><td>{NumericInput(this.state, "newGameConfig.mines", this.handleNumericInputChanged, enableCustomValues)}</td></tr>
                     </tbody>;
 
         const newGame = 
