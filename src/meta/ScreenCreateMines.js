@@ -52,7 +52,7 @@ class ScreenCreateMines extends React.Component {
     }
 
     configMatches(preset) {
-        return (this.x === preset.x && this.y === preset.y && this.mines === preset.mines);
+        return (this.state.newGameConfig.x === preset.x && this.state.newGameConfig.y === preset.y && this.state.newGameConfig.mines === preset.mines);
     }
 
     handleNumericInputChanged2(propertyName, val) {

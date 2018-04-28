@@ -40,8 +40,9 @@ class Main extends React.Component {
     }
 
     canGoBack() {
-        return this.props.meta.screen !== types.SCREEN_MAIN &&
-                !this.props.gameOver; // FIXME should be a property set by the game state...???
+        const currentScreen = this.props.meta.screen; 
+        return currentScreen !== types.SCREEN_MAIN &&
+                !(currentScreen === types.SCREEN_PLAY_MINES && this.props.gameOver); // FIXME should be a property set by the game state...???
     }
 
     render() {
