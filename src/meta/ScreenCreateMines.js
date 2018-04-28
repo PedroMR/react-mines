@@ -111,7 +111,7 @@ class ScreenCreateMines extends React.Component {
         const newGame = 
             <div id="newGameOpt"> 
                 <form>
-                New game<br/>
+                <h3>New game</h3>
                 <table><thead></thead>
                     { this.props.features[types.FEATURE_PRESET_SELECTION] ? presets : null }
                     { this.props.features[types.FEATURE_CUSTOM_MODE] ? customValueSelector : null }
