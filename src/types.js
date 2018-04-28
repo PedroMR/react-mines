@@ -30,3 +30,4 @@ export const FEATURE_CUSTOM_MODE = "mines-feature-custom";
 export const FEATURE_COLOR_NUMBERS = "mines-feature-color-numbers";
 export const FEATURE_DONT_COLOR_DONE = "mines-feature-dont-color-done";
 export const FEATURE_ERROR_DETECTION = "mines-feature-error-detection";
+export const FEATURE_CLICK_SURROUNDED = "mines-feature-click-surrounded";

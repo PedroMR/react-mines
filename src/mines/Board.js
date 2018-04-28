@@ -56,6 +56,14 @@ class Board extends React.Component {
             value={value}/>
     }
 
+    isSurrounded(x, y) {
+        const pos = x + y*this.props.config.x;
+        const around = this.props.around[pos];        
+        const flagsAndMinesAround = this.countFlagsAndVisibleMinesAround(x, y);
+        const unseenAround = this.countNeighbors(x, y, (pos) => !this.props.seen[pos] && !this.props.flags[pos]);
+        return (unseenAround + flagsAndMinesAround) === around
+    }
+
     countNeighbors(x, y, fn) {
         let n = 0;
         let cols = this.props.config.x;
@@ -88,6 +96,10 @@ class Board extends React.Component {
         if (seen) {
             if (mine) return;
 
+            if (this.hasFeature(types.FEATURE_CLICK_SURROUNDED) && this.isSurrounded(x, y)) {
+                this.flagAllTilesAround(x, y);
+            }
+
             if (this.hasFeature(types.FEATURE_EXPAND) && around === this.countFlagsAndVisibleMinesAround(x, y)) {
                 this.expandAround(x, y);                
             }
@@ -103,6 +115,15 @@ class Board extends React.Component {
             }
         }
     }
+
+    flagAllTilesAround(x, y) {
+        this.countNeighbors(x, y, (npos,nx,ny) => {
+            if (!this.props.seen[npos] && !this.props.flags[npos]) {
+                this.props.dispatch(flagTile(nx, ny));
+            }
+        });
+    }
+
 
     countFlagsAndVisibleMinesAround(x, y) {
         return this.countNeighbors(x, y, (pos) => (this.props.flags[pos] || (this.props.mines[pos] && this.props.seen[pos])));
