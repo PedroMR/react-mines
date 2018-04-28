@@ -6,16 +6,17 @@ import { changeScreen } from './MetaActions';
 import { start } from 'pretty-error';
 import dotProp from 'dot-prop-immutable';
 
-function NumericInput(dataObject, propertyName, handleChanged, enabled) {
-    const defaultValue = dotProp.get(dataObject, propertyName); 
+function NumericInput(props) { 
+    const {propertyName, onChange, enabled, defaultValue} = props;
     return <input type="text" name={propertyName} className="numInput" disabled={!enabled} value={defaultValue} onChange={(e)=> {
         let val = Math.floor(e.target.value);
         if (!isNaN(val) && val !== undefined) {
-             handleChanged(e.target, val);
+            onChange(e.target, val);
         }
         e.preventDefault();
      } }/>
 }
+
 
 class ScreenCreateMines extends React.Component {
     constructor(props) {
@@ -56,8 +57,14 @@ class ScreenCreateMines extends React.Component {
         return (this.x === preset.x && this.y === preset.y && this.mines === preset.mines);
     }
 
+    handleNumericInputChanged2(propertyName, val) {
+        let newState = dotProp.set(this.state, propertyName, val);
+        newState.currentPreset = newState.customPresetIndex;
+        this.setState(newState);
+    }
+
     handleNumericInputChanged(target, val) {
-        const name = target.name;
+        const name = typeof target === 'string' ? target : target.name;
         let newState = dotProp.set(this.state, name, val);
         newState.currentPreset = newState.customPresetIndex;
         this.setState(newState);
@@ -96,9 +103,9 @@ class ScreenCreateMines extends React.Component {
         const presets =  <tbody><tr className="gamePresets"><td colSpan='2'>{radioOptions}</td></tr></tbody>;
         const enableCustomValues = this.props.features[types.FEATURE_CUSTOM_MODE];
         const customValueSelector = <tbody>
-                    <tr><td>Rows:</td><td>{NumericInput(this.state, "newGameConfig.y", this.handleNumericInputChanged, enableCustomValues)}</td></tr>
-                    <tr><td>Columns:</td><td>{NumericInput(this.state, "newGameConfig.x", this.handleNumericInputChanged, enableCustomValues)}</td></tr>
-                    <tr><td>Mines:</td><td>{NumericInput(this.state, "newGameConfig.mines", this.handleNumericInputChanged, enableCustomValues)}</td></tr>
+                    <tr><td>Rows:</td><td><NumericInput propertyName="newGameConfig.y" defaultValue={this.state.newGameConfig.y} onChange={this.handleNumericInputChanged} enabled={enableCustomValues}/></td></tr>
+                    <tr><td>Columns:</td><td><NumericInput propertyName="newGameConfig.x" defaultValue={this.state.newGameConfig.x} onChange={this.handleNumericInputChanged} enabled={enableCustomValues}/></td></tr>
+                    <tr><td>Mines:</td><td><NumericInput propertyName="newGameConfig.mines" defaultValue={this.state.newGameConfig.mines} onChange={this.handleNumericInputChanged} enabled={enableCustomValues}/></td></tr>
                     </tbody>;
 
         const newGame = 
