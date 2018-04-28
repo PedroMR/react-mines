@@ -5,8 +5,8 @@ import { startNewGame } from '../mines/MinesActions';
 import { changeScreen } from './MetaActions';
 import { start } from 'pretty-error';
 
-function NumericInput(defaultValue, handleChanged) {
-    return <input type="text" className="numInput" value={defaultValue} onChange={(e)=> {
+function NumericInput(defaultValue, handleChanged, enabled) {
+    return <input type="text" className="numInput" disabled={!enabled} value={defaultValue} onChange={(e)=> {
         let val = Math.floor(e.target.value);
         if (!isNaN(val) && val !== undefined) {
              handleChanged(val);
@@ -102,10 +102,11 @@ class ScreenCreateMines extends React.Component {
         let radioOptions = this.state.presets.map(makeRadioOption);
 
         const presets =  <tbody><tr className="gamePresets"><td colSpan='2'>{radioOptions}</td></tr></tbody>;
+        const enableCustomValues = this.props.features[types.FEATURE_CUSTOM_MODE];
         const customValueSelector = <tbody>
-                    <tr><td>Rows:</td><td>{NumericInput(this.state.newGameConfig.y, this.handleYChanged)}</td></tr>
-                    <tr><td>Columns:</td><td>{NumericInput(this.state.newGameConfig.x, this.handleXChanged)}</td></tr>
-                    <tr><td>Mines:</td><td>{NumericInput(this.state.newGameConfig.mines, this.handleMinesChanged)}</td></tr>
+                    <tr><td>Rows:</td><td>{NumericInput(this.state.newGameConfig.y, this.handleYChanged, enableCustomValues)}</td></tr>
+                    <tr><td>Columns:</td><td>{NumericInput(this.state.newGameConfig.x, this.handleXChanged, enableCustomValues)}</td></tr>
+                    <tr><td>Mines:</td><td>{NumericInput(this.state.newGameConfig.mines, this.handleMinesChanged, enableCustomValues)}</td></tr>
                     </tbody>;
 
         const newGame = 
@@ -114,7 +115,7 @@ class ScreenCreateMines extends React.Component {
                 <h3>New game</h3>
                 <table><thead></thead>
                     { this.props.features[types.FEATURE_PRESET_SELECTION] ? presets : null }
-                    { this.props.features[types.FEATURE_CUSTOM_MODE] ? customValueSelector : null }
+                    { customValueSelector }
                 </table>
                 <button onClick={()=>this.onCreateGameButton()}>Create Game</button>
                 </form>
