@@ -56,27 +56,44 @@ class Board extends React.Component {
             value={value}/>
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    checkAutoClick() {
         const features = this.props.features;
-        if (prevProps.seen != this.props.seen || prevProps.flags != this.props.flags) {
-            console.log("changed seen/flags");
-            if (false && features[types.FEATURE_AUTOCLICK_SURROUNDED]) {
-                for(let y=0; y < this.props.config.y; y++) {
-                    for(let x=0; x < this.props.config.x; x++) {
-                        if(this.isSurrounded(x, y)) {
-                            this.flagAllTilesAround(x, y);
-                        }
+        console.log("auto-click");
+        if (features[types.FEATURE_AUTOCLICK_SURROUNDED]) {
+            for(let y=0; y < this.props.config.y; y++) {
+                for(let x=0; x < this.props.config.x; x++) {
+                    if(this.isSurrounded(x, y)) {
+                        console.log("found ", x, y);
+                        this.flagAllTilesAround(x, y);
+                        return;
                     }
                 }
             }
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.seen != this.props.seen || prevProps.flags != this.props.flags) {
+            console.log("changed seen/flags");
+            if (this.timer) {
+                clearTimeout(this.timer);
+                this.timer = null;
+            }
+
+            this.timer = setTimeout(() => {this.checkAutoClick()}, this.props.options.autoClickTimer || 1000);
+        }
+
+    }
+
     isSurrounded(x, y) {
         const pos = x + y*this.props.config.x;
+        const seen = this.props.seen[pos];
+        if (!seen) return false;
+        const resolved = this.countNeighbors(x, y, (npos) => !this.props.seen[npos] && !this.props.flags[npos]) === 0;
+        if (resolved) return false;
         const around = this.props.around[pos];        
         const flagsAndMinesAround = this.countFlagsAndVisibleMinesAround(x, y);
-        const unseenAround = this.countNeighbors(x, y, (pos) => !this.props.seen[pos] && !this.props.flags[pos]);
+        const unseenAround = this.countNeighbors(x, y, (npos) => !this.props.seen[npos] && !this.props.flags[npos]);
         return (unseenAround + flagsAndMinesAround) === around
     }
 

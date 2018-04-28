@@ -19,7 +19,7 @@ function createGameState(config) {
     let nMines = config.mines;
 
     let state = {}
-    state.options = { uiMode: types.UI_MODE_REVEAL };
+    state.options = { uiMode: types.UI_MODE_REVEAL, autoClickTimer: 2000 };
     state.config = {x: cols, y: rows, mines: nMines};
     state.seen = Array(cols*rows).fill(false);
     state.around = Array(cols*rows).fill(0);
