@@ -58,7 +58,7 @@ export function gameReducer(state = initialGameState, action) {
         case types.FLAG_TILE:
             if (state.gameOver) return state;
 
-            const flaggedState = handleFlagTile(state, payload.x, payload.y);
+            const flaggedState = handleFlagTile(state, payload.x, payload.y, payload.val);
             checkGameOver(flaggedState);
             return flaggedState;
             
@@ -92,10 +92,12 @@ export function gameReducer(state = initialGameState, action) {
     }
 }
 
-function handleFlagTile(state, x, y) {
+function handleFlagTile(state, x, y, val) {
     const pos = getPos(state, x, y);
 
     if (state.seen[pos]) return state; // can't flag seen tile
+
+    val = val !== undefined ? val : !state.flags[pos];
 
     if (!state.flags[pos] && flagsRemaining(state) <= 0) {
         // can't place flag here! too many flags down.

@@ -5,9 +5,9 @@ export const startNewGame = (config) => ({
     payload: { config }
 });
 
-export const flagTile = (x, y) => ({
+export const flagTile = (x, y, val) => ({
     type: types.FLAG_TILE,
-    payload: { x, y }
+    payload: { x, y, val }
 });
 
 export const revealTile = (x, y) => ({

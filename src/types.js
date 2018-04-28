@@ -31,3 +31,5 @@ export const FEATURE_COLOR_NUMBERS = "mines-feature-color-numbers";
 export const FEATURE_DONT_COLOR_DONE = "mines-feature-dont-color-done";
 export const FEATURE_ERROR_DETECTION = "mines-feature-error-detection";
 export const FEATURE_CLICK_SURROUNDED = "mines-feature-click-surrounded";
+export const FEATURE_AUTOCLICK_SURROUNDED = "mines-feature-autoclick-surrounded";
+export const FEATURE_AUTOCLICK_SAFE = "mines-feature-autoclick-safe";
