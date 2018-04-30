@@ -33,3 +33,5 @@ export const FEATURE_ERROR_DETECTION = "mines-feature-error-detection";
 export const FEATURE_CLICK_SURROUNDED = "mines-feature-click-surrounded";
 export const FEATURE_AUTOCLICK_SURROUNDED = "mines-feature-autoclick-surrounded";
 export const FEATURE_AUTOCLICK_SAFE = "mines-feature-autoclick-safe";
+export const FEATURE_SAFE_FIRST_CLICK = "mines-feature-safe-first";
+export const FEATURE_ZERO_FIRST_CLICK = "mines-feature-zero-first";

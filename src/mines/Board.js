@@ -14,7 +14,7 @@ function Square(props) {
     if (props.mine) className += " square-mine";
     else if (props.flag) className += " square-flag square-unseen" + (props.placingFlag ? "-flagging" : "");
     else if (!props.seen) className += " square-unseen" + (props.placingFlag ? "-flagging" : "");
-    return <button className={className} onClick={props.onClick}>{props.value}</button>;
+    return <button className={className} onClick={props.onClick} onContextMenu={props.onClick}>{props.value}</button>;
 }
 
 class Board extends React.Component {
@@ -43,7 +43,7 @@ class Board extends React.Component {
         } 
         // value = safeAround;
         return <Square key={x+","+y} 
-             onClick={() => this.handleClick(x, y, pos, seen, around, flag, mine, e)}
+             onClick={(e) => this.handleClick(x, y, pos, seen, around, flag, mine, e)}
             placingFlag={this.isPlacingFlag()}
             mine={mine}
             seen={seen}
@@ -79,7 +79,7 @@ class Board extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.waitingForRegen) {
+        if (this.state && this.state.waitingForRegen) {
             console.log("Regenned game! ", this.state.waitingForRegen);
             this.setState({waitingForRegen: false});
             const pos = this.state.waitingForRegen.x + this.state.waitingForRegen.y*this.props.config.x;
@@ -154,7 +154,7 @@ class Board extends React.Component {
         return this.props.features[feature];
     }
 
-    handleClick(x, y, pos, seen, around, flag, mine) {        
+    handleClick(x, y, pos, seen, around, flag, mine, e) {
         if (seen) {
             if (mine) return;
 
@@ -168,15 +168,13 @@ class Board extends React.Component {
             return;
         }
 
-        if (this.isPlacingFlag())
+        if (this.isPlacingFlag() || e.type === 'contextmenu')
             this.props.dispatch(flagTile(x, y));
         else if (!flag) {
             if (this.props.clicksSoFar === 0) {
-                console.log("first click!");
-                if (this.props.mines[pos] || this.props.around[pos] > 0) {
-                    console.log("Try it again!");
-                    // safe first click
-                    this.props.dispatch(startNewGame(this.props.config, x, y));
+                if ((this.props.mines[pos] && this.hasFeature(types.FEATURE_SAFE_FIRST_CLICK)) || 
+                    (this.props.around[pos] > 0  && this.hasFeature(types.FEATURE_ZERO_FIRST_CLICK))) {
+                    this.props.dispatch(startNewGame(this.props.config, x, y, this.hasFeature(types.FEATURE_ZERO_FIRST_CLICK) ? 1 : 0));
                     this.setState({waitingForRegen: {x, y}});
                 }
             }

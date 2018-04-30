@@ -1,14 +1,14 @@
 # TODO
 
-- [ ] right-click !
-- [ ] Bonus for level danger (mine ratio)
 - [ ] Purchasing menu for features
+- [ ] Bonus for level danger (mine ratio)
+- [ ] Reward tiers for performance (non-linear)
 - [ ] Bonus for conserving clicks
-- [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
 - [ ] Sounds
 - [ ] Narrator text box
-- [ ] First-click never-boom
+- [ ] Advanced level selector
 - [ ] Design roadmap for improvements and evolution of the game
+- [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
 
 - [X] Add selection menu for new games (Beginner / Advanced / Mobile / Custom)
 - [X] Add flag and mine counter
@@ -20,3 +20,4 @@
 - [X] Claimable currency from the score tally
 - [X] BUG: Initializing preset mode should change config to be beginner if it was custom (or leave custom if that's available)
 - [X] No bomb on first inspect (+ maybe it's a zero?)
+- [X] right-click !
