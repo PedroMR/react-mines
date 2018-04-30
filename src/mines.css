@@ -21,14 +21,14 @@
     height: 30px;
     font-size: 26px;
     background-color: white;
-    transition: all 0.5s ease-out;
+    transition: all 0.1s ease-out;
 }
 .square:focus {
     outline: none;
 }
 .square:hover {
     background-color: #EEAA00;
-    transition: all 0.5s ease-out;
+    transition: all 0.1s ease-out;
 }
 .square-unseen-flagging:hover {
     background-image: url('img/minefield.svg');    

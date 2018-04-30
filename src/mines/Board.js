@@ -56,36 +56,42 @@ class Board extends React.Component {
             value={value}/>
     }
 
+    hasAutoClickFeatures() {
+        const features = this.props.features;
+        return features[types.FEATURE_AUTOCLICK_SURROUNDED] || features[types.FEATURE_AUTOCLICK_SAFE]        
+    }
+
     checkAutoClick() {
         const features = this.props.features;
         console.log("auto-click");
-        if (features[types.FEATURE_AUTOCLICK_SURROUNDED]) {
-            for(let y=0; y < this.props.config.y; y++) {
-                for(let x=0; x < this.props.config.x; x++) {
-                    if(this.isSurrounded(x, y)) {
-                        console.log("found ", x, y);
-                        this.flagAllTilesAround(x, y);
-                        return;
-                    }
+        for(let y=0; y < this.props.config.y; y++) {
+            for(let x=0; x < this.props.config.x; x++) {
+                if (features[types.FEATURE_AUTOCLICK_SURROUNDED] && this.isSurrounded(x, y)) {
+                    this.flagAllTilesAround(x, y);
+                    return;
+                }
+                if (features[types.FEATURE_AUTOCLICK_SAFE] && this.isSafe(x, y)) {
+                    this.expandAround(x, y);
+                    return;
                 }
             }
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.seen != this.props.seen || prevProps.flags != this.props.flags) {
+        if (this.hasAutoClickFeatures() && (prevProps.seen !== this.props.seen || prevProps.flags !== this.props.flags)) {
             console.log("changed seen/flags");
             if (this.timer) {
                 clearTimeout(this.timer);
                 this.timer = null;
             }
 
-            this.timer = setTimeout(() => {this.checkAutoClick()}, this.props.options.autoClickTimer || 1000);
+            this.timer = setTimeout(() => {this.checkAutoClick()}, 100); //this.props.options.autoClickTimer 
         }
 
     }
 
-    isSurrounded(x, y) {
+    isSafe(x,y) {
         const pos = x + y*this.props.config.x;
         const seen = this.props.seen[pos];
         if (!seen) return false;
@@ -93,7 +99,20 @@ class Board extends React.Component {
         if (resolved) return false;
         const around = this.props.around[pos];        
         const flagsAndMinesAround = this.countFlagsAndVisibleMinesAround(x, y);
+        return around === flagsAndMinesAround;
+    }
+
+    isSurrounded(x, y) {
+        const pos = x + y*this.props.config.x;
+        const seen = this.props.seen[pos];
+        if (!seen) return false;
+        if (this.props.mines[pos]) return false;
+        const resolved = this.countNeighbors(x, y, (npos) => !this.props.seen[npos] && !this.props.flags[npos]) === 0;
+        if (resolved) return false;
+        const around = this.props.around[pos];        
+        const flagsAndMinesAround = this.countFlagsAndVisibleMinesAround(x, y);
         const unseenAround = this.countNeighbors(x, y, (npos) => !this.props.seen[npos] && !this.props.flags[npos]);
+        // console.log("unseen "+unseenAround+" flagsAndMines "+flagsAndMinesAround+" ?== "+around+" "+((unseenAround + flagsAndMinesAround) === around));
         return (unseenAround + flagsAndMinesAround) === around
     }
 
