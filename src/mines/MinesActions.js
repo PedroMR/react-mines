@@ -1,8 +1,8 @@
 import * as types from "../types";
 
-export const startNewGame = (config) => ({
+export const startNewGame = (config, safeX, safeY, safeRadius) => ({
     type: types.NEW_GAME,
-    payload: { config }
+    payload: { config, safeX, safeY, safeRadius }
 });
 
 export const flagTile = (x, y, val) => ({

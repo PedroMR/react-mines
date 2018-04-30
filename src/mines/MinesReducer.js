@@ -9,12 +9,15 @@ const initialConfig = {
 
 export const initialGameState = createGameState(initialConfig);
 
-function createGameState(config) {
+function createGameState(config, safeX = -1, safeY = -1, safeRadius = 1) {
     if (!config) config = initialConfig;
     
     let cols = config.x;
     let rows = config.y;
-    config.mines = Math.min(config.mines, cols * rows);
+    const tiles = cols*rows;
+    config.mines = Math.min(
+            Math.max(config.mines, Math.ceil(tiles/10)), 
+            Math.floor(tiles/3));
 
     let nMines = config.mines;
 
@@ -25,11 +28,19 @@ function createGameState(config) {
     state.around = Array(cols*rows).fill(0);
     state.mines = Array(cols*rows).fill(false);
     state.flags = Array(cols*rows).fill(false);
+    state.clicksSoFar = 0;
     state.gameOver = false;
 
     while(nMines > 0) {
         let randX = tools.getRandomInt(cols);
         let randY = tools.getRandomInt(rows);
+
+        if (safeY > -1) {
+            if (Math.abs(randX - safeX) <= safeRadius || 
+                Math.abs(randY - safeY) <= safeRadius)
+                continue;
+        }
+
         let pos = randX+cols*randY;
         if (!state.mines[pos]) {
             nMines--;
@@ -53,7 +64,7 @@ export function gameReducer(state = initialGameState, action) {
     console.log(action);
     switch(action.type) {
         case types.NEW_GAME:
-            return createGameState(payload.config);
+            return createGameState(payload.config, payload.safeX, payload.safeY, payload.safeRadius);
             
         case types.FLAG_TILE:
             if (state.gameOver) return state;
@@ -64,8 +75,10 @@ export function gameReducer(state = initialGameState, action) {
             
         case types.REVEAL_TILE:
             if (state.gameOver) return state;
-
+            
             const newState = handleRevealTile(state, payload.x, payload.y);
+            newState.clicksSoFar++;
+
             checkGameOver(newState);
             return newState;
 

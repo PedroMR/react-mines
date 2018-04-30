@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { flagTile, revealTile } from './MinesActions';
+import { flagTile, revealTile, startNewGame } from './MinesActions';
 import * as types from '../types';
 
 function Square(props) {
@@ -43,7 +43,7 @@ class Board extends React.Component {
         } 
         // value = safeAround;
         return <Square key={x+","+y} 
-             onClick={() => this.handleClick(x, y, pos, seen, around, flag, mine)}
+             onClick={() => this.handleClick(x, y, pos, seen, around, flag, mine, e)}
             placingFlag={this.isPlacingFlag()}
             mine={mine}
             seen={seen}
@@ -79,6 +79,16 @@ class Board extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if (this.state.waitingForRegen) {
+            console.log("Regenned game! ", this.state.waitingForRegen);
+            this.setState({waitingForRegen: false});
+            const pos = this.state.waitingForRegen.x + this.state.waitingForRegen.y*this.props.config.x;
+            const seen = this.props.seen[pos];
+            const around = this.props.around[pos];
+            const mine = seen && this.props.mines[pos];
+            const flag = this.props.flags[pos];        
+            this.handleClick(this.state.waitingForRegen.x, this.state.waitingForRegen.y, pos, seen, around, flag, mine);
+        }
         if (this.hasAutoClickFeatures() && (prevProps.seen !== this.props.seen || prevProps.flags !== this.props.flags)) {
             console.log("changed seen/flags");
             if (this.timer) {
@@ -161,6 +171,16 @@ class Board extends React.Component {
         if (this.isPlacingFlag())
             this.props.dispatch(flagTile(x, y));
         else if (!flag) {
+            if (this.props.clicksSoFar === 0) {
+                console.log("first click!");
+                if (this.props.mines[pos] || this.props.around[pos] > 0) {
+                    console.log("Try it again!");
+                    // safe first click
+                    this.props.dispatch(startNewGame(this.props.config, x, y));
+                    this.setState({waitingForRegen: {x, y}});
+                }
+            }
+
             this.props.dispatch(revealTile(x, y));
             if (this.hasFeature(types.FEATURE_ZERO_OUT) && around === 0) {
                 this.expandAround(x, y);
@@ -210,7 +230,7 @@ class Board extends React.Component {
 
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'features'];
+    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'features', 'clicksSoFar'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state.game[name]});
 

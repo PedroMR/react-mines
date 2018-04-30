@@ -1,8 +1,10 @@
 # TODO
 
-- [ ] BUG: Initializing preset mode should change config to be beginner if it was custom (or leave custom if that's available)
-- [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
+- [ ] right-click !
+- [ ] Bonus for level danger (mine ratio)
 - [ ] Purchasing menu for features
+- [ ] Bonus for conserving clicks
+- [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
 - [ ] Sounds
 - [ ] Narrator text box
 - [ ] First-click never-boom
@@ -16,3 +18,5 @@
 - [X] Feature selector (for evo)
 - [X] Profile system (w/ reset button) for store
 - [X] Claimable currency from the score tally
+- [X] BUG: Initializing preset mode should change config to be beginner if it was custom (or leave custom if that's available)
+- [X] No bomb on first inspect (+ maybe it's a zero?)

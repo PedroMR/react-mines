@@ -25,8 +25,11 @@ class ScreenCreateMines extends React.Component {
             newGameConfig: {x: config.x, y: config.y, mines: config.mines},
             currentPreset: 0,
             presets: [
-                {x: 10, y: 6, mines: 8, name: "Beginner"},
+                {x: 10, y: 6, mines: 8, name: "Novice"},
                 {x: 20, y: 15, mines: 60, name: "Advanced"},
+                {x: 8, y: 8, mines: 10, name: "Old-Time Beginner"},
+                {x: 16, y: 16, mines: 40, name: "Old-Time Intermediate"},
+                {x: 31, y: 16, mines: 99, name: "Old-Time Expert"},
                 {x: 11, y: 16, mines: 45, name: "Mobile"},
             ],
         }
@@ -90,11 +93,13 @@ class ScreenCreateMines extends React.Component {
 
     render() {
         const makeRadioOption = ((preset, index) => {
+            const tiles = preset.x * preset.y;
+            const ratio = preset.x ? Number(preset.mines / tiles).toFixed(2)+"%" : "";
             const strKey = "k"+index;
             return <label key={strKey}><input id="option" type="radio" name="field"
                 value={preset.name} 
                 checked={this.state.currentPreset===index} onChange={this.handlePresetChanged} 
-                />{preset.name}<br/></label>
+                />{preset.name} {ratio}<br/></label>
             });
         let radioOptions = this.state.presets.map(makeRadioOption);
 
