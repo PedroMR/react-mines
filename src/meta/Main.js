@@ -51,7 +51,7 @@ class Main extends React.Component {
     render() {
         const backButton = <button className="backButton" onClick={this.handleBackButton}>Back</button>;
         return <div
-            ><h1>Mine Game</h1>
+            ><h1>Mines</h1>
             <Version/>
             {this.canGoBack() ? backButton : null}
             <MetaInfo meta={this.props.meta}/>

@@ -2,28 +2,25 @@
     text-align: center;
 }
 .shopItem {
+    align-content: center;
+    width: 800px;
     height: 3em;
-    width: 70%;
-    border: 1px solid salmon;
+    border: 1px dashed lightgray;
+    padding: 4px;
     margin: 1em;
+    display: grid;
+    grid-template-columns: 12em 1px auto 80px;
 }
 .name {
-    float: left;
-    margin-left: 1em;
-    margin-top: 0.2em;
+    text-align: left;
+    grid-column-start: 1;
+    font-weight: bold;
 }
 .price {
-    clear: left;
-    float: left;
-    width: 10em;
-    margin-left: 1em;
-    margin-bottom: 0.2em;
+    grid-column-start: 4;
+    font-size: 14pt;
 }
 .description {
-    float: right;
-    clear: right;
-    margin-right: 1em;
-    margin-top: 0.2em;
-    text-align: right;
-    vertical-align: text-bottom;
+    grid-column-start: 3;
+    text-align: left;
 }
