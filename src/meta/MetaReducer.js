@@ -1,13 +1,15 @@
 import * as dotProp from 'dot-prop-immutable'
 import * as types from '../types';
 import * as tools from '../Tools';
+import items from '../conf/Items';
 
 /* config layoutL:
  * state.
  *   .meta
  *      .screen -> current menu we're looking at (main, mines, shop?... etc other crazy stuff)
  *      .features
- *      .wallet
+ *      .items -> array of owned item ids
+ *      .wallet -> currencies
  *          .credits
  *   .game
  *      .seen
@@ -22,7 +24,9 @@ import * as tools from '../Tools';
 
 export const initialMetaState = {
     screen: types.SCREEN_MAIN,
-    features: { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
+    features: {},// { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
+    items: [], // list of IDs bought already
+    wallet: {},
     score: {
         perMineFound: 5,
         perMineDetonated: -10,
@@ -54,9 +58,35 @@ export function metaReducer(state = initialMetaState, action) {
         case types.CLAIM_CREDITS:
             return tools.addCredits(state, action.payload.amount);
 
+        case types.BUY_ITEM:
+            return purchaseItem(state, payload.itemId, payload.price);
+
         default:
             return state;
     }
+}
+
+function purchaseItem(state, itemId, price) {
+    const theItem = tools.findItemById(itemId);
+    price = price || theItem.price;
+
+    if (!theItem) {
+        console.log("Can't find item "+itemId);
+        return state;
+    }
+    if (tools.ownsItemId(state.items, itemId)) {
+        console.log("Already owns "+itemId);
+        return state;
+    }
+    if (state.wallet.credits < price) {
+        console.log("Can't buy, price "+price+" too high; wallet "+state.wallet.credits);
+        return state;
+    }
+
+    let newState = dotProp.merge(state, 'items', itemId);
+    newState = dotProp.set(newState, 'wallet.credits', state.wallet.credits - price);
+
+    return newState;
 }
 
 

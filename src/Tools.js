@@ -1,4 +1,5 @@
 import { initialMetaState } from './meta/MetaReducer';
+import items from './conf/Items';
 
 export function scoreForMinesFound(score, amount) {
     console.log('found',score, initialMetaState);
@@ -52,4 +53,15 @@ export function newVersionOf(obj, newProps) {
 
 export function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
+}
+
+export function findItemById(itemId) {
+    return items.find( e =>  e.id === itemId );
+}
+
+export function ownsItemId(items, itemId) {
+    if (!items) return false;
+    console.log("items "+items+" is "+(typeof items));
+
+    return items.indexOf(itemId) >= 0;
 }

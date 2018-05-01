@@ -67,7 +67,7 @@ function Version(props) {
 
 function MetaInfo(props) {
     const credits = tools.getCredits(props.meta);
-    const creditString = (credits <= 0) ? '\u00A0' : credits+" Credits";
+    const creditString = (credits <= 0 || !credits) ? '\u00A0' : credits+" Credits";
 
     return <div className='metaInfo'><span className='creditDisplay'>{creditString}</span></div>;
 }

@@ -12,6 +12,7 @@ export const RESET_PROFILE = "config.resetProfile";
 export const CHANGE_SCREEN = "ui.goto";
 
 export const CLAIM_CREDITS = "claimCredits";
+export const BUY_ITEM = "buyItem";
 
 // UI Modes
 export const UI_MODE_FLAG = "ui.mode.flag";
