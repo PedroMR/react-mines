@@ -19,6 +19,7 @@ export const UI_MODE_REVEAL = "ui.mode.reveal";
 
 // Screens
 export const SCREEN_MAIN = "screen-main";
+export const SCREEN_SHOP = "screen-shop";
 export const SCREEN_PLAY_MINES = "screen-play-mines";
 export const SCREEN_CREATE_MINES = "screen-create-mines";
 

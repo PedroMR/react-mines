@@ -4,9 +4,17 @@
 - [ ] Bonus for level danger (mine ratio)
 - [ ] Reward tiers for performance (non-linear)
 - [ ] Bonus for conserving clicks
+- [ ] Finish the level earlier -- if all unseen spots = num mines - num flags
 - [ ] Sounds
 - [ ] Narrator text box
 - [ ] Advanced level selector
+- [ ] Some crazy features for levels, like:
+    - [ ] More warning patterns (e.g., hex)
+    - [ ] Double-mines
+    - [ ] Wrong numbers
+- [ ] Power-ups? (help with things like no-info areas)
+    - [ ] Limited-use "rewind"
+    - [ ] Kill a bomb (so you can see the number)
 - [ ] Design roadmap for improvements and evolution of the game
 - [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
 

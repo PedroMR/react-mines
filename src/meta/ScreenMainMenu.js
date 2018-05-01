@@ -8,11 +8,17 @@ class ScreenMainMenu extends React.PureComponent {
 
     onPlayMines() {
         this.props.dispatch(changeScreen(types.SCREEN_CREATE_MINES));
-        // this.props.dispatch(startNewGame());
+    }
+
+    onShop() {
+        this.props.dispatch(changeScreen(types.SCREEN_SHOP));
     }
 
     render() {
-        return <div className='mainMenu'><button className='playMines' onClick={() => this.onPlayMines()}>Play a game!</button></div>;
+        return <div className='mainMenu'>
+            <button className='playMines' onClick={() => this.onPlayMines()}>Hunt for mines</button><br/>
+            <button className='shop' onClick={() => this.onShop()}>Shop</button>
+            </div>;
     }
 }
 

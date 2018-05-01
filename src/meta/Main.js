@@ -11,6 +11,7 @@ import * as tools from '../Tools';
 import { startNewGame } from '../mines/MinesActions';
 import packageJson from '../package.alias.json';
 import { changeScreen } from './MetaActions';
+import ScreenShop from '../shop/ScreenShop';
 
 class Main extends React.Component {
     constructor(props) {
@@ -26,6 +27,8 @@ class Main extends React.Component {
         switch(this.props.meta.screen) {
             case types.SCREEN_MAIN:
                 return <ScreenMainMenu/>;
+            case types.SCREEN_SHOP:
+                return <ScreenShop/>;
             case types.SCREEN_PLAY_MINES:
                 return <Mines/>;
             case types.SCREEN_CREATE_MINES:

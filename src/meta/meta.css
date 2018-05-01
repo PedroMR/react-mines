@@ -24,6 +24,11 @@ button.playMines {
     font-size: 2em;
 }
 
+button.shop {
+    padding: 5px;
+    font-size: 1.5em;
+}
+
 .metaInfo {
     clear: both;
 }

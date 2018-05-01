@@ -155,7 +155,7 @@ class Board extends React.Component {
     }
 
     handleClick(x, y, pos, seen, around, flag, mine, e) {
-        e.preventDefault();
+        if (e) e.preventDefault();
         if (seen) {
             if (mine) return;
 

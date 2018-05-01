@@ -1,0 +1,29 @@
+.shop {
+    text-align: center;
+}
+.shopItem {
+    height: 3em;
+    width: 70%;
+    border: 1px solid salmon;
+    margin: 1em;
+}
+.name {
+    float: left;
+    margin-left: 1em;
+    margin-top: 0.2em;
+}
+.price {
+    clear: left;
+    float: left;
+    width: 10em;
+    margin-left: 1em;
+    margin-bottom: 0.2em;
+}
+.description {
+    float: right;
+    clear: right;
+    margin-right: 1em;
+    margin-top: 0.2em;
+    text-align: right;
+    vertical-align: text-bottom;
+}

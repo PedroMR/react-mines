@@ -27,10 +27,10 @@ class ScreenCreateMines extends React.Component {
             presets: [
                 {x: 10, y: 6, mines: 8, name: "Novice"},
                 {x: 20, y: 15, mines: 60, name: "Advanced"},
+                {x: 11, y: 16, mines: 40, name: "Mobile"},
                 {x: 8, y: 8, mines: 10, name: "Old-Time Beginner"},
                 {x: 16, y: 16, mines: 40, name: "Old-Time Intermediate"},
                 {x: 31, y: 16, mines: 99, name: "Old-Time Expert"},
-                {x: 11, y: 16, mines: 45, name: "Mobile"},
             ],
         }
 
