@@ -18,7 +18,7 @@ test('add credits to wallet', () => {
 
 test('adding credits does not mutate wallet', ()=> {
     const amount = 10;
-    const base = 6;
+    const base = 2;
     const baseWallet = {wallet: {credits: base}};
     const baseWalletPlusAmount = {wallet: {credits: base + amount}};
 

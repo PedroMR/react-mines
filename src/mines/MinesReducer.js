@@ -1,3 +1,4 @@
+import seedrandom from 'seedrandom';
 import * as types from '../types';
 import * as tools from '../Tools';
 
@@ -9,9 +10,11 @@ const initialConfig = {
 
 export const initialGameState = createGameState(initialConfig);
 
-function createGameState(config, safeX = -1, safeY = -1, safeRadius = 1) {
+function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, safeRadius = 1) {
     if (!config) config = initialConfig;
     
+    let rand = new seedrandom(seed);
+
     let cols = config.x;
     let rows = config.y;
     const tiles = cols*rows;
@@ -20,6 +23,8 @@ function createGameState(config, safeX = -1, safeY = -1, safeRadius = 1) {
             Math.floor(tiles/3));
 
     let nMines = config.mines;
+
+    const getRandomInt = (i) => (Math.floor(i*rand.quick()));
 
     let state = {}
     state.options = { uiMode: types.UI_MODE_REVEAL, autoClickTimer: 2000 };
@@ -32,8 +37,8 @@ function createGameState(config, safeX = -1, safeY = -1, safeRadius = 1) {
     state.gameOver = false;
 
     while(nMines > 0) {
-        let randX = tools.getRandomInt(cols);
-        let randY = tools.getRandomInt(rows);
+        let randX = getRandomInt(cols);
+        let randY = getRandomInt(rows);
 
         if (safeY > -1) {
             if (Math.abs(randX - safeX) <= safeRadius || 
@@ -64,7 +69,7 @@ export function gameReducer(state = initialGameState, action) {
     console.log(action);
     switch(action.type) {
         case types.NEW_GAME:
-            return createGameState(payload.config, payload.safeX, payload.safeY, payload.safeRadius);
+            return createGameState(payload.config, payload.seed, payload.safeX, payload.safeY, payload.safeRadius);
             
         case types.FLAG_TILE:
             if (state.gameOver) return state;

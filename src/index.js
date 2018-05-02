@@ -12,8 +12,9 @@ import adapter from 'redux-localstorage/lib/adapters/localStorage';
 
 // localStorage.clear();
 
+const devToolsOptions = {shouldHotReload: true};
+
 const storage = adapter(window.localStorage);
-const devToolsOptions = {shouldHotReload: false};
 const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? 
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(devToolsOptions) : compose;
 const enhancer = composeEnhancers(

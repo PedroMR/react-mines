@@ -1,6 +1,8 @@
 # TODO
 
-- [ ] Purchasing menu for features
+- [ ] query option for clearing localStorage
+- [ ] Move random() out of the reducers to avoid determinism process. Can go to action!
+- [ ] Level progression
 - [ ] Bonus for level danger (mine ratio)
 - [ ] Reward tiers for performance (non-linear)
 - [ ] Bonus for conserving clicks
@@ -18,6 +20,7 @@
 - [ ] Design roadmap for improvements and evolution of the game
 - [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
 
+- [X] Purchasing menu for features
 - [X] Add selection menu for new games (Beginner / Advanced / Mobile / Custom)
 - [X] Add flag and mine counter
 - [X] Add mine graphic

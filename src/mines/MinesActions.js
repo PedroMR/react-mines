@@ -1,9 +1,11 @@
 import * as types from "../types";
 
-export const startNewGame = (config, safeX, safeY, safeRadius) => ({
-    type: types.NEW_GAME,
-    payload: { config, safeX, safeY, safeRadius }
-});
+export const startNewGame = (config, safeX, safeY, safeRadius) => {
+    const seed = Math.floor(Math.random()*99999);
+    return {
+        type: types.NEW_GAME,
+        payload: { config, seed, safeX, safeY, safeRadius }
+}};
 
 export const flagTile = (x, y, val) => ({
     type: types.FLAG_TILE,
