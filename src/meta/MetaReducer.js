@@ -83,10 +83,7 @@ function purchaseItem(state, itemId, price) {
         return state;
     }
 
-    let newState = dotProp.merge(state, 'items', itemId);
-    newState = dotProp.set(newState, 'wallet.credits', state.wallet.credits - price);
-
-    return newState;
+    return tools.purchaseItem(state, itemId, price);
 }
 
 

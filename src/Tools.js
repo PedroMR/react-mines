@@ -1,3 +1,4 @@
+import dotProp from 'dot-prop-immutable';
 import { initialMetaState } from './meta/MetaReducer';
 import items from './conf/Items';
 
@@ -64,4 +65,22 @@ export function ownsItemId(items, itemId) {
     console.log("items "+items+" is "+(typeof items));
 
     return items.indexOf(itemId) >= 0;
+}
+
+export function purchaseItem(state, itemId, price) {
+    let newState = dotProp.merge(state, 'items', itemId);
+    newState = dotProp.set(newState, 'wallet.credits', state.wallet.credits - price);
+
+    const item = findItemById(itemId);
+
+    console.log(item);
+    
+    for(let effect of item.effects) {
+        console.log("effect ",effect, effect.feature);
+        if (effect.feature) {
+            newState = dotProp.set(newState, 'features.'+effect.feature, true);
+        }
+    }
+
+    return newState;
 }
