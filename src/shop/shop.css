@@ -23,6 +23,7 @@
     margin: 1em;
     display: grid;
     grid-template-columns: 12em 1px auto 80px;
+    transition: all 1s; 
 }
 .name {
     text-align: left;

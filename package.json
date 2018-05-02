@@ -1,5 +1,5 @@
 {
-  "name": "minesweeper",
+  "name": "react-mines",
   "version": "0.1.1",
   "private": true,
   "homepage": "http://pedromr.github.io/react-mines",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "gh-pages": "^1.1.0"
+    "gh-pages": "^1.1.0",
+    "redux-immutable-state-invariant": "^2.1.0"
   }
 }
