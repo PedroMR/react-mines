@@ -1,12 +1,13 @@
 # TODO
 
 - [ ] Level progression
+- [ ] Narrator text box
 - [ ] Bonus for level danger (mine ratio)
 - [ ] Reward tiers for performance (non-linear)
 - [ ] Bonus for conserving clicks
+- [ ] Improve score tally 
 - [ ] Finish the level earlier -- if all unseen spots = num mines - num flags
 - [ ] Sounds
-- [ ] Narrator text box
 - [ ] Advanced level selector
 - [ ] Some crazy features for levels, like:
     - [ ] More warning patterns (e.g., hex)

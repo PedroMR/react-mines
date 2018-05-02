@@ -8,7 +8,7 @@ const initialConfig = {
     mines: 8,
 };
 
-export const initialGameState = createGameState(initialConfig);
+export const initialGameState = { config: initialConfig };
 
 function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, safeRadius = 1) {
     if (!config) config = initialConfig;

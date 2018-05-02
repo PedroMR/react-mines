@@ -24,6 +24,7 @@ import items from '../conf/Items';
 
 export const initialMetaState = {
     screen: types.SCREEN_MAIN,
+    level: 0,
     features: {},// { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
     items: [], // list of IDs bought already
     wallet: {},
