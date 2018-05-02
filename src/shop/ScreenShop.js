@@ -14,8 +14,10 @@ function ShopItem(props) {
     const buyText = "Buy for "+item.price;
     const buyContents = props.alreadyOwned ? checkMark : buyText;
     const canBuy = props.canAfford && !props.alreadyOwned;
+    let itemClass = "shopItem"
+    if (props.alreadyOwned) itemClass += " owned";
 
-    return <div className="shopItem">
+    return <div className={itemClass}>
         <div className='name'>{item.name}</div><br/>
         <div className='description'>{item.description}</div>
         <button disabled={!canBuy} onClick={() => props.onBuy(item)} className='price'>{buyContents}</button>
