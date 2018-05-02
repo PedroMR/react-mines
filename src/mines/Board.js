@@ -231,7 +231,7 @@ class Board extends React.Component {
 function mapStateToProps(state) {
     const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'features', 'clicksSoFar'];
     let retVal = {}
-    propNames.forEach(name => { retVal[name] = state.game[name]});
+    propNames.forEach(name => { retVal[name] = state.mines[name]});
 
     retVal.features = state.meta.features;
     return retVal;

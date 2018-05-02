@@ -73,9 +73,7 @@ function MetaInfo(props) {
 }
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver'];
     let retVal = {}
-    propNames.forEach(name => { retVal[name] = state.game[name]});
     retVal.meta = state.meta;
     return retVal;
 }

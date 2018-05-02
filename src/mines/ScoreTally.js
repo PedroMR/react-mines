@@ -57,8 +57,8 @@ class ScoreTally extends React.PureComponent {
 function mapStateToProps(state) {
     return { 
         score: state.meta.score,
-        gameOver: state.game.gameOver,
-        claimedRewards: state.game.claimedRewards,
+        gameOver: state.mines.gameOver,
+        claimedRewards: state.mines.claimedRewards,
     }
 }
 

@@ -74,9 +74,9 @@ class Mines extends React.Component {
 
 function mapStateToProps(state) {
     console.log(state);
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver'];
+    const propNames = [ 'config', 'options', 'gameOver'];
     let retVal = {}
-    propNames.forEach(name => { retVal[name] = state.game[name]});
+    propNames.forEach(name => { retVal[name] = state.mines[name]});
     retVal.meta = state.meta;
     return retVal;
 }

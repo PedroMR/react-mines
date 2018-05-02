@@ -82,7 +82,6 @@ export function gameReducer(state = initialGameState, action) {
             if (state.gameOver) return state;
             
             const newState = handleRevealTile(state, payload.x, payload.y);
-            newState.clicksSoFar++;
 
             checkGameOver(newState);
             return newState;
@@ -133,7 +132,7 @@ function handleRevealTile(state, x, y) {
 
     let seen = state.seen.slice();
     seen[pos] = true;
-    return tools.newVersionOf(state, {seen});
+    return tools.newVersionOf(state, {seen, clicksSoFar: state.clicksSoFar+1});
 }
 
 function getPos(state, x, y) {

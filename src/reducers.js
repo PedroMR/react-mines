@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import gameReducer from './mines/MinesReducer';
+import minesReducer from './mines/MinesReducer';
 import metaReducer from './meta/MetaReducer';
 
 /* config layoutL:
@@ -22,7 +22,7 @@ import metaReducer from './meta/MetaReducer';
 
 const reducer = combineReducers({
     meta: metaReducer,
-    game: gameReducer
+    mines: minesReducer
 });
 
 

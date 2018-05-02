@@ -136,7 +136,7 @@ class ScreenCreateMines extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        config: state.game.config,
+        config: state.mines.config,
         features: state.meta.features,
     }
 }
