@@ -62,7 +62,9 @@ export function findItemById(itemId) {
 
 export function ownsItemId(items, itemId) {
     if (!items) return false;
-    console.log("items "+items+" is "+(typeof items));
+    if (!itemId || !Array.isArray(items)) {
+        console.error("invalid arguments; items is "+items);
+    } 
 
     return items.indexOf(itemId) >= 0;
 }

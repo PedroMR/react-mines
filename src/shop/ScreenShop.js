@@ -28,12 +28,30 @@ class ScreenShop extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.state = { items: this.findAvailableItems() };
+        this.state = { shopItems: this.findAvailableItems() };
         this.onBuy = this.onBuy.bind(this);
     }
 
     findAvailableItems() {
-        return itemConfig;
+        const ownedItems = this.props.items;
+        let availableItems = itemConfig.map(elem => {
+            const e2 = tools.newVersionOf(elem);
+            e2.alreadyOwned = tools.ownsItemId(ownedItems, e2.id);
+            e2.visible = true;
+            return e2;
+        });
+        availableItems.sort((e1, e2) => {
+            if (e1.alreadyOwned && !e2.alreadyOwned) return 1;
+            if (e2.alreadyOwned && !e1.alreadyOwned) return -1;
+            return e1.price - e2.price;
+        });
+        return availableItems;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.items !== this.props.items) {
+            this.setState({ shopItems: this.findAvailableItems()});
+        }
     }
 
     onBuy(item) {
@@ -41,7 +59,7 @@ class ScreenShop extends React.PureComponent {
     }
 
     render() {
-        const itemList = this.state.items.map(item => <ShopItem key={item.id}
+        const itemList = this.state.shopItems.map(item => <ShopItem key={item.id}
             item={item}
             onBuy={this.onBuy}
             canAfford={item.price <= this.props.wallet.credits}
