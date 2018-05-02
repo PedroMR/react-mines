@@ -13,13 +13,12 @@ import adapter from 'redux-localstorage/lib/adapters/localStorage';
 // localStorage.clear();
 
 const storage = adapter(window.localStorage);
-const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const enhancer = compose(
+const devToolsOptions = {shouldHotReload: false};
+const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? 
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(devToolsOptions) : compose;
+const enhancer = composeEnhancers(
   persistState(storage, 'mines'),
-  applyMiddleware(invariant()), 
-  // window.devToolsExtension ? window.devToolsExtension() : f => f,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(invariant()),
 )
 
 const rehydratedReducer = compose(
