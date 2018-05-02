@@ -10,7 +10,24 @@ import invariant from 'redux-immutable-state-invariant';
 import persistState, {mergePersistedState} from 'redux-localstorage';
 import adapter from 'redux-localstorage/lib/adapters/localStorage';
 
-// localStorage.clear();
+var urlParams;
+(window.onpopstate = function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+})();
+console.log("params", urlParams);
+
+if (urlParams.clear) {
+  localStorage.clear();
+  console.log("clearing localStorage");
+}
 
 const devToolsOptions = {shouldHotReload: true};
 
