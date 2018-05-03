@@ -10,6 +10,14 @@ button {
 
 .backButton {
     float: left;
+    /* width: 6em;
+    height: 3em; */
+    font-size: 12pt;
+    padding: 0.4em;
+}
+
+#root {
+    margin: 20px;
 }
 
 .mainMenu {
