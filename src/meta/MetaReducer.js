@@ -1,7 +1,6 @@
 import * as dotProp from 'dot-prop-immutable'
 import * as types from '../types';
 import * as tools from '../Tools';
-import items from '../conf/Items';
 
 /* config layoutL:
  * state.

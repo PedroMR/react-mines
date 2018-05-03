@@ -4,7 +4,7 @@ const allLevels = [
     {
         config: {x: 6, y: 6, mines: 6},
         effects: [
-            {feature: 'mines-feature-zero-first'},
+            {feature: types.FEATURE_ZERO_FIRST_CLICK},
         ]
     },
     {

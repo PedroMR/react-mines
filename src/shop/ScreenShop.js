@@ -1,8 +1,6 @@
 import React from 'react';
-import * as types from '../types';
 import * as tools from '../Tools';
 import { connect } from 'react-redux';
-import dotProp from 'dot-prop-immutable';
 import {buyItem} from './ShopActions';
 import './shop.css';
 import check from '../img/check.png';

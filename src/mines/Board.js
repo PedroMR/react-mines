@@ -60,12 +60,10 @@ class Board extends React.Component {
     }
 
     hasAutoClickFeatures() {
-        const features = this.props.features;
         return this.hasFeature(types.FEATURE_AUTOCLICK_SURROUNDED) || this.hasFeature(types.FEATURE_AUTOCLICK_SAFE)
     }
 
     checkAutoClick() {
-        const features = this.props.features;
         console.log("auto-click");
         for(let y=0; y < this.props.config.y; y++) {
             for(let x=0; x < this.props.config.x; x++) {

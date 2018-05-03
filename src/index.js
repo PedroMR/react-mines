@@ -19,6 +19,7 @@ var urlParams;
         query  = window.location.search.substring(1);
 
     urlParams = {};
+    // eslint-disable-next-line
     while (match = search.exec(query))
        urlParams[decode(match[1])] = decode(match[2]);
 })();
