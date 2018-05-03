@@ -23,7 +23,7 @@ class ScreenCreateMines extends React.Component {
 
         this.state = {
             newGameConfig: {x: config.x, y: config.y, mines: config.mines},
-            currentPreset: 0,
+            currentPreset: -1,
             presets: [
                 {x: 10, y: 6, mines: 8, name: "Novice"},
                 {x: 20, y: 15, mines: 60, name: "Advanced"},
@@ -50,7 +50,7 @@ class ScreenCreateMines extends React.Component {
 
         if (!this.props.features[types.FEATURE_PRESET_SELECTION] && !this.props.features[types.FEATURE_CUSTOM_MODE]) {
             // why stay here?
-            this.props.dispatch(startNewGame(this.state.presets[0]));
+            this.props.dispatch(startNewGame(this.state.presets[this.state.customPresetIndex]));
         }
     }
 

@@ -3,9 +3,9 @@ import * as types from '../types';
 import * as tools from '../Tools';
 
 const initialConfig = {
-    x: 10,
+    x: 6,
     y: 6,
-    mines: 8,
+    mines: 5,
 };
 
 export const initialGameState = { config: initialConfig };
