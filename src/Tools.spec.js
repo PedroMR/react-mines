@@ -1,3 +1,4 @@
+import * as types from './types';
 import * as tools from './Tools';
 
 test('get credits', () => {
@@ -39,4 +40,64 @@ test('scoring a mines game', () => {
     const score4 = {perMineFound: 10};
     expect(tools.totalScoreFor(score4, results)).toEqual(40);
 
+})
+
+const itemData = [
+    {
+        id: 'auto-zero',
+        name: "Auto Zeroes",
+        price: 20,
+        description: "Automatically reveal all neighbors to a zero tile.",
+        effects: [{ feature: types.FEATURE_ZERO_OUT }]
+    },{
+        id: 'expand-safe',
+        name: "Safe Expanding",
+        price: 45,
+        description: "Click a number to automatically reveal all its neighbors if it's considered safe.",
+        effects: [{ feature: types.FEATURE_EXPAND }]
+    },{
+        id: 'level-1',
+        name: "Unlock the next level",
+        price: 75,
+        description: "More tiles, more mines, more rewards.",
+        effects: [{ level: 1 }]
+    },
+]
+
+test('can find items', () => {
+    const itemId = 'expand-safe';
+
+    expect(tools.findItemById(itemId)).toEqual(itemData[1]);
+    expect(tools.findItemById('non-existant id')).toEqual(undefined);
+})
+
+test('can purchase items', () => {
+    const itemId = 'expand-safe';
+    const meta = { items: [], wallet: {credits: 100} };
+    const retVal  = tools.purchaseItem(meta, itemId);
+
+    expect(retVal.items).toEqual([itemId]);
+    expect(retVal.wallet).toEqual({credits: 55});
+    expect(tools.purchaseItem(meta, 'non-existant id')).toBe(meta);
+})
+
+test('basic feature checking', ()=> {
+    const meta = { features: {['my-feature']: true }};
+
+    expect(tools.hasFeature(meta, 'my-feature')).toBeTruthy();
+    expect(tools.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
+})
+
+test('empy item list feature checking', ()=> {
+    const meta = { items: [], features: {['my-feature']: true }};
+
+    expect(tools.hasFeature(meta, 'my-feature')).toBeTruthy();
+    expect(tools.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
+})
+
+test('item list feature checking', ()=> {
+    const meta = { items: ['expand-safe'] };
+
+    expect(tools.hasFeature(meta, types.FEATURE_EXPAND)).toBeTruthy();
+    expect(tools.hasFeature(meta, types.FEATURE_ZERO_OUT)).toBeFalsy();
 })

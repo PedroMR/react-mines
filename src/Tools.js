@@ -70,19 +70,40 @@ export function ownsItemId(items, itemId) {
 }
 
 export function purchaseItem(state, itemId, price) {
+    const item = findItemById(itemId);
+    if (!item) {
+        console.error("item "+itemId+" not found");
+        return state;
+    }
+    price = price || item.price;
     let newState = dotProp.merge(state, 'items', itemId);
     newState = dotProp.set(newState, 'wallet.credits', state.wallet.credits - price);
 
-    const item = findItemById(itemId);
-
-    console.log(item);
-    
     for(let effect of item.effects) {
-        console.log("effect ",effect, effect.feature);
         if (effect.feature) {
             newState = dotProp.set(newState, 'features.'+effect.feature, true);
         }
     }
 
     return newState;
+}
+
+export function hasFeature(meta, featureId) {
+    if (meta.features && meta.features[featureId])
+        return true;
+
+    if (meta.items) {
+        for (let itemId of meta.items) {
+            const item = findItemById(itemId);
+            if (!item.effects) continue;
+            {
+                for(let effect of item.effects) {
+                    if (effect.feature === featureId)
+                        return true;
+                }
+            }
+        }
+    }
+
+    return false;
 }
