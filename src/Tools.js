@@ -79,11 +79,11 @@ export function purchaseItem(state, itemId, price) {
     let newState = dotProp.merge(state, 'items', itemId);
     newState = dotProp.set(newState, 'wallet.credits', state.wallet.credits - price);
 
-    for(let effect of item.effects) {
-        if (effect.feature) {
-            newState = dotProp.set(newState, 'features.'+effect.feature, true);
-        }
-    }
+    // for(let effect of item.effects) {
+    //     if (effect.feature) {
+    //         newState = dotProp.set(newState, 'features.'+effect.feature, true);
+    //     }
+    // }
 
     return newState;
 }
