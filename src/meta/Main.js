@@ -24,7 +24,7 @@ class Main extends React.Component {
     }
 
     renderCurrentScreen() {
-        switch(this.props.meta.screen) {
+        switch(this.props.current.screen) {
             case types.SCREEN_MAIN:
                 return <ScreenMainMenu/>;
             case types.SCREEN_SHOP:
@@ -43,7 +43,7 @@ class Main extends React.Component {
     }
 
     canGoBack() {
-        const currentScreen = this.props.meta.screen; 
+        const currentScreen = this.props.current.screen; 
         return currentScreen !== types.SCREEN_MAIN &&
                 !(currentScreen === types.SCREEN_PLAY_MINES && this.props.gameOver); // FIXME should be a property set by the game state...???
     }
@@ -73,9 +73,10 @@ function MetaInfo(props) {
 }
 
 function mapStateToProps(state) {
-    let retVal = {}
-    retVal.meta = state.meta;
-    return retVal;
+    return {
+        meta: state.meta,
+        current: state.meta.current,
+    }
 }
 
 export default connect(mapStateToProps)(Main);

@@ -7,7 +7,8 @@ import items from '../conf/Items';
  * state.
  *   .meta
  *      .screen -> current menu we're looking at (main, mines, shop?... etc other crazy stuff)
- *      .features
+ *      .level -> max unlocked level
+ *      .currentLevel -> level being played
  *      .items -> array of owned item ids
  *      .wallet -> currencies
  *          .credits
@@ -23,8 +24,11 @@ import items from '../conf/Items';
 
 
 export const initialMetaState = {
-    screen: types.SCREEN_MAIN,
-    level: 0,
+    current: {
+        screen: types.SCREEN_MAIN,
+        level: 0,
+    },
+    maxLevel: 0,
     features: {},// { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
     items: [], // list of IDs bought already
     wallet: {},
@@ -50,10 +54,10 @@ export function metaReducer(state = initialMetaState, action) {
             return initialMetaState;
 
         case types.CHANGE_SCREEN:
-            return tools.newVersionOf(state, {screen: payload.screen});
+            return dotProp.set(state, "current.screen", payload.screen);
 
         case types.NEW_GAME: //TODO rename this to work for multiple games
-            return dotProp.set( state, 'screen', types.SCREEN_PLAY_MINES);    
+            return dotProp.set( state, 'current.screen', types.SCREEN_PLAY_MINES);    
         
         case types.DEBUG_ADD_CREDITS:
         case types.CLAIM_CREDITS:
