@@ -1,7 +1,7 @@
 import dotProp from 'dot-prop-immutable';
 import { initialMetaState } from './meta/MetaReducer';
-import realItems from './conf/Items';
-import realLevels from './conf/Levels';
+import realItems from './conf/ItemDatabase';
+import realLevels from './conf/LevelDatabase';
 
 let items = realItems;
 let levels = realLevels;

@@ -1,5 +1,17 @@
-import levels from '../conf/Levels';
 import * as tools from '../Tools';
+import realItems from '../conf/ItemDatabase';
+import realLevels from '../conf/LevelDatabase';
+
+let items = realItems;
+let levels = realLevels;
+
+function useItemDatabase(itemDB) {
+    items = itemDB;
+}
+
+function useLevelDatabase(levelsDB) {
+    levels = levelsDB;
+}
 
 function hasFeature(meta, featureId) {
     if (hasFeatureInProfile(meta, featureId))
@@ -50,6 +62,8 @@ function hasFeatureInLevel(meta, featureId) {
 
 let Features = {
     hasFeature,
+    useItemDatabase,
+    useLevelDatabase,
 }
 
 export default Features;

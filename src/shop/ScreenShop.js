@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {buyItem} from './ShopActions';
 import './shop.css';
 import check from '../img/check.png';
-import itemConfig from '../conf/Items';
+import itemConfig from '../conf/ItemDatabase';
 
 function ShopItem(props) {
     const item = props.item;

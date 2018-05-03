@@ -1,6 +1,6 @@
 import React from 'react';
 import * as types from '../types';
-import levels from '../conf/Levels';
+import levels from '../conf/LevelDatabase';
 import { connect } from 'react-redux';
 import { startNewGame } from '../mines/MinesActions';
 import dotProp from 'dot-prop-immutable';

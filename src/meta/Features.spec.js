@@ -28,7 +28,7 @@ const levelData = [
     {
         config: {x: 6, y: 6, mines: 6},
         effects: [
-            {feature: 'mines-feature-zero-first'},
+            {feature: types.FEATURE_CLICK_SURROUNDED},
         ]
     },
     {
@@ -38,15 +38,15 @@ const levelData = [
 
 
 test('basic level feature checking', ()=> {
-    tools.useLevelDatabase(levelData);
+    Features.useLevelDatabase(levelData);
     let meta = { current: { level: 0 }};
 
-    expect(Features.hasFeature(meta, 'mines-feature-zero-first')).toBeTruthy();
+    expect(Features.hasFeature(meta, types.FEATURE_CLICK_SURROUNDED)).toBeTruthy();
     expect(Features.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
 
     meta.current.level = 1;
 
-    expect(Features.hasFeature(meta, 'mines-feature-zero-first')).toBeFalsy();
+    expect(Features.hasFeature(meta, types.FEATURE_CLICK_SURROUNDED)).toBeFalsy();
     expect(Features.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
 
 })
