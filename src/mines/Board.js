@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { flagTile, revealTile, startNewGame } from './MinesActions';
 import * as types from '../types';
+import * as tools from '../Tools';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
@@ -27,17 +28,15 @@ class Board extends React.Component {
         let value = seen ? (mine ? "*" : around) : "";
         if (value === 0) value = "";
 
-        const features = this.props.features;
-
         const flagsAndMinesAround = this.countFlagsAndVisibleMinesAround(x, y);
         const resolved = this.countNeighbors(x, y, (pos) => !this.props.seen[pos] && !this.props.flags[pos]) === 0;
-        const okay = (!resolved || !features[types.FEATURE_DONT_COLOR_DONE]) && features[types.FEATURE_COLOR_NUMBERS] && around === flagsAndMinesAround;
+        const okay = (!resolved || !this.hasFeature(types.FEATURE_DONT_COLOR_DONE)) && this.hasFeature(types.FEATURE_COLOR_NUMBERS) && around === flagsAndMinesAround;
         const unseenAround = this.countNeighbors(x, y, (pos) => !this.props.seen[pos] && !this.props.flags[pos]);
-        const surrounded = (!resolved || !features[types.FEATURE_DONT_COLOR_DONE]) && features[types.FEATURE_COLOR_NUMBERS] && (unseenAround + flagsAndMinesAround) === around;
+        const surrounded = (!resolved || !this.hasFeature(types.FEATURE_DONT_COLOR_DONE)) && this.hasFeature(types.FEATURE_COLOR_NUMBERS) && (unseenAround + flagsAndMinesAround) === around;
 
         let error = null;
 
-        if (seen && features[types.FEATURE_ERROR_DETECTION] && around < flagsAndMinesAround) {
+        if (seen && this.hasFeature(types.FEATURE_ERROR_DETECTION) && around < flagsAndMinesAround) {
             value += "!";
             error = true;
         } 
@@ -47,7 +46,7 @@ class Board extends React.Component {
             placingFlag={this.isPlacingFlag()}
             mine={mine}
             seen={seen}
-            resolved={!error && resolved && features[types.FEATURE_COLOR_NUMBERS] && features[types.FEATURE_DONT_COLOR_DONE]}
+            resolved={!error && resolved && this.hasFeature(types.FEATURE_COLOR_NUMBERS) && this.hasFeature(types.FEATURE_DONT_COLOR_DONE)}
             completelyOkay={!error && okay}
             completelySurrounded={error|| surrounded}
             gameOver={this.props.gameOver}
@@ -56,9 +55,13 @@ class Board extends React.Component {
             value={value}/>
     }
 
+    hasFeature(featureId) {
+        return tools.hasFeature(this.props.meta, featureId);
+    }
+
     hasAutoClickFeatures() {
         const features = this.props.features;
-        return features[types.FEATURE_AUTOCLICK_SURROUNDED] || features[types.FEATURE_AUTOCLICK_SAFE]        
+        return this.hasFeature(types.FEATURE_AUTOCLICK_SURROUNDED) || this.hasFeature(types.FEATURE_AUTOCLICK_SAFE)
     }
 
     checkAutoClick() {
@@ -66,11 +69,11 @@ class Board extends React.Component {
         console.log("auto-click");
         for(let y=0; y < this.props.config.y; y++) {
             for(let x=0; x < this.props.config.x; x++) {
-                if (features[types.FEATURE_AUTOCLICK_SURROUNDED] && this.isSurrounded(x, y)) {
+                if (this.hasFeature(types.FEATURE_AUTOCLICK_SURROUNDED) && this.isSurrounded(x, y)) {
                     this.flagAllTilesAround(x, y);
                     return;
                 }
-                if (features[types.FEATURE_AUTOCLICK_SAFE] && this.isSafe(x, y)) {
+                if (this.hasFeature(types.FEATURE_AUTOCLICK_SAFE) && this.isSafe(x, y)) {
                     this.expandAround(x, y);
                     return;
                 }
@@ -150,10 +153,6 @@ class Board extends React.Component {
         return this.props.options.uiMode === types.UI_MODE_FLAG;
     }
 
-    hasFeature(feature) {
-        return this.props.features[feature];
-    }
-
     handleClick(x, y, pos, seen, around, flag, mine, e) {
         if (e) e.preventDefault();
         if (seen) {
@@ -229,11 +228,11 @@ class Board extends React.Component {
 
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'features', 'clicksSoFar'];
+    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'clicksSoFar'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state.mines[name]});
 
-    retVal.features = state.meta.features;
+    retVal.meta = state.meta;
     return retVal;
 }
 export default connect(mapStateToProps)(Board);

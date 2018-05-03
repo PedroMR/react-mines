@@ -1,5 +1,6 @@
 import React from 'react';
 import * as types from '../types';
+import * as tools from '../Tools';
 import { connect } from 'react-redux';
 import { startNewGame } from '../mines/MinesActions';
 import dotProp from 'dot-prop-immutable';
@@ -34,11 +35,11 @@ class ScreenCreateMines extends React.Component {
             ],
         }
 
-        if (this.props.features[types.FEATURE_CUSTOM_MODE]) {
+        if (this.hasFeature(types.FEATURE_CUSTOM_MODE)) {
             this.state.presets.push({name: "Custom"});
             this.state.customPresetIndex = this.state.presets.length-1;
             this.state.currentPreset = this.state.customPresetIndex;
-        } else if (this.props.features[types.FEATURE_PRESET_SELECTION]) {
+        } else if (this.hasFeature(types.FEATURE_PRESET_SELECTION)) {
             this.state.newGameConfig = {...this.state.presets[this.state.currentPreset]};
         }
 
@@ -48,10 +49,14 @@ class ScreenCreateMines extends React.Component {
         this.handleNumericInputChanged = this.handleNumericInputChanged.bind(this);
         this.handlePresetChanged = this.handlePresetChanged.bind(this);
 
-        if (!this.props.features[types.FEATURE_PRESET_SELECTION] && !this.props.features[types.FEATURE_CUSTOM_MODE]) {
+        if (!this.hasFeature(types.FEATURE_PRESET_SELECTION) && !this.hasFeature(types.FEATURE_CUSTOM_MODE)) {
             // why stay here?
             this.props.dispatch(startNewGame(this.state.presets[this.state.customPresetIndex]));
         }
+    }
+
+    hasFeature(feature) {
+        return tools.hasFeature(this.props.meta, feature);
     }
 
     configMatches(preset) {
@@ -104,7 +109,7 @@ class ScreenCreateMines extends React.Component {
         let radioOptions = this.state.presets.map(makeRadioOption);
 
         const presets =  <tbody><tr className="gamePresets"><td colSpan='2'>{radioOptions}</td></tr></tbody>;
-        const enableCustomValues = this.props.features[types.FEATURE_CUSTOM_MODE];
+        const enableCustomValues = this.hasFeature(types.FEATURE_CUSTOM_MODE);
         const customValueSelector = <tbody>{[
                 {name: "Rows", prop: "y"},
                 {name: "Columns", prop: "x"},
@@ -121,7 +126,7 @@ class ScreenCreateMines extends React.Component {
                 <form>
                 <h3>New game</h3>
                 <table><thead></thead>
-                    { this.props.features[types.FEATURE_PRESET_SELECTION] ? presets : null }
+                    { this.hasFeature(types.FEATURE_PRESET_SELECTION) ? presets : null }
                     { customValueSelector }
                 </table>
                 <button onClick={()=>this.onCreateGameButton()}>Create Game</button>
@@ -137,7 +142,7 @@ class ScreenCreateMines extends React.Component {
 function mapStateToProps(state) {
     return {
         config: state.mines.config,
-        features: state.meta.features,
+        meta: state.meta,
     }
 }
 
