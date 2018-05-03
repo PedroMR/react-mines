@@ -27,6 +27,7 @@ export const SCREEN_CREATE_MINES = "screen-create-mines";
 // Feature flags
 export const FEATURE_EXPAND = "mines-feature-expand";
 export const FEATURE_ZERO_OUT = "mines-feature-zeroOut";
+export const FEATURE_BLANK_ZEROES = "mines-feature-blankZero";
 export const FEATURE_PRESET_SELECTION = "mines-feature-presets";
 export const FEATURE_CUSTOM_MODE = "mines-feature-custom";
 export const FEATURE_COLOR_NUMBERS = "mines-feature-color-numbers";

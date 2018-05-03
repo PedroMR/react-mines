@@ -26,7 +26,7 @@ class Board extends React.Component {
         const mine = seen && this.props.mines[pos];
         const flag = this.props.flags[pos];        
         let value = seen ? (mine ? "*" : around) : "";
-        if (value === 0) value = "";
+        if (value === 0 && this.hasFeature(types.FEATURE_BLANK_ZEROES)) value = "";
 
         const flagsAndMinesAround = this.countFlagsAndVisibleMinesAround(x, y);
         const resolved = this.countNeighbors(x, y, (pos) => !this.props.seen[pos] && !this.props.flags[pos]) === 0;

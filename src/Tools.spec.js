@@ -60,11 +60,12 @@ const itemData = [
         name: "Unlock the next level",
         price: 75,
         description: "More tiles, more mines, more rewards.",
-        effects: [{ level: 1 }]
+        effects: [{ maxLevel: 1 }]
     },
 ]
 
 test('can find items', () => {
+    tools.useItemDatabase(itemData);
     const itemId = 'expand-safe';
 
     expect(tools.findItemById(itemId)).toEqual(itemData[1]);
@@ -72,6 +73,7 @@ test('can find items', () => {
 })
 
 test('can purchase items', () => {
+    tools.useItemDatabase(itemData);
     const itemId = 'expand-safe';
     const meta = { items: [], wallet: {credits: 100} };
     const retVal  = tools.purchaseItem(meta, itemId);
@@ -116,7 +118,8 @@ const levelData = [
 ];
 
 
-test('basic feature checking', ()=> {
+test('basic level feature checking', ()=> {
+    tools.useLevelDatabase(levelData);
     let meta = { current: { level: 0 }};
 
     expect(tools.hasFeature(meta, 'mines-feature-zero-first')).toBeTruthy();
@@ -127,4 +130,15 @@ test('basic feature checking', ()=> {
     expect(tools.hasFeature(meta, 'mines-feature-zero-first')).toBeFalsy();
     expect(tools.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
 
+})
+
+test('item level unlocking', ()=> {
+    tools.useItemDatabase(itemData);
+    const itemId = 'level-1';
+    const meta = { items: [], maxLevel: 0, wallet: {credits: 100} };
+    const retVal  = tools.purchaseItem(meta, itemId);
+
+    expect(retVal.wallet).toEqual({credits: 25});
+    expect(retVal.items).toContain(itemId);
+    expect(retVal.maxLevel).toBe(1);
 })

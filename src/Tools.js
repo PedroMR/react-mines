@@ -1,7 +1,18 @@
 import dotProp from 'dot-prop-immutable';
 import { initialMetaState } from './meta/MetaReducer';
-import items from './conf/Items';
-import levels from './conf/Levels';
+import realItems from './conf/Items';
+import realLevels from './conf/Levels';
+
+let items = realItems;
+let levels = realLevels;
+
+export function useItemDatabase(itemDB) {
+    items = itemDB;
+}
+
+export function useLevelDatabase(levelsDB) {
+    levels = levelsDB;
+}
 
 export function scoreForMinesFound(score, amount) {
     console.log('found',score, initialMetaState);
@@ -80,11 +91,14 @@ export function purchaseItem(state, itemId, price) {
     let newState = dotProp.merge(state, 'items', itemId);
     newState = dotProp.set(newState, 'wallet.credits', state.wallet.credits - price);
 
-    // for(let effect of item.effects) {
-    //     if (effect.feature) {
-    //         newState = dotProp.set(newState, 'features.'+effect.feature, true);
-    //     }
-    // }
+    for(let effect of item.effects) {
+        if (effect.feature) {
+            // Features don't get set from here -- they're polled via tools.hasFeature(), below.
+        }
+        if (effect.maxLevel) {
+            newState.maxLevel = Math.max(newState.maxLevel, effect.maxLevel);
+        }
+    }
 
     return newState;
 }
@@ -111,11 +125,9 @@ function hasFeatureInItems(meta, featureId) {
         for (let itemId of meta.items) {
             const item = findItemById(itemId);
             if (!item.effects) continue;
-            {
-                for(let effect of item.effects) {
-                    if (effect.feature === featureId)
-                        return true;
-                }
+            for(let effect of item.effects) {
+                if (effect.feature === featureId)
+                    return true;
             }
         }
     }
