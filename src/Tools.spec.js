@@ -83,55 +83,6 @@ test('can purchase items', () => {
     expect(tools.purchaseItem(meta, 'non-existant id')).toBe(meta);
 })
 
-test('basic feature checking', ()=> {
-    const meta = { features: {['my-feature']: true }};
-
-    expect(tools.hasFeature(meta, 'my-feature')).toBeTruthy();
-    expect(tools.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
-})
-
-test('empy item list feature checking', ()=> {
-    const meta = { items: [], features: {['my-feature']: true }};
-
-    expect(tools.hasFeature(meta, 'my-feature')).toBeTruthy();
-    expect(tools.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
-})
-
-test('item list feature checking', ()=> {
-    const meta = { items: ['expand-safe'] };
-
-    expect(tools.hasFeature(meta, types.FEATURE_EXPAND)).toBeTruthy();
-    expect(tools.hasFeature(meta, types.FEATURE_ZERO_OUT)).toBeFalsy();
-})
-
-
-const levelData = [
-    {
-        config: {x: 6, y: 6, mines: 6},
-        effects: [
-            {feature: 'mines-feature-zero-first'},
-        ]
-    },
-    {
-        config: {x: 10, y: 8, mines: 10},
-    },
-];
-
-
-test('basic level feature checking', ()=> {
-    tools.useLevelDatabase(levelData);
-    let meta = { current: { level: 0 }};
-
-    expect(tools.hasFeature(meta, 'mines-feature-zero-first')).toBeTruthy();
-    expect(tools.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
-
-    meta.current.level = 1;
-
-    expect(tools.hasFeature(meta, 'mines-feature-zero-first')).toBeFalsy();
-    expect(tools.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
-
-})
-
 test('item level unlocking', ()=> {
     tools.useItemDatabase(itemData);
     const itemId = 'level-1';

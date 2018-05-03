@@ -1,10 +1,10 @@
 import React from 'react';
 import * as types from '../types';
-import * as tools from '../Tools';
 import levels from '../conf/Levels';
 import { connect } from 'react-redux';
 import { startNewGame } from '../mines/MinesActions';
 import dotProp from 'dot-prop-immutable';
+import Features from './Features';
 
 function NumericInput(props) { 
     const {propertyName, onChange, enabled, defaultValue} = props;
@@ -61,7 +61,7 @@ class ScreenCreateMines extends React.Component {
     }
 
     hasFeature(feature) {
-        return tools.hasFeature(this.props.meta, feature);
+        return Features.hasFeature(this.props.meta, feature);
     }
 
     configMatches(preset) {

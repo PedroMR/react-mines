@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { flagTile, revealTile, startNewGame } from './MinesActions';
 import * as types from '../types';
-import * as tools from '../Tools';
+import Features from '../meta/Features';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
@@ -56,7 +56,7 @@ class Board extends React.Component {
     }
 
     hasFeature(featureId) {
-        return tools.hasFeature(this.props.meta, featureId);
+        return Features.hasFeature(this.props.meta, featureId);
     }
 
     hasAutoClickFeatures() {
