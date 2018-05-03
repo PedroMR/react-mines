@@ -1,6 +1,7 @@
 import React from 'react';
 import * as types from '../types';
 import * as tools from '../Tools';
+import levels from '../conf/Levels';
 import { connect } from 'react-redux';
 import { startNewGame } from '../mines/MinesActions';
 import dotProp from 'dot-prop-immutable';
@@ -51,7 +52,11 @@ class ScreenCreateMines extends React.Component {
 
         if (!this.hasFeature(types.FEATURE_PRESET_SELECTION) && !this.hasFeature(types.FEATURE_CUSTOM_MODE)) {
             // why stay here?
-            this.props.dispatch(startNewGame(this.state.presets[this.state.customPresetIndex]));
+            let levelNumber = Math.min(this.props.meta.maxLevel, levels.length);
+            const levelData = levels[levelNumber];
+            const config = levelData.config;
+            // this.props.dispatch(startNewGame(this.state.presets[this.state.customPresetIndex]));
+            this.props.dispatch(startNewGame(config));
         }
     }
 
