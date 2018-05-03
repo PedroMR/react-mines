@@ -83,17 +83,16 @@ class Board extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state && this.state.waitingForRegen) {
-            console.log("Regenned game! ", this.state.waitingForRegen);
             this.setState({waitingForRegen: false});
             const pos = this.state.waitingForRegen.x + this.state.waitingForRegen.y*this.props.config.x;
             const seen = this.props.seen[pos];
             const around = this.props.around[pos];
             const mine = seen && this.props.mines[pos];
             const flag = this.props.flags[pos];        
+            console.log("Regenned game! ", this.state.waitingForRegen, " around ", around, " seen "+seen);
             this.handleClick(this.state.waitingForRegen.x, this.state.waitingForRegen.y, pos, seen, around, flag, mine);
         }
         if (this.hasAutoClickFeatures() && (prevProps.seen !== this.props.seen || prevProps.flags !== this.props.flags)) {
-            console.log("changed seen/flags");
             if (this.timer) {
                 clearTimeout(this.timer);
                 this.timer = null;
@@ -165,6 +164,10 @@ class Board extends React.Component {
             if (this.hasFeature(types.FEATURE_EXPAND) && around === this.countFlagsAndVisibleMinesAround(x, y)) {
                 this.expandAround(x, y);                
             }
+
+            if (this.hasFeature(types.FEATURE_ZERO_OUT) && around === 0) {
+                this.expandAround(x, y);
+            }            
             return;
         }
 
