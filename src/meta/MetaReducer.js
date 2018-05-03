@@ -1,6 +1,7 @@
 import * as dotProp from 'dot-prop-immutable'
 import * as types from '../types';
 import * as tools from '../Tools';
+import Items from '../meta/Items';
 
 /* config layoutL:
  * state.
@@ -71,14 +72,14 @@ export function metaReducer(state = initialMetaState, action) {
 }
 
 function purchaseItem(state, itemId, price) {
-    const theItem = tools.findItemById(itemId);
+    const theItem = Items.findItemById(itemId);
     price = price || theItem.price;
 
     if (!theItem) {
         console.log("Can't find item "+itemId);
         return state;
     }
-    if (tools.ownsItemId(state.items, itemId)) {
+    if (Items.ownsItemId(state.items, itemId)) {
         console.log("Already owns "+itemId);
         return state;
     }
@@ -87,7 +88,7 @@ function purchaseItem(state, itemId, price) {
         return state;
     }
 
-    return tools.purchaseItem(state, itemId, price);
+    return Items.purchaseItem(state, itemId, price);
 }
 
 

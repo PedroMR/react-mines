@@ -5,6 +5,7 @@ import {buyItem} from './ShopActions';
 import './shop.css';
 import check from '../img/check.png';
 import itemConfig from '../conf/ItemDatabase';
+import Items from '../meta/Items';
 
 function ShopItem(props) {
     const item = props.item;
@@ -34,7 +35,7 @@ class ScreenShop extends React.PureComponent {
         const ownedItems = this.props.items;
         let availableItems = itemConfig.map(elem => {
             const e2 = tools.newVersionOf(elem);
-            e2.alreadyOwned = tools.ownsItemId(ownedItems, e2.id);
+            e2.alreadyOwned = Items.ownsItemId(ownedItems, e2.id);
             e2.visible = true;
             return e2;
         });
@@ -61,7 +62,7 @@ class ScreenShop extends React.PureComponent {
             item={item}
             onBuy={this.onBuy}
             canAfford={item.price <= this.props.wallet.credits}
-            alreadyOwned={tools.ownsItemId(this.props.items, item.id)}
+            alreadyOwned={Items.ownsItemId(this.props.items, item.id)}
         />);
 
         return <div className="shop"><h3>Shop</h3><center>{itemList}</center></div>;

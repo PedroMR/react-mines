@@ -1,12 +1,14 @@
 import * as tools from '../Tools';
 import realItems from '../conf/ItemDatabase';
 import realLevels from '../conf/LevelDatabase';
+import Items from './Items';
 
 let items = realItems;
 let levels = realLevels;
 
 function useItemDatabase(itemDB) {
     items = itemDB;
+    Items.useItemDatabase(itemDB);
 }
 
 function useLevelDatabase(levelsDB) {
@@ -33,7 +35,7 @@ function hasFeatureInProfile(meta, featureId) {
 function hasFeatureInItems(meta, featureId) {
     if (meta.items) {
         for (let itemId of meta.items) {
-            const item = tools.findItemById(itemId);
+            const item = Items.findItemById(itemId);
             if (!item.effects) continue;
             for(let effect of item.effects) {
                 if (effect.feature === featureId)
