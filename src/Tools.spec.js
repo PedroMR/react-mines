@@ -101,3 +101,30 @@ test('item list feature checking', ()=> {
     expect(tools.hasFeature(meta, types.FEATURE_EXPAND)).toBeTruthy();
     expect(tools.hasFeature(meta, types.FEATURE_ZERO_OUT)).toBeFalsy();
 })
+
+
+const levelData = [
+    {
+        config: {x: 6, y: 6, mines: 6},
+        effects: [
+            {feature: 'mines-feature-zero-first'},
+        ]
+    },
+    {
+        config: {x: 10, y: 8, mines: 10},
+    },
+];
+
+
+test('basic feature checking', ()=> {
+    let meta = { current: { level: 0 }};
+
+    expect(tools.hasFeature(meta, 'mines-feature-zero-first')).toBeTruthy();
+    expect(tools.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
+
+    meta.current.level = 1;
+
+    expect(tools.hasFeature(meta, 'mines-feature-zero-first')).toBeFalsy();
+    expect(tools.hasFeature(meta, 'my-NON-feature')).toBeFalsy();
+
+})

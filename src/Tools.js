@@ -1,6 +1,7 @@
 import dotProp from 'dot-prop-immutable';
 import { initialMetaState } from './meta/MetaReducer';
 import items from './conf/Items';
+import levels from './conf/Levels';
 
 export function scoreForMinesFound(score, amount) {
     console.log('found',score, initialMetaState);
@@ -89,9 +90,23 @@ export function purchaseItem(state, itemId, price) {
 }
 
 export function hasFeature(meta, featureId) {
-    if (meta.features && meta.features[featureId])
+    if (hasFeatureInProfile(meta, featureId))
         return true;
 
+    if (hasFeatureInItems(meta, featureId))
+        return true;
+
+    if (hasFeatureInLevel(meta, featureId))
+        return true;
+
+    return false;
+}
+
+function hasFeatureInProfile(meta, featureId) {
+    return (meta.features && meta.features[featureId]);
+}
+
+function hasFeatureInItems(meta, featureId) {
     if (meta.items) {
         for (let itemId of meta.items) {
             const item = findItemById(itemId);
@@ -103,6 +118,21 @@ export function hasFeature(meta, featureId) {
                 }
             }
         }
+    }
+
+    return false;
+}
+
+function hasFeatureInLevel(meta, featureId) {
+    if (!meta.current) return false;
+
+    const level = levels[meta.current.level];
+    if (!level) return false;
+    if (!level.effects) return false;
+
+    for(let effect of level.effects) {
+        if (effect.feature === featureId)
+            return true;
     }
 
     return false;
