@@ -6,6 +6,12 @@ export function OwnsItem(itemId) {
     }
 }
 
+export function UnlockedLevel(levelNumber) {
+    return function(meta) {
+        return meta.maxLevel >= levelNumber;
+    }
+}
+
 export function Not(clause) {
     return function(...args) {
         return !clause(...args);

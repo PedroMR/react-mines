@@ -1,6 +1,6 @@
 
 import * as types from "../types";
-import {OwnsItem, Not} from '../meta/Require';
+import {OwnsItem, Not, UnlockedLevel} from '../meta/Require';
 
 const allItems = [
     {
@@ -22,21 +22,52 @@ const allItems = [
         description: "Click a number to automatically reveal all its neighbors if it's considered safe.",
         effects: [{ feature: types.FEATURE_EXPAND }]
     },{
-        id: 'level-1',
-        name: "Unlock the next level",
-        price: 45,
-        description: "More tiles, more mines, more rewards.",
-        effects: [{ maxLevel: 1 }]
+        id: 'color-code',
+        name: "Color Code Numbers",
+        price: 175,
+        description: "Convenient optics alter the way you perceive numbers depending on the amount of mines vs the amount of unseen tiles. Trust us, you'll like this one.",
+        effects: [{ feature: types.FEATURE_COLOR_NUMBERS }]
     },{
-        id: 'level-2',
-        name: "Raise the roof!",
-        price: 110,
-        description: "It's getting hot in here... defuse more mines!",
-        effects: [{ maxLevel: 2 }],
-        showIf: [
-            OwnsItem('level-1'),
-        ],
+        id: 'dont-color-done',
+        name: "Information Filtering",
+        price: 215,
+        description: "Some would think it's not worth paying this much for something that makes things gray. They would be wrong. In an era of information overload filtering things out is-- ...I'll be quiet.",
+        effects: [{ feature: types.FEATURE_DONT_COLOR_DONE }],
+        showIf: [OwnsItem('color-code')],
+    },{
+        id: 'click-surrounded',
+        name: "You Are Surrounded!",
+        price: 350,
+        description: '"What if I told you... you could click the RED numbers?"',
+        effects: [{ feature: types.FEATURE_CLICK_SURROUNDED }],
+        showIf: [OwnsItem('color-code')],
+    },{
+        id: 'error-detection',
+        name: "Mine Checksum",
+        price: 250,
+        description: "Are you going faster now? This will help avoid some human mistakes. Don't worry. We won't judge.",
+        effects: [{ feature: types.FEATURE_ERROR_DETECTION }],
+        showIf: [UnlockedLevel(4)],
     },
+    MakeLevelUnlock(1, 45),
+    MakeLevelUnlock(2, 110),
+    MakeLevelUnlock(3, 180),
+    MakeLevelUnlock(4, 250),
 ]
+
+function MakeLevelUnlock(num, price) {
+    let level = {
+        id: 'level-'+num,
+        name: "Unlock level "+num,
+        price,
+        description: "More tiles! More mines! More... REWARDS...",
+        effects: [{maxLevel: num}]
+    }
+    level.showIf = [ Not(OwnsItem('level-'+(num+1))) ];
+    if (num > 1)
+        level.showIf.push(OwnsItem('level-'+(num-1)));
+
+    return level;
+}
 
 export default allItems;
