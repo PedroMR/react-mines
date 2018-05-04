@@ -36,15 +36,26 @@ class ScreenShop extends React.PureComponent {
         let availableItems = itemConfig.map(elem => {
             const e2 = tools.newVersionOf(elem);
             e2.alreadyOwned = Items.ownsItemId(ownedItems, e2.id);
-            e2.visible = true;
+            e2.visible = e2.alreadyOwned || this.canShowItem(e2);
             return e2;
         });
+        availableItems = availableItems.filter((e1) => (e1.visible));
         availableItems.sort((e1, e2) => {
             if (e1.alreadyOwned && !e2.alreadyOwned) return 1;
             if (e2.alreadyOwned && !e1.alreadyOwned) return -1;
             return e1.price - e2.price;
         });
         return availableItems;
+    }
+
+    canShowItem(item) {
+        if (item.showIf) {
+            for (let requirement of item.showIf) {
+                if (!requirement(this.props.meta))
+                    return false;
+            }
+        }
+        return true;
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -75,6 +86,7 @@ function mapStateToProps(state) {
         wallet: state.meta.wallet,
         items: state.meta.items,
         features: state.meta.features,
+        meta: state.meta,
     }
 }
 

@@ -1,6 +1,6 @@
 
 import * as types from "../types";
-import {OwnsItem} from '../meta/Require';
+import {OwnsItem, Not} from '../meta/Require';
 
 const allItems = [
     {
