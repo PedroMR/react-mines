@@ -2,7 +2,10 @@
 
 - [ ] Narrator text box
 - [ ] Loads of story
-- [ ] Get feature when something happens in the game (e.g., clicking a bomb first unlocks the item that improves that)
+- [ ] Analytics
+- [ ] Rooster for the shop (can afford)
+- [ ] Maybe requirement for "only after next game"? (staggered item purchase)
+- [ ] Formalize feature when something happens in the game (e.g., clicking a bomb first unlocks the item that improves that)
 - [ ] Bonus for level danger (mine ratio) 
 - [ ] Reward tiers for performance (non-linear)?
 - [ ] Bonus for conserving clicks (as item)
