@@ -1,11 +1,10 @@
 # TODO
 
-- [ ] Level progression
 - [ ] Narrator text box
 - [ ] Bonus for level danger (mine ratio)
 - [ ] Reward tiers for performance (non-linear)
 - [ ] Bonus for conserving clicks
-- [ ] Improve score tally 
+- [ ] Improve score tally aesthetics
 - [ ] Finish the level earlier -- if all unseen spots = num mines - num flags
 - [ ] Sounds
 - [ ] Advanced level selector
@@ -13,12 +12,17 @@
     - [ ] More warning patterns (e.g., hex)
     - [ ] Double-mines
     - [ ] Wrong numbers
+    - [ ] Multiple layers (two or three 2D slices of a 3D level)
 - [ ] Power-ups? (help with things like no-info areas)
     - [ ] Limited-use "rewind"
     - [ ] Kill a bomb (so you can see the number)
 - [ ] Design roadmap for improvements and evolution of the game
+- [ ] Moar g4m3s!
+    - [ ] Picross-like
+    - [ ] Controling robot in tunnels with guards?
 - [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
 
+- [X] VERY BASIC Level progression (purchasing)
 - [X] query option for clearing localStorage
 - [X] Move random() out of the reducers to avoid determinism process. Can go to action!
 - [X] Purchasing menu for features

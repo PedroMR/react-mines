@@ -1,5 +1,6 @@
 
 import * as types from "../types";
+import {OwnsItem} from '../meta/Require';
 
 const allItems = [
     {
@@ -26,6 +27,15 @@ const allItems = [
         price: 45,
         description: "More tiles, more mines, more rewards.",
         effects: [{ maxLevel: 1 }]
+    },{
+        id: 'level-2',
+        name: "Raise the roof!",
+        price: 110,
+        description: "It's getting hot in here... defuse more mines!",
+        effects: [{ maxLevel: 2 }],
+        showIf: [
+            OwnsItem('level-1'),
+        ],
     },
 ]
 

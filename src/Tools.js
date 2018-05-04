@@ -15,7 +15,6 @@ export function useLevelDatabase(levelsDB) {
 }
 
 export function scoreForMinesFound(score, amount) {
-    console.log('found',score, initialMetaState);
     const ratio = scoreMultiplierForMinesFound(score);
 
     return ratio * amount;
