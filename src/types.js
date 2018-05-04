@@ -10,6 +10,7 @@ export const DEBUG_ADD_CREDITS = "debug.addCredits";
 
 export const RESET_PROFILE = "config.resetProfile";
 export const CHANGE_SCREEN = "ui.goto";
+export const SELECT_LEVEL = "ui.selectLevel";
 
 export const CLAIM_CREDITS = "claimCredits";
 export const BUY_ITEM = "buyItem";
@@ -38,3 +39,4 @@ export const FEATURE_AUTOCLICK_SURROUNDED = "mines-feature-autoclick-surrounded"
 export const FEATURE_AUTOCLICK_SAFE = "mines-feature-autoclick-safe";
 export const FEATURE_SAFE_FIRST_CLICK = "mines-feature-safe-first";
 export const FEATURE_ZERO_FIRST_CLICK = "mines-feature-zero-first";
+export const FLAG_DID_HIT_MINE_FIRST_CLICK = "flag-hit-mine-first-click";

@@ -1,6 +1,6 @@
 
 import * as types from "../types";
-import {OwnsItem, Not, UnlockedLevel} from '../meta/Require';
+import {OwnsItem, Not, UnlockedLevel, HasFeature} from '../meta/Require';
 
 const allItems = [
     {
@@ -48,6 +48,13 @@ const allItems = [
         description: "Are you going faster now? This will help avoid some human mistakes. Don't worry. We won't judge.",
         effects: [{ feature: types.FEATURE_ERROR_DETECTION }],
         showIf: [UnlockedLevel(4)],
+    },{
+        id: 'mine-first-click',
+        name: "Mine Mulligan",
+        price: 97,
+        description: "That felt awful, right? You should never have to hit a mine in your first tap again.",
+        effects: [{ feature: types.FEATURE_SAFE_FIRST_CLICK }],
+        showIf: [HasFeature(types.FLAG_DID_HIT_MINE_FIRST_CLICK)],
     },
     MakeLevelUnlock(1, 45),
     MakeLevelUnlock(2, 110),

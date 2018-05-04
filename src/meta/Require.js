@@ -1,4 +1,6 @@
 import Items from './Items';
+import Features from './Features';
+
 
 export function OwnsItem(itemId) {
     return function(meta) {
@@ -12,14 +14,14 @@ export function UnlockedLevel(levelNumber) {
     }
 }
 
+export function HasFeature(featureId) {
+    return function(meta) {
+        return Features.hasFeature(meta, featureId);
+    }
+}
+
 export function Not(clause) {
     return function(...args) {
         return !clause(...args);
     }
 }
-
-let Require = {
-    OwnsItem,
-}
-
-export default Require;

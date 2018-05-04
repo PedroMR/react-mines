@@ -1,11 +1,13 @@
 # TODO
 
 - [ ] Narrator text box
-- [ ] Bonus for level danger (mine ratio)
-- [ ] Reward tiers for performance (non-linear)
-- [ ] Bonus for conserving clicks
+- [ ] Loads of story
+- [ ] Get feature when something happens in the game (e.g., clicking a bomb first unlocks the item that improves that)
+- [ ] Bonus for level danger (mine ratio) 
+- [ ] Reward tiers for performance (non-linear)?
+- [ ] Bonus for conserving clicks (as item)
 - [ ] Improve score tally aesthetics
-- [ ] Finish the level earlier -- if all unseen spots = num mines - num flags
+- [ ] Finish the level earlier -- if all unseen spots = num mines - num flags (as feature)
 - [ ] Sounds
 - [ ] Advanced level selector
 - [ ] Some crazy features for levels, like:

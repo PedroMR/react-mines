@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { flagTile, revealTile, startNewGame } from './MinesActions';
+import { debugToggleFeature } from '../meta/MetaActions';
 import * as types from '../types';
 import Features from '../meta/Features';
 
@@ -173,8 +174,16 @@ class Board extends React.Component {
             this.props.dispatch(flagTile(x, y));
         else if (!flag) {
             if (this.props.clicksSoFar === 0) {
-                if ((this.props.mines[pos] && this.hasFeature(types.FEATURE_SAFE_FIRST_CLICK)) || 
-                    (this.props.around[pos] > 0  && this.hasFeature(types.FEATURE_ZERO_FIRST_CLICK))) {
+                const hitMine = this.props.mines[pos];
+                const hitNextToMine = this.props.around[pos] > 0;
+                if (hitMine && !this.hasFeature(types.FEATURE_SAFE_FIRST_CLICK) && !this.hasFeature(types.FLAG_DID_HIT_MINE_FIRST_CLICK)) {
+                    //TODO add narrator text here "wouldn't it be nice", etc
+                    console.log("hitMine & didn't have flag")
+                    this.props.dispatch(debugToggleFeature(types.FLAG_DID_HIT_MINE_FIRST_CLICK));
+                }
+
+                if ((hitMine && this.hasFeature(types.FEATURE_SAFE_FIRST_CLICK)) || 
+                    (hitNextToMine && this.hasFeature(types.FEATURE_ZERO_FIRST_CLICK))) {
                     this.props.dispatch(startNewGame(this.props.config, x, y, this.hasFeature(types.FEATURE_ZERO_FIRST_CLICK) ? 1 : 0));
                     this.setState({waitingForRegen: {x, y}});
                 }

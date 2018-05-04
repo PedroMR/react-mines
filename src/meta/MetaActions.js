@@ -23,3 +23,8 @@ export const changeScreen = ( screen ) => ({
     type: types.CHANGE_SCREEN,
     payload: { screen }
 });
+
+export const selectLevel = ( levelNumber ) => ({
+    type: types.SELECT_LEVEL,
+    payload: { levelNumber }
+});

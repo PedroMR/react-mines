@@ -56,6 +56,9 @@ export function metaReducer(state = initialMetaState, action) {
         case types.CHANGE_SCREEN:
             return dotProp.set(state, "current.screen", payload.screen);
 
+        case types.SELECT_LEVEL:
+            return dotProp.set(state, "current.level", payload.levelNumber);
+
         case types.NEW_GAME: //TODO rename this to work for multiple games
             return dotProp.set( state, 'current.screen', types.SCREEN_PLAY_MINES);    
         
