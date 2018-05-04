@@ -2,6 +2,11 @@ import * as types from "../types";
 
 export const startNewGame = (config, safeX, safeY, safeRadius) => {
     const seed = Math.floor(Math.random()*99999);
+    if (config.mineRatio && !config.mines) {
+        const mines = Math.floor(config.x * config.y * config.mineRatio);
+        config = {...config, mines }; 
+        console.log(config);
+    }
     return {
         type: types.NEW_GAME,
         payload: { config, seed, safeX, safeY, safeRadius }

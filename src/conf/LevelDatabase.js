@@ -10,6 +10,12 @@ const allLevels = [
     {
         config: {x: 10, y: 8, mines: 10},
     },
+    {
+        config: {x: 10, y: 10, mineRatio: 0.14},
+    },
+    {
+        config: {x: 12, y: 10, mineRatio: 0.16},
+    },
 ];
 
 export default allLevels;
