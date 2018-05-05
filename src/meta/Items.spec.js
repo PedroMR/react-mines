@@ -1,5 +1,6 @@
 import * as types from '../types';
 import Items from './Items';
+import * as tools from '../Tools';
 
 const itemData = [
     {
@@ -20,6 +21,12 @@ const itemData = [
         price: 75,
         description: "More tiles, more mines, more rewards.",
         effects: [{ maxLevel: 1 }]
+    },{
+        id: 'multi-2',
+        name: "Multiplier",
+        price: 175,
+        description: "More tiles, more mines, more rewards.",
+        effects: [{ scoreMultiplier: 2 }]        
     },
 ]
 
@@ -51,4 +58,17 @@ test('item level unlocking', ()=> {
     expect(retVal.wallet).toEqual({credits: 25});
     expect(retVal.items).toContain(itemId);
     expect(retVal.maxLevel).toBe(1);
+})
+
+test('item score multiplier', ()=> {
+    Items.useItemDatabase(itemData);
+    const itemId = 'multi-2';
+    const meta = { items: [], maxLevel: 0, wallet: {credits: 500} };
+    const retVal  = Items.purchaseItem(meta, itemId);
+
+    expect(tools.scoreMultiplier()).toBe(1);
+
+    expect(retVal.wallet).toEqual({credits: 325});
+    expect(retVal.items).toContain(itemId);
+    expect(tools.scoreMultiplier(retVal.score)).toBe(2);
 })

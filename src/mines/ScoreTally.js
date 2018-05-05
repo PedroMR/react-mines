@@ -18,16 +18,19 @@ class ScoreTally extends React.PureComponent {
         const scoreTypes = [
             {name: "Mines found", method: tools.scoreForMinesFound, param: [results.nCorrectFlags], mult: tools.scoreMultiplierForMinesFound},
             {name: "Mines detonated", method: tools.scoreForMinesDetonated, param: [results.nDetonated], mult: tools.scoreMultiplierForMinesDetonated},
+            {name: "Score Multiplier", mult: tools.scoreMultiplier},
         ];
 
         this.state.scoreRows = scoreTypes.map(item => {
-            const pointsWorth = item.method(props.score, ...item.param);
+            const pointsWorth = item.method ? item.method(props.score, ...item.param) : '';
             this.state.totalScore += pointsWorth;
-            const amount = item.param[0];
+            const amount = item.param ? item.param[0] : '';
             const ratio = item.mult(props.score);
 
             return <tr key={item.name}><td className="scoreTallyNames">{item.name}</td><td>{ratio}</td><td>x{amount}</td><td className="scoreTallyPoints">{pointsWorth}</td></tr>;
         })
+
+        this.state.totalScore = Math.round(this.state.totalScore * tools.scoreMultiplier(this.props.score));
 
         this.claimCredits = this.claimCredits.bind(this);
     }
