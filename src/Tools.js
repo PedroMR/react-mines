@@ -36,10 +36,16 @@ export function scoreMultiplierForMinesDetonated(score) {
     else return score.perMineDetonated;
 }
 
+export function scoreMultiplier(score) {
+    if (score === undefined || !score.multiplier) return 1;
+    else return score.multiplier;
+}
+
 export function totalScoreFor(score, results) {
     let totalScore = 0;
     totalScore += scoreForMinesFound(score, results.nMinesFound);
     totalScore += scoreForMinesDetonated(score, results.nMinesDetonated);
+    totalScore *= scoreMultiplier(score);
     return totalScore;
 }
 

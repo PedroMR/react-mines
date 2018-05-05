@@ -63,19 +63,19 @@ const allItems = [
         effects: [{ feature: types.FEATURE_ZERO_FIRST_CLICK }],
         showIf: [OwnsItem('mine-first-click')],
     },
-    MakeLevelUnlock(1, 45),
-    MakeLevelUnlock(2, 110),
-    MakeLevelUnlock(3, 180),
-    MakeLevelUnlock(4, 250),
+    MakeLevelUnlock(1, 45, 1),
+    MakeLevelUnlock(2, 110, 1.1),
+    MakeLevelUnlock(3, 180, 1.2),
+    MakeLevelUnlock(4, 250, 1.3),
 ]
 
-function MakeLevelUnlock(num, price) {
+function MakeLevelUnlock(num, price, scoreMult) {
     let level = {
         id: 'level-'+num,
         name: "Unlock level "+num,
         price,
         description: "More tiles! More mines! More... REWARDS...",
-        effects: [{maxLevel: num}]
+        effects: [{maxLevel: num}, { scoreMultiplier: scoreMult }]
     }
     level.showIf = [ Not(OwnsItem('level-'+(num+1))) ];
     if (num > 1)

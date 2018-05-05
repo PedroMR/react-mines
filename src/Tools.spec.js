@@ -41,3 +41,9 @@ test('scoring a mines game', () => {
     expect(tools.totalScoreFor(score4, results)).toEqual(40);
 
 })
+
+test('scoring with multiplier', () => {
+    const results = {nMinesFound: 5, nMinesDetonated: 1};
+    let score = { multiplier: 2 };
+    expect(tools.totalScoreFor(score, results)).toEqual(30);    
+})

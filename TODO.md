@@ -1,8 +1,11 @@
 # TODO
 
+- [ ] Bonus for no detonations
+- [ ] Cash multiplier
 - [ ] Narrator text box
 - [ ] Loads of story
 - [ ] Analytics
+- [ ] Improve debug menu (show which features available from what)
 - [ ] Rooster for the shop (can afford)
 - [ ] Maybe requirement for "only after next game"? (staggered item purchase)
 - [ ] Formalize feature when something happens in the game (e.g., clicking a bomb first unlocks the item that improves that)

@@ -12,6 +12,8 @@ import Items from '../meta/Items';
  *      .items -> array of owned item ids
  *      .wallet -> currencies
  *          .credits
+ *      .score -> score variables
+ *          .maxMultiplier -> multiplier used for points
  *   .game
  *      .seen
  *      .around
@@ -35,6 +37,7 @@ export const initialMetaState = {
     score: {
         perMineFound: 5,
         perMineDetonated: -10,
+        multiplier: 1,
     },
 };
 

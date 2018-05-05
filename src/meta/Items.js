@@ -39,6 +39,12 @@ function purchaseItem(state, itemId, price) {
         if (effect.maxLevel) {
             newState.maxLevel = Math.max(newState.maxLevel, effect.maxLevel);
         }
+        if (!newState.score) {
+            newState.score = {};
+        }
+        if (effect.scoreMultiplier > newState.score.multiplier) {
+            dotProp.set(newState, 'score.multiplier', effect.scoreMultiplier);
+        }
     }
 
     return newState;
