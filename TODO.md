@@ -1,7 +1,6 @@
 # TODO
 
 - [ ] Bonus for no detonations
-- [ ] Cash multiplier
 - [ ] Narrator text box
 - [ ] Loads of story
 - [ ] Analytics
@@ -45,3 +44,4 @@
 - [X] BUG: Initializing preset mode should change config to be beginner if it was custom (or leave custom if that's available)
 - [X] No bomb on first inspect (+ maybe it's a zero?)
 - [X] right-click !
+- [X] Cash multiplier
