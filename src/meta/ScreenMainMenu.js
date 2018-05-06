@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as types from '../types';
 import {changeScreen}  from './MetaActions';
+import Features from './Features';
 
 class ScreenMainMenu extends React.PureComponent {
 
@@ -15,11 +16,18 @@ class ScreenMainMenu extends React.PureComponent {
     }
 
     render() {
+        const showShop = Features.hasFeature(this.props.meta, types.FEATURE_SHOW_SHOP);
         return <div className='mainMenu'>
             <button className='playMines' onClick={() => this.onPlayMines()}>Hunt for mines</button><br/>
-            <button className='shop' onClick={() => this.onShop()}>Shop</button>
+            {showShop ? <button className='shop' onClick={() => this.onShop()}>Shop</button> : null}
             </div>;
     }
 }
 
-export default connect()(ScreenMainMenu);
+function mapStateToProps (state) {
+    return {
+        meta: state.meta
+    }
+}
+
+export default connect(mapStateToProps)(ScreenMainMenu);

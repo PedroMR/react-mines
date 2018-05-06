@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as tools from '../Tools';
 import * as types from '../types';
-import {claimCredits, changeScreen}  from '../meta/MetaActions';
+import {claimCredits, changeScreen, debugToggleFeature}  from '../meta/MetaActions';
 import ReactGA from 'react-ga';
 
 class ScoreTally extends React.PureComponent {
@@ -56,6 +56,7 @@ class ScoreTally extends React.PureComponent {
             value: this.state.totalScore
         });
         if (this.state.totalScore > 0 && !this.props.claimedRewards) {
+            this.props.dispatch(debugToggleFeature(types.FEATURE_SHOW_SHOP, true));
             this.props.dispatch(claimCredits(this.state.totalScore));
         }
         this.props.dispatch(changeScreen(types.SCREEN_MAIN));
