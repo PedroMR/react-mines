@@ -18,8 +18,8 @@ class ScoreTally extends React.PureComponent {
         const scoreTypes = [
             {name: "Mines found", method: tools.scoreForMinesFound, param: [results.nCorrectFlags], mult: tools.scoreMultiplierForMinesFound},
             {name: "Mines detonated", method: tools.scoreForMinesDetonated, param: [results.nDetonated], mult: tools.scoreMultiplierForMinesDetonated},
-            {name: "No damage bonus", addMult: 0.5},
-            {name: "Score Multiplier", addMult: tools.scoreMultiplier(props.score) - 1},
+            {name: "No damage bonus", addMult: 0.5, gotIt: results.noDetonations},
+            {name: "Score Multiplier", addMult: tools.scoreMultiplier(props.score) - 1, gotIt: true},
         ];
 
         let totalMultiplier = 1;
@@ -31,15 +31,18 @@ class ScoreTally extends React.PureComponent {
             const ratio = item.mult ? item.mult(props.score) : '';
             const addMult = item.addMult;
             if (addMult) {
-                totalMultiplier += addMult;
-                const multString = '+'+(addMult * 100).toFixed(0) + "%";
+                let multString = '+'+(addMult * 100).toFixed(0) + "%";
+                if (item.gotIt)
+                    totalMultiplier += addMult;
+                else
+                    multString = 'X'; //TODO replace with forbidden icon
                 return <tr key={item.name}><td className="scoreTallyNames">{item.name}</td><td></td><td></td><td colSpan='3' className="scoreTallyPoints">{multString}</td></tr>;
             } else {
                 return <tr key={item.name}><td className="scoreTallyNames">{item.name}</td><td>{ratio}</td><td>x{amount}</td><td className="scoreTallyPoints">{pointsWorth}</td></tr>;
             }
         })
 
-        this.state.totalScore = Math.round(this.state.totalScore * tools.scoreMultiplier(this.props.score));
+        this.state.totalScore = Math.round(this.state.totalScore * (1 + totalMultiplier));
 
         this.claimCredits = this.claimCredits.bind(this);
     }
