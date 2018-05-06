@@ -12,11 +12,19 @@ import { startNewGame } from '../mines/MinesActions';
 import packageJson from '../package.alias.json';
 import { changeScreen } from './MetaActions';
 import ScreenShop from '../shop/ScreenShop';
+import ReactGA from 'react-ga';
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
         this.handleBackButton = this.handleBackButton.bind(this);
+        this.initializeGA();
+    }
+    
+    initializeGA() {
+        const trackingID = /localhost/.test(document.location.hostname) ? 'UA-XXXX' : 'UA-82637064-2';
+        console.log(trackingID);
+        ReactGA.initialize(trackingID, { debug: true });
     }
 
     createNewGame(config) {
@@ -24,6 +32,7 @@ class Main extends React.Component {
     }
 
     renderCurrentScreen() {
+        ReactGA.pageview(this.props.current.screen);
         switch(this.props.current.screen) {
             case types.SCREEN_MAIN:
                 return <ScreenMainMenu/>;

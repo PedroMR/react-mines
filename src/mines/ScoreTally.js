@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as tools from '../Tools';
 import * as types from '../types';
 import {claimCredits, changeScreen}  from '../meta/MetaActions';
+import ReactGA from 'react-ga';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {
@@ -48,6 +49,11 @@ class ScoreTally extends React.PureComponent {
     }
 
     claimCredits() {
+        ReactGA.event({
+            category: 'game',
+            action: 'claim-credits',
+            value: this.state.totalScore
+        });
         if (this.state.totalScore > 0 && !this.props.claimedRewards) {
             this.props.dispatch(claimCredits(this.state.totalScore));
         }

@@ -8,6 +8,7 @@
     "npm": "^5.8.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "react-ga": "^2.5.0",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",

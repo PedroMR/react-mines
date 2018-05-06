@@ -6,6 +6,7 @@ import './shop.css';
 import check from '../img/check.png';
 import itemConfig from '../conf/ItemDatabase';
 import Items from '../meta/Items';
+import ReactGA from 'react-ga';
 
 function ShopItem(props) {
     const item = props.item;
@@ -65,6 +66,12 @@ class ScreenShop extends React.PureComponent {
     }
 
     onBuy(item) {
+        ReactGA.event({
+            category: 'shop',
+            action: 'buy-item',
+            label: item.id,
+            value: item.price
+        });
         this.props.dispatch(buyItem(item));
     }
 
