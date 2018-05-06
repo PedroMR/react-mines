@@ -1,9 +1,8 @@
 # TODO
 
-- [ ] Bonus for no detonations
+- [ ] Analytics
 - [ ] Narrator text box
 - [ ] Loads of story
-- [ ] Analytics
 - [ ] Improve debug menu (show which features available from what)
 - [ ] Rooster for the shop (can afford)
 - [ ] Maybe requirement for "only after next game"? (staggered item purchase)
@@ -45,3 +44,4 @@
 - [X] No bomb on first inspect (+ maybe it's a zero?)
 - [X] right-click !
 - [X] Cash multiplier
+- [X] Bonus for no detonations
