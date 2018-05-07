@@ -66,7 +66,7 @@ const allItems = [
     MakeLevelUnlock(1, 50, 1),
     MakeLevelUnlock(2, 110, 1.1),
     MakeLevelUnlock(3, 180, 1.2),
-    MakeLevelUnlock(4, 250, 1.3),
+    MakeLevelUnlock(4, 250, 2),
 ]
 
 function MakeLevelUnlock(num, price, scoreMult) {

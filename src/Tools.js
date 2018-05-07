@@ -2,6 +2,7 @@ import dotProp from 'dot-prop-immutable';
 import { initialMetaState } from './meta/MetaReducer';
 import realItems from './conf/ItemDatabase';
 import realLevels from './conf/LevelDatabase';
+import Items from './meta/Items';
 
 let items = realItems;
 let levels = realLevels;
@@ -36,16 +37,14 @@ export function scoreMultiplierForMinesDetonated(score) {
     else return score.perMineDetonated;
 }
 
-export function scoreMultiplier(score) {
-    if (score === undefined || !score.multiplier) return 1;
-    else return score.multiplier;
+export function scoreMultiplier(meta) {
+    return Items.getBestMultiplier(meta.items);
 }
 
 export function totalScoreFor(score, results) {
     let totalScore = 0;
     totalScore += scoreForMinesFound(score, results.nMinesFound);
     totalScore += scoreForMinesDetonated(score, results.nMinesDetonated);
-    totalScore *= scoreMultiplier(score);
     return totalScore;
 }
 

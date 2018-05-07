@@ -53,12 +53,31 @@ function purchaseItem(state, itemId, price) {
     return newState;
 }
 
+function getBestMultiplier(myItems)
+{
+    let bestMultiplier = 1;
+
+    for (let itemId of myItems) {
+        const item = findItemById(itemId);
+        if (!item) continue;
+
+        for (let effect of item.effects) {
+            if (effect.scoreMultiplier) {
+                bestMultiplier = Math.max(bestMultiplier, effect.scoreMultiplier);
+            }
+        }
+    }
+
+    return bestMultiplier;
+}
+
 
 let Items = {
     purchaseItem,
     useItemDatabase,
     findItemById,
     ownsItemId,
+    getBestMultiplier,
 }
 
 export default Items;

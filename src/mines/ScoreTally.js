@@ -5,6 +5,7 @@ import * as types from '../types';
 import {claimCredits, changeScreen, debugToggleFeature}  from '../meta/MetaActions';
 import ReactGA from 'react-ga';
 import Features from '../meta/Features';
+import Items from '../meta/Items';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {
@@ -21,7 +22,7 @@ class ScoreTally extends React.PureComponent {
             {name: "Mines found", method: tools.scoreForMinesFound, param: [results.nCorrectFlags], mult: tools.scoreMultiplierForMinesFound},
             {name: "Mines detonated", method: tools.scoreForMinesDetonated, param: [results.nDetonated], mult: tools.scoreMultiplierForMinesDetonated},
             {name: "No damage bonus", addMult: 1.5, gotIt: results.noDetonations},
-            {name: "Score Multiplier", addMult: tools.scoreMultiplier(props.score), gotIt: true},
+            {name: "Score Multiplier", addMult: Items.getBestMultiplier(props.items), gotIt: true},
         ];
 
         let totalMultiplier = 1;
@@ -84,6 +85,7 @@ function mapStateToProps(state) {
         score: state.meta.score,
         gameOver: state.mines.gameOver,
         claimedRewards: state.mines.claimedRewards,
+        items: state.meta.items,
     }
 }
 

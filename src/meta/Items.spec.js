@@ -66,9 +66,9 @@ test('item score multiplier', ()=> {
     const meta = { items: [], maxLevel: 0, wallet: {credits: 500} };
     const retVal  = Items.purchaseItem(meta, itemId);
 
-    expect(tools.scoreMultiplier()).toBe(1);
+    expect(tools.scoreMultiplier(meta)).toBe(1);
 
     expect(retVal.wallet).toEqual({credits: 325});
     expect(retVal.items).toContain(itemId);
-    expect(tools.scoreMultiplier(retVal.score)).toBe(2);
+    expect(tools.scoreMultiplier(retVal)).toBe(2);
 })
