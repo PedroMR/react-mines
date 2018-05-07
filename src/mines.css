@@ -105,10 +105,10 @@ div.scoreTally {
     max-height: 300px;
     overflow: hidden;
     animation-delay: 5s;
-    z-index: 2;
-    position: absolute;
+    /* z-index: 2; */
+    /* position: absolute; */
     background-color: white;
-    opacity: 0.9;
+    /* opacity: 0.9; */
     left: 10%;
     right: 10%;
 }
@@ -117,7 +117,7 @@ table.scoreTally {
     opacity: 1;
     color: black;
     text-align: center;
-    display: inline-block;
+    /* display: inline-block; */
     overflow: hidden;
     border: 2px solid white;
 }
