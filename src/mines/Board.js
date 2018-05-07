@@ -179,7 +179,7 @@ class Board extends React.Component {
                 if (hitMine && !this.hasFeature(types.FEATURE_SAFE_FIRST_CLICK) && !this.hasFeature(types.FLAG_DID_HIT_MINE_FIRST_CLICK)) {
                     //TODO add narrator text here "wouldn't it be nice", etc
                     console.log("hitMine & didn't have flag")
-                    this.props.dispatch(debugToggleFeature(types.FLAG_DID_HIT_MINE_FIRST_CLICK));
+                    this.props.dispatch(debugToggleFeature(types.FLAG_DID_HIT_MINE_FIRST_CLICK, true));
                 }
 
                 if ((hitMine && this.hasFeature(types.FEATURE_SAFE_FIRST_CLICK)) || 

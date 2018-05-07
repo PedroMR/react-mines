@@ -4,6 +4,7 @@ import * as tools from '../Tools';
 import * as types from '../types';
 import {claimCredits, changeScreen, debugToggleFeature}  from '../meta/MetaActions';
 import ReactGA from 'react-ga';
+import Features from '../meta/Features';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {
@@ -56,8 +57,9 @@ class ScoreTally extends React.PureComponent {
             value: this.state.totalScore
         });
         if (this.state.totalScore > 0 && !this.props.claimedRewards) {
-            this.props.dispatch(debugToggleFeature(types.FEATURE_SHOW_SHOP, true));
             this.props.dispatch(claimCredits(this.state.totalScore));
+            if (!Features.hasFeature(types.FEATURE_SHOW_SHOP))
+                this.props.dispatch(debugToggleFeature(types.FEATURE_SHOW_SHOP, true));
         }
         this.props.dispatch(changeScreen(types.SCREEN_MAIN));
     }

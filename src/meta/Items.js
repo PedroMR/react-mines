@@ -43,8 +43,10 @@ function purchaseItem(state, itemId, price) {
             newState.score = {};
         }
         console.log(effect.scoreMultiplier, newState.score.multiplier);
-        if (!(effect.scoreMultiplier <= newState.score.multiplier)) { // ! <= to avoid undefined
-            newState = dotProp.set(newState, 'score.multiplier', effect.scoreMultiplier);
+        if (effect.scoreMultiplier) {
+            if (!(effect.scoreMultiplier <= newState.score.multiplier)) { // ! <= to avoid undefined
+                newState = dotProp.set(newState, 'score.multiplier', effect.scoreMultiplier);
+            }
         }
     }
 
