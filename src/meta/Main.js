@@ -13,6 +13,7 @@ import packageJson from '../package.alias.json';
 import { changeScreen } from './MetaActions';
 import ScreenShop from '../shop/ScreenShop';
 import ReactGA from 'react-ga';
+import DialoguePanel from '../story/DialoguePanel';
 
 class Main extends React.Component {
     constructor(props) {
@@ -65,6 +66,7 @@ class Main extends React.Component {
             {this.canGoBack() ? backButton : null}
             <MetaInfo meta={this.props.meta}/>
             {this.renderCurrentScreen()} 
+            <DialoguePanel />
             <DebugMenu />
             </div>;
     }

@@ -1,0 +1,15 @@
+.dialoguePanel {
+    border: 1px solid lightgray;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    background-color: black;
+    color: lightgreen;
+    height: 4em;
+    padding: 0.2em;
+    text-align: left;
+}
+.dialoguePanel .header {
+    height: 20px;
+    background-color: darkgrey;
+    display: block;
+}

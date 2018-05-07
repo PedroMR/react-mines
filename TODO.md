@@ -1,17 +1,17 @@
 # TODO
 
-- [ ] Analytics
+- [ ] UI panels (for score and narrator)
 - [ ] Narrator text box
+- [ ] Rooster for the shop (can afford)
 - [ ] Loads of story
 - [ ] Improve debug menu (show which features available from what)
-- [ ] Rooster for the shop (can afford)
-- [ ] Maybe requirement for "only after next game"? (staggered item purchase)
-- [ ] Formalize feature when something happens in the game (e.g., clicking a bomb first unlocks the item that improves that)
+- [ ] Formalize feature when something happens in the game (flags) (e.g., clicking a bomb first unlocks the item that improves that)
 - [ ] Bonus for level danger (mine ratio) 
+- [ ] Maybe requirement for "only after next game"? (staggered item purchase)
 - [ ] Reward tiers for performance (non-linear)?
 - [ ] Bonus for conserving clicks (as item)
 - [ ] Improve score tally aesthetics
-- [ ] Finish the level earlier -- if all unseen spots = num mines - num flags (as feature)
+- [ ] Finish the level earlier -- if all unseen spots = num mines - num flags (as feature?)
 - [ ] Sounds
 - [ ] Advanced level selector
 - [ ] Some crazy features for levels, like:
@@ -45,3 +45,4 @@
 - [X] right-click !
 - [X] Cash multiplier
 - [X] Bonus for no detonations
+- [X] Analytics
