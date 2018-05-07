@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import * as types from '../types';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
+import Story from './Story';
 
 class DialoguePanel extends React.PureComponent {
     
     render() {
-        const text = "Congratulations on completing your basic training."
+        const text = Story.getLine(this.props.meta); //"Congratulations on completing your basic training."
+        //cursor={{hideWhenDone:true}}
         return <div className='dialoguePanel'>
-            <Typist cursor={{hideWhenDone:true}}>{text}</Typist>
+            <Typist avgTypingDelay='50' stdTypingDelay='0.1' >{text}</Typist> 
             </div>;
     }
 }

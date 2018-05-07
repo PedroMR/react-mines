@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 class DebugMenu extends React.PureComponent {
     constructor (props) {
         super(props);
-        this.state = {shown: true};
+        this.state = {shown: false};
         this.handleResetProfile = this.handleResetProfile.bind(this);
     }
     addCredits(amount) {

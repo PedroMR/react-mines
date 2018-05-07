@@ -61,7 +61,7 @@ class Main extends React.Component {
     render() {
         const backButton = <button className="backButton" onClick={this.handleBackButton}>Back</button>;
         return <div
-            ><h1>Mines</h1>
+            ><h1>Remote Mine Disposal Terminal</h1>
             <Version/>
             {this.canGoBack() ? backButton : null}
             <MetaInfo meta={this.props.meta}/>
@@ -73,12 +73,12 @@ class Main extends React.Component {
 }
 
 function Version(props) {
-    return <div className="version">{packageJson.version}</div>;
+    return <div className="version">SMDD-corps, v{packageJson.version}. All material restricted.</div>;
 }
 
 function MetaInfo(props) {
     const credits = tools.getCredits(props.meta);
-    const creditString = (credits <= 0 || !credits) ? '\u00A0' : credits+" Credits";
+    const creditString = (credits <= 0 || !credits) ? '\u00A0' : "Credits: "+credits;
 
     return <div className='metaInfo'><span className='creditDisplay'>{creditString}</span></div>;
 }

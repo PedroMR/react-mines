@@ -72,7 +72,13 @@ button.shop {
     clear: both;
     width: 8em;
 }
+
 .version {
+    position: relative;
+    top: -20px;
+    font-size: 80%;
+}
+.smallVersion {
     position: absolute;
     top: 0px;
     right: 5px;
