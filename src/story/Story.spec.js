@@ -15,11 +15,11 @@ test('get story line by id', () => {
 test('Per request place story line on queue', () => {
     Story.useStoryDatabase(story);
 
-    let meta = { story: { queue: [], read: [] } };
+    let meta = { story: { queue: [], read: {} } };
     let newMeta = Story.enqueueLine(meta, 'testOne');
 
     expect(newMeta.story.queue).toContain('Hello!');
-    expect(newMeta.story.read).toContain('testOne');
+    expect(newMeta.story.read).toHaveProperty('testOne');
     
 })
 
