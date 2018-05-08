@@ -9,7 +9,10 @@ import Story from './Story';
 class DialoguePanel extends React.PureComponent {
     
     render() {
-        const text = Story.getLine(this.props.meta); //"Congratulations on completing your basic training."
+        const story = this.props.story;
+        let text = ''; //Story.getLine(this.props.meta); //"Congratulations on completing your basic training."
+        if (story.queue.length > 0)
+            text = story.queue[0];
         //cursor={{hideWhenDone:true}}
         return <div className='dialoguePanel'>
             <Typist avgTypingDelay='50' stdTypingDelay='0.1' >{text}</Typist> 
@@ -21,6 +24,7 @@ class DialoguePanel extends React.PureComponent {
 function mapStateToProps(state) {
     return {
         meta: state.meta,
+        story: state.meta.story,
         current: state.meta.current,
     }
 }

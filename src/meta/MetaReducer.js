@@ -1,7 +1,8 @@
 import * as dotProp from 'dot-prop-immutable'
 import * as types from '../types';
 import * as tools from '../Tools';
-import Items from '../meta/Items';
+import Items from './Items';
+import Story from '../story/Story';
 
 /* config layoutL:
  * state.
@@ -13,7 +14,10 @@ import Items from '../meta/Items';
  *      .wallet -> currencies
  *          .credits
  *      .score -> score variables
- *          .maxMultiplier -> multiplier used for points
+ *      .story
+ *          .queue
+ *          .read
+ *          .flags
  *   .game
  *      .seen
  *      .around
@@ -32,6 +36,11 @@ export const initialMetaState = {
     },
     maxLevel: 0,
     features: {},// { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
+    story: {
+        read: [],
+        queue: [],
+        flags: {},
+    },
     items: [], // list of IDs bought already
     wallet: {},
     score: {
@@ -41,8 +50,15 @@ export const initialMetaState = {
     },
 };
 
+function metaReducer(state = initialMetaState, action) {
+    let newState = basicMetaReducer(state, action);
 
-export function metaReducer(state = initialMetaState, action) {
+    newState = Story.trigger(newState, action, state);
+    
+    return newState;
+}
+
+function basicMetaReducer(state = initialMetaState, action) {
     const payload = action.payload;
     switch (action.type) {
 

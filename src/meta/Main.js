@@ -63,10 +63,10 @@ class Main extends React.Component {
         return <div
             ><h1>Remote Mine Disposal Terminal</h1>
             <Version/>
+            <DialoguePanel />
             {this.canGoBack() ? backButton : null}
             <MetaInfo meta={this.props.meta}/>
             {this.renderCurrentScreen()} 
-            <DialoguePanel />
             <DebugMenu />
             </div>;
     }

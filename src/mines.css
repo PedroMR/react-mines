@@ -98,6 +98,10 @@
     opacity: 1;
 }
 
+.scoreContainer {
+    display: inline-block;
+}
+
 div.scoreTally {
     -webkit-transition: max-height 2s ease;
     -moz-transition: max-height 2s ease;

@@ -22,7 +22,7 @@ class Status extends React.PureComponent {
             const nDetonated = nTotalMines - nHiddenMines;
             topLine = <span className="status end">GAME OVER!</span>;
             bottomLine = <span className="status">{nCorrectFlags} mine{nCorrectFlags===1?"":"s"} found; {nDetonated} mine{nDetonated===1?"":"s"} detonated.</span>;
-            scoreArea = <ScoreTally results={{nCorrectFlags, nDetonated, noDetonations: nDetonated === 0}}/>;
+            scoreArea = <div className="scoreContainer"><ScoreTally results={{nCorrectFlags, nDetonated, noDetonations: nDetonated === 0}}/></div>;
         }
 
         return <div>{topLine}{bottomLine}{scoreArea}</div>;

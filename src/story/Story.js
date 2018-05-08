@@ -16,6 +16,18 @@ function getLine(meta) {
     return story[0].text;
 }
 
+function trigger(meta, {type, payload}, oldState) {
+    switch(type) {
+        case types.CHANGE_SCREEN:
+            return enqueueLine(meta, 'change')
+        case '@@INIT':
+            return enqueueLine(meta, 'hello')
+
+        default:
+            return meta;
+    }
+}
+
 function setFlag(meta, flagName, value = true) {
     return dotProp.set(meta, 'story.flags.'+flagName, value);
 }
@@ -45,6 +57,7 @@ const Story = {
     enqueueLine,
     setFlag,
     getFlag,
+    trigger,
 }
 
 export default Story;
