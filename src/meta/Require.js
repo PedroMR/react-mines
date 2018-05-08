@@ -8,6 +8,12 @@ export function OwnsItem(itemId) {
     }
 }
 
+export function OnScreen(screen) {
+    return function(meta) {
+        return meta.current.screen === screen;
+    }
+}
+
 export function UnlockedLevel(levelNumber) {
     return function(meta) {
         return meta.maxLevel >= levelNumber;

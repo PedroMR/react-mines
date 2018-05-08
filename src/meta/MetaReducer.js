@@ -37,7 +37,7 @@ export const initialMetaState = {
     maxLevel: 0,
     features: {},// { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
     story: {
-        read: [],
+        read: {},
         queue: [],
         flags: {},
     },

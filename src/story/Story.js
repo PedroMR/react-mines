@@ -19,13 +19,24 @@ function getLine(meta) {
 function trigger(meta, {type, payload}, oldState) {
     switch(type) {
         case types.CHANGE_SCREEN:
-            return enqueueLine(meta, 'change')
+            return enqueueNextAvailableLine(meta);
         case '@@INIT':
             return enqueueLine(meta, 'hello')
 
         default:
             return meta;
     }
+}
+
+function enqueueNextAvailableLine(meta) {
+    for (let line of story) {
+        if (meta.story.read[line.id]) continue;
+
+        //TODO check requirements
+        return enqueueLine(meta, line.id);
+    }
+
+    return meta;
 }
 
 function setFlag(meta, flagName, value = true) {
@@ -45,7 +56,7 @@ function enqueueLine(meta, lineId) {
     }
 
     let newMeta = dotProp.merge(meta, 'story.queue', line.text);
-    newMeta = dotProp.merge(newMeta, 'story.read', lineId);
+    newMeta = dotProp.set(newMeta, 'story.read.'+lineId, true);
 
     return newMeta;
 }
