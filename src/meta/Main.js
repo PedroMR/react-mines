@@ -85,6 +85,7 @@ function MetaInfo(props) {
 
 function mapStateToProps(state) {
     return {
+        gameOver: state.mines.gameOver,
         meta: state.meta,
         current: state.meta.current,
     }

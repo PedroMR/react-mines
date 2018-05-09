@@ -21,12 +21,12 @@ class DialoguePanel extends React.PureComponent {
     }
 
     onLineTyped(line, lineIndex) {
-        console.log(lineIndex, line);
+        // console.log(lineIndex, line);
         this.scrollToBottom();
     }
 
     onCharacterTyped(character, charIndex) {
-        console.log(charIndex, character);
+        // console.log(charIndex, character);
         this.scrollToBottom();
     }
 
