@@ -20,8 +20,8 @@ function trigger(meta, {type, payload}, oldState) {
     switch(type) {
         case types.CHANGE_SCREEN:
             return enqueueNextAvailableLine(meta);
-        case '@@INIT':
-            return enqueueLine(meta, 'hello')
+        // case '@@INIT':
+        //     return enqueueLine(meta, 'hello')
 
         default:
             return meta;
@@ -61,6 +61,10 @@ function enqueueLine(meta, lineId) {
     return newMeta;
 }
 
+function enqueueInitialLine(meta) {
+    return enqueueLine(meta, 'welcome');
+}
+
 const Story = {
     useStoryDatabase,
     getLineById,    
@@ -69,6 +73,7 @@ const Story = {
     setFlag,
     getFlag,
     trigger,
+    enqueueInitialLine,
 }
 
 export default Story;

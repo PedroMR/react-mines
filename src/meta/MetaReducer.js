@@ -28,8 +28,7 @@ import Story from '../story/Story';
  *      .config //static, was used to create current game
  */
 
-
-export const initialMetaState = {
+export const initialMetaState = Story.enqueueInitialLine({
     current: {
         screen: types.SCREEN_MAIN,
         level: 0,
@@ -48,7 +47,7 @@ export const initialMetaState = {
         perMineDetonated: -10,
         multiplier: 1,
     },
-};
+});
 
 function metaReducer(state = initialMetaState, action) {
     let newState = basicMetaReducer(state, action);
