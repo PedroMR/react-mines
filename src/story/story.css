@@ -7,8 +7,7 @@
     height: 4.5em;
     padding: 0.2em;
     text-align: left;
-    overflow: hidden;
-    scroll-behavior: initial;
+    overflow: auto;
 }
 .dialoguePanel .header {
     height: 20px;

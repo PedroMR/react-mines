@@ -31,3 +31,18 @@ export function Not(clause) {
         return !clause(...args);
     }
 }
+
+export function Validate(requirements, ...args) {
+    if (requirements === undefined) return true;
+
+    if (!Array.isArray(requirements)) {
+        return requirements(...args);
+    }
+
+    for (let requirement of requirements) {
+        if (!Validate(requirement, ...args))
+            return false;
+    }
+
+    return true;
+}

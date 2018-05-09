@@ -5,8 +5,8 @@ const allStory = [
     MakeLine('welcome',
     'Congratulations on completing your basic training. You will now be granted access to your console from where you will undertake real, live, on-the-field ground weaponry defusal and disposal. Your squad awaits your orders.'
     ),
+    MakeLine('z', "let's try another one."),
     MakeLine('first-play',"Show us what you've got", Require.OnScreen(types.SCREEN_PLAY_MINES)), 
-    
 ]
 
 function MakeLine(id, text, requirement) {

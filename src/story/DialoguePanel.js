@@ -42,17 +42,16 @@ class DialoguePanel extends React.PureComponent {
         const lastIndex = story.queue.length-1;
         const lineElements = story.queue.map((e, index) => {
             const mainText = e;
-            let wrapper = lastIndex === index ? <Typist
-                onCharacterTyped={()=>this.onCharacterTyped()}
+            let wrapper = lastIndex === index ? <Typist key={e}
+                onCharacterTyped={(c, ci)=>this.onCharacterTyped(c, ci)}
                 onLineTyped={(l, i)=>this.onLineTyped(l, i)}
                 onTypingDone={() => this.onTypingDone()}
                 avgTypingDelay={30} stdTypingDelay={5}
-                >{mainText}</Typist> : mainText;
-            return <p key={e}>{wrapper}</p>;
-            // return <Scroll.Element key={e}>{wrapper}</Scroll.Element>;
+                >{mainText}</Typist> : <p key={e}>{mainText}</p>;
+            return wrapper;
+            // cursor={{hideWhenDone:true}}
         });
 
-        //cursor={{hideWhenDone:true}}
         return <div className='dialoguePanel' ref={elem => this.container = elem}>
                 {lineElements}
             </div>;

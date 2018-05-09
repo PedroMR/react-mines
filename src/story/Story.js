@@ -1,6 +1,7 @@
 import * as types from '../types';
 import dotProp from 'dot-prop-immutable';
 import realStory from '../conf/StoryDatabase';
+import * as Require from '../meta/Require';
 
 let story = realStory;
 
@@ -19,9 +20,8 @@ function getLine(meta) {
 function trigger(meta, {type, payload}, oldState) {
     switch(type) {
         case types.CHANGE_SCREEN:
+        case types.NEW_GAME:
             return enqueueNextAvailableLine(meta);
-        // case '@@INIT':
-        //     return enqueueLine(meta, 'hello')
 
         default:
             return meta;
@@ -32,7 +32,9 @@ function enqueueNextAvailableLine(meta) {
     for (let line of story) {
         if (meta.story.read[line.id]) continue;
 
-        //TODO check requirements
+        if (!Require.Validate(line.requirement, meta))
+            continue;
+        
         return enqueueLine(meta, line.id);
     }
 
@@ -56,6 +58,13 @@ function enqueueLine(meta, lineId) {
     }
 
     let newMeta = dotProp.merge(meta, 'story.queue', line.text);
+
+    const maxQueue = 10;
+    const queueLen = meta.story.queue.length;
+    if (queueLen > maxQueue) {
+        newMeta.story.queue = newMeta.story.queue.slice(queueLen - maxQueue);
+    }
+
     newMeta = dotProp.set(newMeta, 'story.read.'+lineId, true);
 
     return newMeta;
