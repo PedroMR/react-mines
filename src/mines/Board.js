@@ -4,6 +4,7 @@ import { flagTile, revealTile, startNewGame } from './MinesActions';
 import { debugToggleFeature } from '../meta/MetaActions';
 import * as types from '../types';
 import Features from '../meta/Features';
+import Sound from '../sound';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
@@ -170,9 +171,10 @@ class Board extends React.Component {
             return;
         }
 
-        if (this.isPlacingFlag() || e.type === 'contextmenu')
+        if (this.isPlacingFlag() || e.type === 'contextmenu') {
+            Sound.playSound(Sound.BLIP);
             this.props.dispatch(flagTile(x, y));
-        else if (!flag) {
+        } else if (!flag) {
             if (this.props.clicksSoFar === 0) {
                 const hitMine = this.props.mines[pos];
                 const hitNextToMine = this.props.around[pos] > 0;
@@ -188,6 +190,13 @@ class Board extends React.Component {
                     this.setState({waitingForRegen: {x, y}});
                 }
             }
+
+            const willShowMine = this.props.mines[pos];
+            console.log("sound time! "+mine);
+            if (willShowMine) 
+                Sound.playSound(Sound.BOOM);
+            else
+                Sound.playSound(Sound.BLIP);
 
             this.props.dispatch(revealTile(x, y));
             if (this.hasFeature(types.FEATURE_ZERO_OUT) && around === 0) {

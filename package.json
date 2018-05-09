@@ -5,6 +5,7 @@
   "homepage": "http://pedromr.github.io/react-mines",
   "dependencies": {
     "dot-prop-immutable": "https://github.com/debitoor/dot-prop-immutable/tarball/master",
+    "howler": "^2.0.12",
     "npm": "^5.8.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",

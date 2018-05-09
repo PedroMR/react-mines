@@ -2,6 +2,7 @@ import React from 'react';
 import { resetProfile, debugAddCredits, debugToggleFeature } from './MetaActions';
 import * as types from '../types';
 import { connect } from 'react-redux';
+import Sound from '../sound';
 
 class DebugMenu extends React.PureComponent {
     constructor (props) {
@@ -45,7 +46,8 @@ class DebugMenu extends React.PureComponent {
         });
         const resetButton = <button name="Reset" key="reset" onClick={this.handleResetProfile}>Reset Profile</button>;
         const addCreditsButton = <button key="add100" onClick={() => this.addCredits(100)}>Add 100</button>;
-        const allButtons = featureButtons.concat([addCreditsButton, resetButton]);
+        const testSound = <button name="Sound" key="sound" onClick={() => { Sound.playSound(Sound.COIN) }}>Test Sound</button>;
+        const allButtons = featureButtons.concat([addCreditsButton, resetButton, testSound]);
         return <div className="debugMenu">
             <a onClick={() => { this.setState(...this.state, {shown: !shown})}}><b>&nbsp;*&nbsp;Debug Menu</b></a>
             <br/>{shown ? allButtons : null}</div>

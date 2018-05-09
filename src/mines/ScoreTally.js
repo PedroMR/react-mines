@@ -6,6 +6,7 @@ import {claimCredits, changeScreen, debugToggleFeature}  from '../meta/MetaActio
 import ReactGA from 'react-ga';
 import Features from '../meta/Features';
 import Items from '../meta/Items';
+import Sound from '../sound';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {
@@ -63,6 +64,7 @@ class ScoreTally extends React.PureComponent {
                 this.props.dispatch(debugToggleFeature(types.FEATURE_SHOW_SHOP, true));
         }
         this.props.dispatch(changeScreen(types.SCREEN_MAIN));
+        Sound.playSound(Sound.COIN);
     }
 
     render() {
