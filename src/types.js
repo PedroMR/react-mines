@@ -4,6 +4,8 @@ export const REVEAL_TILE = "revealTile";
 export const FLAG_TILE = "flagTile";
 export const NEW_GAME = "newGame";
 
+export const SHOW_DIALOGUE_LINE = "showDialogueLine";
+
 export const SET_UI_MODE = "setUiMode";
 export const DEBUG_TOGGLE_FEATURE = "debug.toggleFeature";
 export const DEBUG_ADD_CREDITS = "debug.addCredits";

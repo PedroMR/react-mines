@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ScoreTally from './ScoreTally';
+import Story from '../story/Story';
+import { showDialogueLine } from '../story/StoryActions';
 
 class Status extends React.PureComponent {
     render() {
@@ -17,6 +19,8 @@ class Status extends React.PureComponent {
         let scoreArea = null;
 
         if (nUnknown <= 0) {
+            if (!Story.hasSeen(this.props.meta, 'first-results'))
+                this.props.dispatch(showDialogueLine('first-results'))
             let nCorrectFlags = 0;
             this.props.mines.forEach((val, index) => { if (val && this.props.flags[index]) nCorrectFlags++; });
             const nDetonated = nTotalMines - nHiddenMines;

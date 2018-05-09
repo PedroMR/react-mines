@@ -32,6 +32,7 @@ export const initialMetaState = Story.enqueueInitialLine({
     current: {
         screen: types.SCREEN_MAIN,
         level: 0,
+        visible: {},
     },
     maxLevel: 0,
     features: {},// { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
@@ -86,6 +87,9 @@ function basicMetaReducer(state = initialMetaState, action) {
 
         case types.BUY_ITEM:
             return purchaseItem(state, payload.itemId, payload.price);
+
+        case types.SHOW_DIALOGUE_LINE:
+            return Story.enqueueLine(state, payload.lineId);
 
         default:
             return state;

@@ -49,6 +49,10 @@ function getFlag(meta, flagName) {
     return dotProp.get(meta, 'story.flags.'+flagName);
 }
 
+function hasSeen(meta, lineId) {
+    return dotProp.get(meta, 'story.read.'+lineId, false);
+}
+
 function enqueueLine(meta, lineId) {
     const line = getLineById(lineId);
 
@@ -83,6 +87,7 @@ const Story = {
     getFlag,
     trigger,
     enqueueInitialLine,
+    hasSeen,
 }
 
 export default Story;

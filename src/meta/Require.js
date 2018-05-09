@@ -32,6 +32,10 @@ export function Not(clause) {
     }
 }
 
+export function Never() {
+    return () => false;
+}
+
 export function Validate(requirements, ...args) {
     if (requirements === undefined) return true;
 
