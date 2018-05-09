@@ -70,10 +70,12 @@ class Board extends React.Component {
         for(let y=0; y < this.props.config.y; y++) {
             for(let x=0; x < this.props.config.x; x++) {
                 if (this.hasFeature(types.FEATURE_AUTOCLICK_SURROUNDED) && this.isSurrounded(x, y)) {
+                    Sound.playSound(Sound.AUTOCLICK_SURROUNDED);
                     this.flagAllTilesAround(x, y);
                     return;
                 }
                 if (this.hasFeature(types.FEATURE_AUTOCLICK_SAFE) && this.isSafe(x, y)) {
+                    Sound.playSound(Sound.AUTOCLICK_SAFE);
                     this.expandAround(x, y);
                     return;
                 }
@@ -98,7 +100,7 @@ class Board extends React.Component {
                 this.timer = null;
             }
 
-            this.timer = setTimeout(() => {this.checkAutoClick()}, 100); //this.props.options.autoClickTimer 
+            this.timer = setTimeout(() => {this.checkAutoClick()}, 1000); //this.props.options.autoClickTimer 
         }
 
     }
@@ -157,14 +159,17 @@ class Board extends React.Component {
             if (mine) return;
 
             if (this.hasFeature(types.FEATURE_CLICK_SURROUNDED) && this.isSurrounded(x, y)) {
+                Sound.playSound(Sound.EXPAND_SURROUNDED);
                 this.flagAllTilesAround(x, y);
             }
 
             if (this.hasFeature(types.FEATURE_EXPAND) && around === this.countFlagsAndVisibleMinesAround(x, y)) {
+                Sound.playSound(Sound.EXPAND_NUMBER);
                 this.expandAround(x, y);                
             }
 
             if (this.hasFeature(types.FEATURE_ZERO_OUT) && around === 0) {
+                Sound.playSound(Sound.EXPAND_SURROUNDED);
                 this.expandAround(x, y);
             }            
             return;

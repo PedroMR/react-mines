@@ -18,7 +18,16 @@ let Sound = {
     CLAIM_CREDITS: 'coin1',
     CLAIM_NO_CREDITS: 'blip1',
     PLACING_FLAG: 'coin1',
+    
+    EXPAND_NUMBER: 'blip1',
+    EXPAND_SURROUNDED: 'coin1',
+
+    AUTOCLICK_SAFE: 'blip1',
+    AUTOCLICK_SURROUNDED: 'coin1',
+
+    END_OF_GAME: null,
 }
+Sound.EXPAND_SURROUNDED = Sound.PLACING_FLAG;
 
 function playTest() {
     console.log("sound");
@@ -29,6 +38,8 @@ function playTest() {
 }
 
 function playSound(soundId) {
+    if(!soundId) return;
+
     let howl = findOrMakeHowl(soundId);
     if (howl)
         howl.play();
