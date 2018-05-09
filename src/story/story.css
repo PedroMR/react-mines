@@ -4,10 +4,11 @@
     font-weight: bold;
     background-color: black;
     color: lightgreen;
-    height: 4em;
+    height: 4.5em;
     padding: 0.2em;
     text-align: left;
-    overflow: auto;
+    overflow: hidden;
+    scroll-behavior: initial;
 }
 .dialoguePanel .header {
     height: 20px;

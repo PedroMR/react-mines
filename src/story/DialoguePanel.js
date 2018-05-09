@@ -5,7 +5,6 @@ import * as types from '../types';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
 import Story from './Story';
-import * as Scroll from 'react-scroll';
 
 class DialoguePanel extends React.PureComponent {
 
@@ -26,6 +25,11 @@ class DialoguePanel extends React.PureComponent {
         this.scrollToBottom();
     }
 
+    onCharacterTyped(character, charIndex) {
+        console.log(charIndex, character);
+        this.scrollToBottom();
+    }
+
     scrollToBottom() {
         this.container.scrollTop = this.container.scrollHeight
     }
@@ -38,8 +42,13 @@ class DialoguePanel extends React.PureComponent {
         const lastIndex = story.queue.length-1;
         const lineElements = story.queue.map((e, index) => {
             const mainText = e;
-            let wrapper = lastIndex === index ? <Typist onLineTyped={()=>this.onLineTyped()} onTypingDone={() => this.onTypingDone()}>{mainText}</Typist> : mainText;
-            return <li key={e}>{wrapper}</li>;
+            let wrapper = lastIndex === index ? <Typist
+                onCharacterTyped={()=>this.onCharacterTyped()}
+                onLineTyped={(l, i)=>this.onLineTyped(l, i)}
+                onTypingDone={() => this.onTypingDone()}
+                avgTypingDelay={30} stdTypingDelay={5}
+                >{mainText}</Typist> : mainText;
+            return <p key={e}>{wrapper}</p>;
             // return <Scroll.Element key={e}>{wrapper}</Scroll.Element>;
         });
 
