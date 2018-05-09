@@ -3,13 +3,21 @@ import boom1 from './assets/boom1.wav';
 import coin1 from './assets/coin1.wav';
 import {Howl} from 'howler';
 
+const Assets =  {
+    blip1,
+    boom1,
+    coin1,
+}
+
 let Sound = {
     playTest,
     playSound,
 
-    BLIP: 'blip',
-    BOOM: 'boom',
-    COIN: 'coin',
+    REVEAL_NUMBER: 'blip1',
+    REVEAL_MINE: 'boom1',
+    CLAIM_CREDITS: 'coin1',
+    CLAIM_NO_CREDITS: 'blip1',
+    PLACING_FLAG: 'coin1',
 }
 
 function playTest() {
@@ -27,9 +35,9 @@ function playSound(soundId) {
 }
 
 let SoundSources = {
-    [Sound.BLIP]: blip1,
-    [Sound.BOOM]: boom1,
-    [Sound.COIN]: coin1,
+    blip1,
+    boom1,
+    coin1,
 };
 let cachedHowls = {}
 

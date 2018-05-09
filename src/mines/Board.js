@@ -124,7 +124,6 @@ class Board extends React.Component {
         const around = this.props.around[pos];        
         const flagsAndMinesAround = this.countFlagsAndVisibleMinesAround(x, y);
         const unseenAround = this.countNeighbors(x, y, (npos) => !this.props.seen[npos] && !this.props.flags[npos]);
-        // console.log("unseen "+unseenAround+" flagsAndMines "+flagsAndMinesAround+" ?== "+around+" "+((unseenAround + flagsAndMinesAround) === around));
         return (unseenAround + flagsAndMinesAround) === around
     }
 
@@ -172,9 +171,11 @@ class Board extends React.Component {
         }
 
         if (this.isPlacingFlag() || e.type === 'contextmenu') {
-            Sound.playSound(Sound.BLIP);
+            Sound.playSound(Sound.PLACING_FLAG);
             this.props.dispatch(flagTile(x, y));
         } else if (!flag) {
+            let waitingForRegen = false;
+
             if (this.props.clicksSoFar === 0) {
                 const hitMine = this.props.mines[pos];
                 const hitNextToMine = this.props.around[pos] > 0;
@@ -186,17 +187,18 @@ class Board extends React.Component {
 
                 if ((hitMine && this.hasFeature(types.FEATURE_SAFE_FIRST_CLICK)) || 
                     (hitNextToMine && this.hasFeature(types.FEATURE_ZERO_FIRST_CLICK))) {
+                    waitingForRegen = true;
                     this.props.dispatch(startNewGame(this.props.config, x, y, this.hasFeature(types.FEATURE_ZERO_FIRST_CLICK) ? 1 : 0));
                     this.setState({waitingForRegen: {x, y}});
                 }
             }
 
-            const willShowMine = this.props.mines[pos];
-            console.log("sound time! "+mine);
-            if (willShowMine) 
-                Sound.playSound(Sound.BOOM);
+            const willShowMine = this.props.mines[pos] && !waitingForRegen;
+            if (this.props.mines[pos] && waitingForRegen) console.log("!!!NO BOOM, waiting to regen");
+            if (willShowMine)
+                Sound.playSound(Sound.REVEAL_MINE);
             else
-                Sound.playSound(Sound.BLIP);
+                Sound.playSound(Sound.REVEAL_NUMBER);
 
             this.props.dispatch(revealTile(x, y));
             if (this.hasFeature(types.FEATURE_ZERO_OUT) && around === 0) {

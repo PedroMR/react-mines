@@ -64,7 +64,7 @@ class ScoreTally extends React.PureComponent {
                 this.props.dispatch(debugToggleFeature(types.FEATURE_SHOW_SHOP, true));
         }
         this.props.dispatch(changeScreen(types.SCREEN_MAIN));
-        Sound.playSound(Sound.COIN);
+        Sound.playSound(this.state.totalScore > 0 ? Sound.CLAIM_CREDITS : Sound.CLAIM_NO_CREDITS);
     }
 
     render() {
