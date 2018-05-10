@@ -8,6 +8,7 @@ import itemConfig from '../conf/ItemDatabase';
 import Items from '../meta/Items';
 import ReactGA from 'react-ga';
 import * as Require from '../meta/Require';
+import Sound from '../sound';
 
 function ShopItem(props) {
     const item = props.item;
@@ -68,6 +69,7 @@ class ScreenShop extends React.PureComponent {
             value: item.price
         });
         this.props.dispatch(buyItem(item));
+        Sound.playSound(Sound.BUY_ITEM);
     }
 
     render() {

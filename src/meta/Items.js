@@ -1,17 +1,16 @@
 import dotProp from 'dot-prop-immutable';
 import realItems from '../conf/ItemDatabase';
 import realLevels from '../conf/LevelDatabase';
+import {Validate} from './Require';
 
 let items = realItems;
 let levels = realLevels;
-console.warn("ITEMS.JS items ",items, realItems);
 
 function useItemDatabase(itemDB) {
     items = itemDB;
 }
 
 function findItemById(itemId) {
-    console.warn("ITEMS.JS findItem ",items, realItems);
     return items.find( e =>  e.id === itemId );
 }
 
@@ -73,6 +72,22 @@ function getBestMultiplier(myItems)
     return bestMultiplier;
 }
 
+function countPurchaseableItems(meta)
+{
+    const ownedItems = meta.items;
+
+    const {wallet} = meta;
+
+    const ownItem = (item) => ownsItemId(ownedItems, item.id);
+    const canSeeItem = (item) => Validate(item.showIf, meta);
+    const canAffordItem = (item) => item.price <= wallet.credits;
+    const canBuyItem = (item) => canSeeItem(item) && canAffordItem(item) && !ownItem(item);
+    const countAvailable = (acc, item) => acc = canBuyItem(item) ? (acc+1) : acc;
+
+    const availableItemsCount = items.reduce(countAvailable, 0);
+    console.log("avail ", availableItemsCount)
+    return availableItemsCount;
+}
 
 let Items = {
     purchaseItem,
@@ -80,6 +95,7 @@ let Items = {
     findItemById,
     ownsItemId,
     getBestMultiplier,
+    countPurchaseableItems,
 }
 
 export default Items;

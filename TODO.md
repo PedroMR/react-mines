@@ -1,9 +1,11 @@
 # TODO
 
-- [ ] UI panels (for score and narrator)
-- [ ] Narrator text box
-- [ ] Rooster for the shop (can afford)
-- [ ] Loads of story
+- [ ] Loads of story and tutorial
+    - Remember you can use the button below the grid to change into "flag placement" mode.
+    - Or you can "right click" if you have a modern fancy mouse.
+    - At shop without money to buy anything -- "hmm, guess it's time for you to earn more credits"
+    - around 10th boom (not super early) -- "They knew it was a risky job. Don't worry, field agents get great funeral insurance."
+    - At some point in the future, maybe after nearly passing a mission (or failing one!) -- "Hmm. Let's see if we can't get those numbers up, shall we? We don't want to see you demoted to field agent." (implying you'll die as a soldier)
 - [ ] Improve debug menu (show which features available from what)
 - [ ] Formalize feature when something happens in the game (flags) (e.g., clicking a bomb first unlocks the item that improves that)
 - [ ] Bonus for level danger (mine ratio) 
@@ -12,8 +14,13 @@
 - [ ] Bonus for conserving clicks (as item)
 - [ ] Improve score tally aesthetics
 - [ ] Finish the level earlier -- if all unseen spots = num mines - num flags (as feature?)
-- [ ] Sounds
 - [ ] Advanced level selector
+- [ ] Add more sounds
+    - BUY ITEM
+    - SELECT and BACK for UI
+    - auto-click
+    - auto-zero out
+    - place flag
 - [ ] Some crazy features for levels, like:
     - [ ] More warning patterns (e.g., hex)
     - [ ] Double-mines
@@ -27,6 +34,7 @@
     - [ ] Picross-like
     - [ ] Controling robot in tunnels with guards?
 - [ ] Change NumericInput to have those up and down stepper arrows and sane (expandable) min and max values
+- [ ]? UI panels (for score and narrator)
 
 - [X] VERY BASIC Level progression (purchasing)
 - [X] query option for clearing localStorage
@@ -46,3 +54,6 @@
 - [X] Cash multiplier
 - [X] Bonus for no detonations
 - [X] Analytics
+- [X] Narrator text box
+- [X] Sound structure
+- [X] Rooster for the shop (can afford)

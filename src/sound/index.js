@@ -25,6 +25,7 @@ let Sound = {
     AUTOCLICK_SAFE: 'blip1',
     AUTOCLICK_SURROUNDED: 'coin1',
 
+    BUY_ITEM: 'coin1',
     END_OF_GAME: null,
 }
 Sound.EXPAND_SURROUNDED = Sound.PLACING_FLAG;
