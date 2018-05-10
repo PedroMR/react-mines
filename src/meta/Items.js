@@ -4,12 +4,14 @@ import realLevels from '../conf/LevelDatabase';
 
 let items = realItems;
 let levels = realLevels;
+console.warn("ITEMS.JS items ",items, realItems);
 
 function useItemDatabase(itemDB) {
     items = itemDB;
 }
 
 function findItemById(itemId) {
+    console.warn("ITEMS.JS findItem ",items, realItems);
     return items.find( e =>  e.id === itemId );
 }
 

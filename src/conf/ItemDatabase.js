@@ -1,6 +1,5 @@
 
 import * as types from "../types";
-import {OwnsItem, Not, UnlockedLevel, HasFeature} from '../meta/Require';
 
 const allItems = [
     {
@@ -33,35 +32,35 @@ const allItems = [
         price: 215,
         description: "Some would think it's not worth paying this much for something that makes things gray. They would be wrong. In an era of information overload filtering things out is-- ...I'll be quiet.",
         effects: [{ feature: types.FEATURE_DONT_COLOR_DONE }],
-        showIf: [OwnsItem('color-code')],
+        showIf: [{OwnsItem:'color-code'}],
     },{
         id: 'click-surrounded',
         name: "You Are Surrounded!",
         price: 350,
         description: '"What if I told you... you could click the RED numbers?"',
         effects: [{ feature: types.FEATURE_CLICK_SURROUNDED }],
-        showIf: [OwnsItem('color-code')],
+        showIf: [{OwnsItem: 'color-code'}],
     },{
         id: 'error-detection',
         name: "Mine Checksum",
         price: 250,
         description: "Are you going faster now? This will help avoid some human mistakes. Don't worry. We won't judge.",
         effects: [{ feature: types.FEATURE_ERROR_DETECTION }],
-        showIf: [UnlockedLevel(4)],
+        showIf: [{UnlockedLevel: 4}],
     },{
         id: 'mine-first-click',
         name: "Mine Mulligan",
         price: 97,
         description: "That felt awful, right? You should never have to hit a mine in your first tap again.",
         effects: [{ feature: types.FEATURE_SAFE_FIRST_CLICK }],
-        showIf: [HasFeature(types.FLAG_DID_HIT_MINE_FIRST_CLICK), Not(OwnsItem('zero-first-click'))],
+        showIf: [{HasFeature: types.FLAG_DID_HIT_MINE_FIRST_CLICK}, {Not: true, OwnsItem: 'zero-first-click'}],
     },{
         id: 'zero-first-click',
         name: "Starting Safe",
         price: 183,
         description: "You know what's better than not starting with a mine? Starting with a blank.",
         effects: [{ feature: types.FEATURE_ZERO_FIRST_CLICK }],
-        showIf: [OwnsItem('mine-first-click')],
+        showIf: [{OwnsItem:'mine-first-click'}],
     },
     MakeLevelUnlock(1, 50, 1),
     MakeLevelUnlock(2, 110, 1.1),
@@ -77,9 +76,9 @@ function MakeLevelUnlock(num, price, scoreMult) {
         description: "More tiles! More mines! More... REWARDS..." + ((num > 1) ? " including a bigger score multiplier." : ""),
         effects: [{maxLevel: num}, { scoreMultiplier: scoreMult }]
     }
-    level.showIf = [ Not(OwnsItem('level-'+(num+1))) ];
+    level.showIf = [ {Not:true, OwnsItem:'level-'+(num+1)} ];
     if (num > 1)
-        level.showIf.push(OwnsItem('level-'+(num-1)));
+        level.showIf.push({OwnsItem:'level-'+(num-1)});
 
     return level;
 }

@@ -40,7 +40,22 @@ export function Validate(requirements, ...args) {
     if (requirements === undefined) return true;
 
     if (!Array.isArray(requirements)) {
-        return requirements(...args);
+        if (typeof requirements === 'object') {
+            const isNegated = requirements.Not;
+
+            if (requirements.OwnsItem) {
+                requirements = OwnsItem(requirements.OwnsItem);
+            } else if(requirements.UnlockedLevel) {
+                requirements = UnlockedLevel(requirements.UnlockedLevel);
+            } else if (requirements.HasFeature) {
+                requirements = HasFeature(requirements.HasFeature);
+            }
+
+            if (isNegated) requirements = Not(requirements);
+        }
+
+        if (typeof requirements === 'function')
+            return requirements(...args);
     }
 
     for (let requirement of requirements) {

@@ -7,6 +7,7 @@ import check from '../img/check.png';
 import itemConfig from '../conf/ItemDatabase';
 import Items from '../meta/Items';
 import ReactGA from 'react-ga';
+import * as Require from '../meta/Require';
 
 function ShopItem(props) {
     const item = props.item;
@@ -50,13 +51,7 @@ class ScreenShop extends React.PureComponent {
     }
 
     canShowItem(item) {
-        if (item.showIf) {
-            for (let requirement of item.showIf) {
-                if (!requirement(this.props.meta))
-                    return false;
-            }
-        }
-        return true;
+        return Require.Validate(item.showIf, this.props.meta);
     }
 
     componentDidUpdate(prevProps, prevState) {

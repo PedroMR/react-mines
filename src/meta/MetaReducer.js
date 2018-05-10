@@ -97,21 +97,21 @@ function basicMetaReducer(state = initialMetaState, action) {
 }
 
 function purchaseItem(state, itemId, price) {
-    const theItem = Items.findItemById(itemId);
-    price = price || theItem.price;
+    // const theItem = Items.findItemById(itemId);
+    // price = price || theItem.price;
 
-    if (!theItem) {
-        console.log("Can't find item "+itemId);
-        return state;
-    }
-    if (Items.ownsItemId(state.items, itemId)) {
-        console.log("Already owns "+itemId);
-        return state;
-    }
-    if (state.wallet.credits < price) {
-        console.log("Can't buy, price "+price+" too high; wallet "+state.wallet.credits);
-        return state;
-    }
+    // if (!theItem) {
+    //     console.log("Can't find item "+itemId);
+    //     return state;
+    // }
+    // if (Items.ownsItemId(state.items, itemId)) {
+    //     console.log("Already owns "+itemId);
+    //     return state;
+    // }
+    // if (state.wallet.credits < price) {
+    //     console.log("Can't buy, price "+price+" too high; wallet "+state.wallet.credits);
+    //     return state;
+    // }
 
     return Items.purchaseItem(state, itemId, price);
 }
