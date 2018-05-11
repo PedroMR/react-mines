@@ -12,6 +12,7 @@ const Assets =  {
 let Sound = {
     playTest,
     playSound,
+    isMuted,
 
     REVEAL_NUMBER: 'blip1',
     REVEAL_MINE: 'boom1',
@@ -46,6 +47,12 @@ function playSound(soundId) {
     let howl = findOrMakeHowl(soundId);
     if (howl)
         howl.play();
+}
+
+function isMuted(meta) {
+    if (!meta.settings) return false;
+    
+    return !meta.settings.audio;
 }
 
 let SoundSources = {

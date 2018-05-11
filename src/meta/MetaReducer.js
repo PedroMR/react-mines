@@ -43,6 +43,7 @@ export const initialMetaState = Story.enqueueInitialLine({
     },
     items: [], // list of IDs bought already
     wallet: {},
+    settings: { audio: true },
     score: {
         perMineFound: 5,
         perMineDetonated: -10,
@@ -71,6 +72,10 @@ function basicMetaReducer(state = initialMetaState, action) {
 
         case types.RESET_PROFILE:
             return initialMetaState;
+
+        case types.MUTE_AUDIO:
+            console.log("setting audio to "+(!payload.muteIt)+", was ",dotProp.get(state, "settings.audio"));
+            return dotProp.set(state, "settings.audio", !payload.muteIt);
 
         case types.CHANGE_SCREEN:
             return dotProp.set(state, "current.screen", payload.screen);

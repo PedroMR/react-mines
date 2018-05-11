@@ -10,6 +10,11 @@ export const debugAddCredits = (amount) => ({
     payload: { amount }
 });
 
+export const muteAudio = (muteIt) => ({
+    type: types.MUTE_AUDIO,
+    payload: { muteIt }
+});
+
 export const resetProfile = () => ({
     type: types.RESET_PROFILE,
 });

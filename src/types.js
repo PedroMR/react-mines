@@ -10,6 +10,8 @@ export const SET_UI_MODE = "setUiMode";
 export const DEBUG_TOGGLE_FEATURE = "debug.toggleFeature";
 export const DEBUG_ADD_CREDITS = "debug.addCredits";
 
+export const MUTE_AUDIO = "sound.mute";
+
 export const RESET_PROFILE = "config.resetProfile";
 export const CHANGE_SCREEN = "ui.goto";
 export const SELECT_LEVEL = "ui.selectLevel";

@@ -10,7 +10,7 @@ import * as types from '../types';
 import * as tools from '../Tools';
 import { startNewGame } from '../mines/MinesActions';
 import packageJson from '../package.alias.json';
-import { changeScreen } from './MetaActions';
+import { changeScreen, muteAudio } from './MetaActions';
 import ScreenShop from '../shop/ScreenShop';
 import ReactGA from 'react-ga';
 import DialoguePanel from '../story/DialoguePanel';
@@ -60,11 +60,16 @@ class Main extends React.Component {
                 !(currentScreen === types.SCREEN_PLAY_MINES && this.props.gameOver); // FIXME should be a property set by the game state...???
     }
 
+    handleAudioToggle() {
+        const isMuted = Sound.isMuted(this.props.meta);
+        this.props.dispatch(muteAudio(!isMuted))
+    }
+
     render() {
         const backButton = <button className="backButton" onClick={this.handleBackButton}>Back</button>;
         return <div
             ><h1>Remote Mine Disposal Terminal</h1>
-            <Version/><AudioToggle/>
+            <Version/><AudioToggle isMuted={Sound.isMuted(this.props.meta)} handleAudioToggle={() => this.handleAudioToggle()}/>
             <DialoguePanel />
             {this.canGoBack() ? backButton : null}
             <MetaInfo meta={this.props.meta}/>
@@ -86,7 +91,9 @@ function MetaInfo(props) {
 }
 
 function AudioToggle(props) {
-    return <i class="fas fa-volume-up"></i>;
+    const isMuted = props.isMuted;
+    const volumeClass = isMuted ? "fa-volume-off" : "fa-volume-up";
+    return <div onClick={props.handleAudioToggle}><i className={"fas "+volumeClass}></i></div>;
 }
 
 function mapStateToProps(state) {
