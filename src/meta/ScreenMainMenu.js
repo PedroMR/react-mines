@@ -5,14 +5,17 @@ import * as types from '../types';
 import {changeScreen}  from './MetaActions';
 import Features from './Features';
 import Items from './Items';
+import Sound from '../sound';
 
 class ScreenMainMenu extends React.PureComponent {
 
     onPlayMines() {
+        Sound.playSound(Sound.CLICK_BUTTON);
         this.props.dispatch(changeScreen(types.SCREEN_CREATE_MINES));
     }
 
     onShop() {
+        Sound.playSound(Sound.CLICK_BUTTON);
         this.props.dispatch(changeScreen(types.SCREEN_SHOP));
     }
 

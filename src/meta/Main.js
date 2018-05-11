@@ -14,6 +14,7 @@ import { changeScreen } from './MetaActions';
 import ScreenShop from '../shop/ScreenShop';
 import ReactGA from 'react-ga';
 import DialoguePanel from '../story/DialoguePanel';
+import Sound from '../sound';
 
 class Main extends React.Component {
     constructor(props) {
@@ -49,6 +50,7 @@ class Main extends React.Component {
     }
     
     handleBackButton() {
+        Sound.playSound(Sound.CLICK_BACK);
         this.props.dispatch(changeScreen(types.SCREEN_MAIN));
     }
 
