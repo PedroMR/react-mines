@@ -61,10 +61,8 @@ class Main extends React.Component {
     }
 
     handleAudioToggle() {
-        // this.props.dispatch(muteAudio(!isMuted))
-        Sound.setMute(!Sound.isMuted());
+        this.props.dispatch(muteAudio(!Sound.isMuted()));
         Sound.playSound(Sound.CLICK_BUTTON);
-        this.forceUpdate(); // needed since it doesn't change props (yet)
     }
 
     render() {

@@ -3,6 +3,7 @@ import * as types from '../types';
 import * as tools from '../Tools';
 import Items from './Items';
 import Story from '../story/Story';
+import Sound from '../sound';
 
 /* config layoutL:
  * state.
@@ -43,7 +44,7 @@ export const initialMetaState = Story.enqueueInitialLine({
     },
     items: [], // list of IDs bought already
     wallet: {},
-    settings: { audio: true },
+    settings: { mute: false },
     score: {
         perMineFound: 5,
         perMineDetonated: -10,
@@ -62,6 +63,9 @@ function metaReducer(state = initialMetaState, action) {
 function basicMetaReducer(state = initialMetaState, action) {
     const payload = action.payload;
     switch (action.type) {
+        case "redux-localstorage/INIT":
+            Sound.setMute(dotProp.get(state, 'settings.mute', false));
+            return state;
 
         case types.DEBUG_TOGGLE_FEATURE:
             const feature = payload.feature;
@@ -74,8 +78,8 @@ function basicMetaReducer(state = initialMetaState, action) {
             return initialMetaState;
 
         case types.MUTE_AUDIO:
-            console.log("setting audio to "+(!payload.muteIt)+", was ",dotProp.get(state, "settings.audio"));
-            return dotProp.set(state, "settings.audio", !payload.muteIt);
+            Sound.setMute(payload.muteIt);
+            return dotProp.set(state, "settings.mute", payload.muteIt);
 
         case types.CHANGE_SCREEN:
             return dotProp.set(state, "current.screen", payload.screen);
