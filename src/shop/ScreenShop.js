@@ -13,7 +13,7 @@ import Sound from '../sound';
 function ShopItem(props) {
     const item = props.item;
     const checkMark = <img className="icon" width='45' alt="check" src={check}/>
-    const buyText = "Buy for "+item.price;
+    const buyText = "Buy for "+tools.formatPrice(item.price);
     const buyContents = props.alreadyOwned ? checkMark : buyText;
     const canBuy = props.canAfford && !props.alreadyOwned;
     let itemClass = "shopItem"

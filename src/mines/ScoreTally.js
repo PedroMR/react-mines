@@ -43,7 +43,7 @@ class ScoreTally extends React.PureComponent {
                     multString = 'X'; //TODO replace with forbidden icon
                 return <tr key={item.name}><td className="scoreTallyNames">{item.name}</td><td></td><td></td><td colSpan='3' className="scoreTallyPoints">{multString}</td></tr>;
             } else {
-                return <tr key={item.name}><td className="scoreTallyNames">{item.name}</td><td>{ratio}</td><td>x{amount}</td><td className="scoreTallyPoints">{pointsWorth}</td></tr>;
+                return <tr key={item.name}><td className="scoreTallyNames">{item.name}</td><td>{ratio}</td><td>x{amount}</td><td className="scoreTallyPoints">{tools.formatPrice(pointsWorth)}</td></tr>;
             }
         })
 
@@ -75,7 +75,7 @@ class ScoreTally extends React.PureComponent {
         return <div className="scoreTally"><table className="scoreTally"><thead></thead><tbody>
             {/* <tr><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></tr> */}
                     {this.state.scoreRows}
-                    <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">${this.state.totalScore}</td></tr>
+                    <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{tools.formatPrice(this.state.totalScore)}</td></tr>
                     <tr><td colSpan='4' className="scoreTallyClaim">{claimButton}</td></tr>
                     </tbody>
                 </table></div>;

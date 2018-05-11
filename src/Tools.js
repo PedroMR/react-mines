@@ -71,3 +71,7 @@ export function newVersionOf(obj, newProps) {
 export function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
+
+export function formatPrice(amount) {
+    return amount+' Ω';
+}

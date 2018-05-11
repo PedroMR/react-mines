@@ -1,5 +1,6 @@
 # TODO
 
+- [ ] Sound toggle
 - [ ] Loads of story and tutorial
     - Remember you can use the button below the grid to change into "flag placement" mode.
     - Or you can "right click" if you have a modern fancy mouse.

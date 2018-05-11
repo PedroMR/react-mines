@@ -62,7 +62,7 @@ class Main extends React.Component {
         const backButton = <button className="backButton" onClick={this.handleBackButton}>Back</button>;
         return <div
             ><h1>Remote Mine Disposal Terminal</h1>
-            <Version/>
+            <Version/><AudioToggle/>
             <DialoguePanel />
             {this.canGoBack() ? backButton : null}
             <MetaInfo meta={this.props.meta}/>
@@ -78,9 +78,13 @@ function Version(props) {
 
 function MetaInfo(props) {
     const credits = tools.getCredits(props.meta);
-    const creditString = (credits <= 0 || !credits) ? '\u00A0' : "Credits: "+credits;
+    const creditString = (credits <= 0 || !credits) ? '\u00A0' : "Wallet: "+tools.formatPrice(credits);
 
     return <div className='metaInfo'><span className='creditDisplay'>{creditString}</span></div>;
+}
+
+function AudioToggle(props) {
+    return <i class="fas fa-volume-up"></i>;
 }
 
 function mapStateToProps(state) {
