@@ -1,9 +1,12 @@
 {
-  "main.css": "static/css/main.36406b90.css",
-  "main.css.map": "static/css/main.36406b90.css.map",
-  "main.js": "static/js/main.cb7f19e2.js",
-  "main.js.map": "static/js/main.cb7f19e2.js.map",
+  "main.css": "static/css/main.3c338575.css",
+  "main.css.map": "static/css/main.3c338575.css.map",
+  "main.js": "static/js/main.76c4a031.js",
+  "main.js.map": "static/js/main.76c4a031.js.map",
+  "static/media/blip1.wav": "static/media/blip1.c5c0a534.wav",
+  "static/media/boom1.wav": "static/media/boom1.48571337.wav",
   "static/media/check.png": "static/media/check.d56ddb28.png",
+  "static/media/coin1.wav": "static/media/coin1.7c259467.wav",
   "static/media/magnifying-glass.svg": "static/media/magnifying-glass.892ef6aa.svg",
   "static/media/mine-explosion.svg": "static/media/mine-explosion.9604adf6.svg",
   "static/media/minefield.svg": "static/media/minefield.19b7cd10.svg"
