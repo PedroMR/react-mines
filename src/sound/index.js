@@ -13,6 +13,7 @@ let Sound = {
     playTest,
     playSound,
     isMuted,
+    setMute,
 
     REVEAL_NUMBER: 'blip1',
     REVEAL_MINE: 'boom1',
@@ -34,7 +35,8 @@ let Sound = {
 Sound.EXPAND_SURROUNDED = Sound.PLACING_FLAG;
 
 function playTest() {
-    console.log("sound");
+    console.log("sound",settings.isMuted());
+    if (isMuted()) return;
     const sound = new Howl({
         src: boom1
     })
@@ -43,16 +45,21 @@ function playTest() {
 
 function playSound(soundId) {
     if(!soundId) return;
+    if (isMuted()) return;
 
     let howl = findOrMakeHowl(soundId);
     if (howl)
         howl.play();
 }
 
+let settings = { mute: false };
+
 function isMuted(meta) {
-    if (!meta.settings) return false;
-    
-    return !meta.settings.audio;
+    return settings.mute;
+}
+
+function setMute(mute) {
+    settings.mute = mute;
 }
 
 let SoundSources = {

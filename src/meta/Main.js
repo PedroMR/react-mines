@@ -61,15 +61,17 @@ class Main extends React.Component {
     }
 
     handleAudioToggle() {
-        const isMuted = Sound.isMuted(this.props.meta);
-        this.props.dispatch(muteAudio(!isMuted))
+        // this.props.dispatch(muteAudio(!isMuted))
+        Sound.setMute(!Sound.isMuted());
+        Sound.playSound(Sound.CLICK_BUTTON);
+        this.forceUpdate(); // needed since it doesn't change props (yet)
     }
 
     render() {
         const backButton = <button className="backButton" onClick={this.handleBackButton}>Back</button>;
         return <div
             ><h1>Remote Mine Disposal Terminal</h1>
-            <Version/><AudioToggle isMuted={Sound.isMuted(this.props.meta)} handleAudioToggle={() => this.handleAudioToggle()}/>
+            <Version/><AudioToggle isMuted={Sound.isMuted()} handleAudioToggle={() => this.handleAudioToggle()}/>
             <DialoguePanel />
             {this.canGoBack() ? backButton : null}
             <MetaInfo meta={this.props.meta}/>
