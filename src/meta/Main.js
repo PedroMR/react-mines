@@ -2,16 +2,16 @@ import React from 'react';
 import "../mines.css";
 import "./meta.css";
 import { connect } from 'react-redux';
-import Mines from "../mines/Mines";
+import ScreenMines from "../mines/ScreenMines";
 import ScreenMainMenu from "./ScreenMainMenu";
 import ScreenCreateMines from "./ScreenCreateMines";
+import ScreenShop from '../shop/ScreenShop';
 import DebugMenu from "./DebugMenu";
 import * as types from '../types';
 import * as tools from '../Tools';
 import { startNewGame } from '../mines/MinesActions';
 import packageJson from '../package.alias.json';
 import { changeScreen, muteAudio } from './MetaActions';
-import ScreenShop from '../shop/ScreenShop';
 import ReactGA from 'react-ga';
 import DialoguePanel from '../story/DialoguePanel';
 import Sound from '../sound';
@@ -41,7 +41,7 @@ class Main extends React.Component {
             case types.SCREEN_SHOP:
                 return <ScreenShop/>;
             case types.SCREEN_PLAY_MINES:
-                return <Mines/>;
+                return <ScreenMines/>;
             case types.SCREEN_CREATE_MINES:
                 return <ScreenCreateMines config={this.props.config} features={this.props.features}/>;
             default:

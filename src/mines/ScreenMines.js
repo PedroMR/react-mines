@@ -6,7 +6,7 @@ import ControlPanel from "./ControlPanel";
 import { startNewGame, setUiMode } from './MinesActions';
 import * as types from '../types';
 
-class Mines extends React.Component {
+class ScreenMines extends React.Component {
     constructor(props) {
         super(props);
 
@@ -81,4 +81,4 @@ function mapStateToProps(state) {
     return retVal;
 }
 
-export default connect(mapStateToProps)(Mines);
+export default connect(mapStateToProps)(ScreenMines);
