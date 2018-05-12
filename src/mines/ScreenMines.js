@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Board from "./Board";
+import MinesPowerList from "./MinesPowerList";
 import Status from "./Status";
 import ControlPanel from "./ControlPanel";
 import { startNewGame, setUiMode } from './MinesActions';
 import * as types from '../types';
+import Features from '../meta/Features';
 
 class ScreenMines extends React.Component {
     constructor(props) {
@@ -59,6 +61,7 @@ class ScreenMines extends React.Component {
     
     render() {
         return <div  onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}>
+                <MinesPowerList hasFeature={(id) => Features.hasFeature(this.props.meta, id)}/>
                 <Status />
                 <Board />
                 <ControlPanel

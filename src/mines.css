@@ -146,3 +146,19 @@ table.scoreTally {
     text-transform: uppercase;
     background-color: lightgrey;
 }
+.minesPowerList {
+    /* border: 1px solid blueviolet; */
+    float: right;
+    text-align: left;
+    width: 30%;
+}
+.minesPower {
+    border: 1px solid lightgray;
+    float: left;
+    text-align: center;
+    width: 30%;
+    background-color: #fff;
+}
+.minesPower:hover {
+    background-color: #eee;    
+}
