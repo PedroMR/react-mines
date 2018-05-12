@@ -93,7 +93,7 @@ function MetaInfo(props) {
 function AudioToggle(props) {
     const isMuted = props.isMuted;
     const volumeClass = isMuted ? "fa-volume-off" : "fa-volume-up";
-    return <div onClick={props.handleAudioToggle}><i className={"fas "+volumeClass}></i></div>;
+    return <div onClick={props.handleAudioToggle} className="audioToggle"><i className={"fas "+volumeClass}></i></div>;
 }
 
 function mapStateToProps(state) {

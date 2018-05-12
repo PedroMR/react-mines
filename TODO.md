@@ -1,6 +1,6 @@
 # TODO
 
-- [ ] Sound toggle
+- [ ] List of powers next to board 
 - [ ] Loads of story and tutorial
     - Remember you can use the button below the grid to change into "flag placement" mode.
     - Or you can "right click" if you have a modern fancy mouse.
@@ -58,3 +58,4 @@
 - [X] Narrator text box
 - [X] Sound structure
 - [X] Rooster for the shop (can afford)
+- [X] Sound toggle
