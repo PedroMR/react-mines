@@ -7,6 +7,7 @@ import ReactGA from 'react-ga';
 import Features from '../meta/Features';
 import Items from '../meta/Items';
 import Sound from '../sound';
+import { Collapse } from 'react-bootstrap';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {
@@ -50,6 +51,8 @@ class ScoreTally extends React.PureComponent {
         this.state.totalScore = Math.round(this.state.totalScore * totalMultiplier);
 
         this.claimCredits = this.claimCredits.bind(this);
+
+        // setTimeout(()=> { this.setState({open: true})}, 1000);
     }
 
     claimCredits() {
@@ -71,14 +74,16 @@ class ScoreTally extends React.PureComponent {
 
         const claimButtonTitle = this.state.totalScore > 0 ? "Claim Credits" : "Move On";
         const claimButton = <button name="claim" disabled={this.props.claimedRewards} onClick={this.claimCredits}>{claimButtonTitle}</button>;
+        const scoreTally = <div className="scoreTally"><table className="scoreTally"><thead></thead><tbody>
+        {/* <tr><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></tr> */}
+                {this.state.scoreRows}
+                <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{tools.formatPrice(this.state.totalScore)}</td></tr>
+                <tr><td colSpan='4' className="scoreTallyClaim">{claimButton}</td></tr>
+                </tbody>
+            </table></div>;
 
-        return <div className="scoreTally"><table className="scoreTally"><thead></thead><tbody>
-            {/* <tr><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></tr> */}
-                    {this.state.scoreRows}
-                    <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{tools.formatPrice(this.state.totalScore)}</td></tr>
-                    <tr><td colSpan='4' className="scoreTallyClaim">{claimButton}</td></tr>
-                    </tbody>
-                </table></div>;
+        // return <div><Collapse in={this.state.open} timeout={1000} appear={true}>{scoreTally}</Collapse></div>;
+        return scoreTally;
     }
 }
 
