@@ -158,6 +158,7 @@ table.scoreTally {
     text-align: center;
     width: 30%;
     background-color: #fff;
+    user-select: none;
 }
 .minesPower:hover {
     background-color: #eee;    

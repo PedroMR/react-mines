@@ -1,6 +1,7 @@
 import React from 'react';
 import imgInspect from '../img/magnifying-glass.png';
 import imgFlag from '../img/minefield.png';
+import { Button, Tooltip, OverlayTrigger, Popover } from 'react-bootstrap';
 
 class MinesPowerList extends React.PureComponent {
     render() {
@@ -13,12 +14,15 @@ class MinesPowerList extends React.PureComponent {
             {name:"Flag", desc:"Right-click to mark a tile as a mine", icon: imgFlag },
         ];
         const iconSize = 20;
-
+        
         const powerList = powers.map((power)=> {
-            return <div className="minesPower"><img src={power.icon} width={iconSize} height={iconSize}/><br/>{power.name}</div>;
+            const popover =  <Popover title={power.name}>{power.desc}</Popover>;
+            return <OverlayTrigger placement='left' overlay={popover}><div className="minesPower"><img src={power.icon} alt={power.name} title={power.desc} width={iconSize} height={iconSize}/><br/>{power.name}</div></OverlayTrigger>;
         })
 
-        return <div className="minesPowerList">POWERS<br/>{powerList}</div>;
+
+        return <div className="minesPowerList">POWERS<br/>
+        {powerList}</div>;
     }
 }
 
