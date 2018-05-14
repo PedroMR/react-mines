@@ -121,7 +121,7 @@ table.scoreTally {
     opacity: 1;
     color: black;
     text-align: center;
-    /* display: inline-block; */
+    display: inline-block;
     overflow: hidden;
     border: 2px solid white;
 }

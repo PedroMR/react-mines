@@ -61,7 +61,7 @@ class ScreenMines extends React.Component {
     
     render() {
         return <div  onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}>
-                <MinesPowerList hasFeature={(id) => Features.hasFeature(this.props.meta, id)}/>
+                <MinesPowerList items={this.props.meta.items} hasFeature={(id) => Features.hasFeature(this.props.meta, id)}/>
                 <Status />
                 <Board />
                 <ControlPanel
