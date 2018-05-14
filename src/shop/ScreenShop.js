@@ -9,6 +9,7 @@ import Items from '../meta/Items';
 import ReactGA from 'react-ga';
 import * as Require from '../meta/Require';
 import Sound from '../sound';
+import { Button } from 'react-bootstrap';
 
 function ShopItem(props) {
     const item = props.item;
@@ -22,7 +23,7 @@ function ShopItem(props) {
     return <div className={itemClass}>
         <div className='name'>{item.name}</div><br/>
         <div className='description'>{item.description}</div>
-        <button disabled={!canBuy} onClick={() => props.onBuy(item)} className='price'>{buyContents}</button>
+        <Button disabled={!canBuy} onClick={() => props.onBuy(item)}  bsStyle={props.alreadyOwned ? 'success': 'primary'} >{buyContents}</Button>
         </div>;
 }
 
