@@ -7,7 +7,7 @@ import ReactGA from 'react-ga';
 import Features from '../meta/Features';
 import Items from '../meta/Items';
 import Sound from '../sound';
-import { Collapse } from 'react-bootstrap';
+import { Collapse, Modal, Button } from 'react-bootstrap';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {
@@ -71,19 +71,28 @@ class ScoreTally extends React.PureComponent {
     }
 
     render() {
+        const totalScore = this.state.totalScore;
+        const gettingRewards = totalScore > 0;
 
-        const claimButtonTitle = this.state.totalScore > 0 ? "Claim Credits" : "Move On";
+        const claimButtonTitle = gettingRewards ? "Claim Credits" : "Move On";
         const claimButton = <button name="claim" disabled={this.props.claimedRewards} onClick={this.claimCredits}>{claimButtonTitle}</button>;
         const scoreTally = <div className="scoreTally"><table className="scoreTally"><thead></thead><tbody>
         {/* <tr><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></tr> */}
                 {this.state.scoreRows}
-                <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{tools.formatPrice(this.state.totalScore)}</td></tr>
-                <tr><td colSpan='4' className="scoreTallyClaim">{claimButton}</td></tr>
+                <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{tools.formatPrice(totalScore)}</td></tr>
+                {/* <tr><td colSpan='4' className="scoreTallyClaim">{claimButton}</td></tr> */}
                 </tbody>
             </table></div>;
 
         // return <div><Collapse in={this.state.open} timeout={1000} appear={true}>{scoreTally}</Collapse></div>;
-        return scoreTally;
+        return <div className="static-modal"><Modal.Dialog>
+                <Modal.Header>GAME OVER</Modal.Header>
+                <Modal.Body>{scoreTally}</Modal.Body>
+                <Modal.Footer>
+                    <Button bsStyle={gettingRewards ? "primary" : 'default'} disabled={this.props.claimedRewards} onClick={this.claimCredits}>{claimButtonTitle}</Button>
+                </Modal.Footer>
+            </Modal.Dialog></div>;
+        // return scoreTally;
     }
 }
 
