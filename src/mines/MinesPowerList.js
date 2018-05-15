@@ -37,7 +37,7 @@ class MinesPowerList extends React.PureComponent {
 
             const popover =  <Popover id='{power.name}' title={power.name}>{power.desc}</Popover>;
             const inside = power.icon ? <img src={power.icon} alt="icon" title={power.desc} width={iconSize} height={iconSize}/> : <div  width={iconSize} height={iconSize} style={{display:'inline-block', width:iconSize,height:iconSize}}/>;
-            return <OverlayTrigger placement='left' trigger={['hover','focus','click']} rootClose overlay={popover}><div className="minesPower">{inside}<br/>{power.name}</div></OverlayTrigger>;
+            return <OverlayTrigger key={power.name+power.item} placement='left' trigger={['hover','focus','click']} rootClose overlay={popover}><div className="minesPower">{inside}<br/>{power.name}</div></OverlayTrigger>;
         })
 
 

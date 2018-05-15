@@ -5,6 +5,8 @@ import * as types from '../types';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
 import Story from './Story';
+import {Well, Panel} from 'react-bootstrap';
+import Sound from '../sound';
 
 class DialoguePanel extends React.PureComponent {
 
@@ -26,7 +28,9 @@ class DialoguePanel extends React.PureComponent {
     }
 
     onCharacterTyped(character, charIndex) {
-        // console.log(charIndex, character);
+        const volume = Math.random()*0.3 + 0.2;
+        if (Math.random() < 0.4)
+            Sound.playSound(Sound.KEY_TYPE, volume);
         this.scrollToBottom();
     }
 
@@ -46,15 +50,14 @@ class DialoguePanel extends React.PureComponent {
                 onCharacterTyped={(c, ci)=>this.onCharacterTyped(c, ci)}
                 onLineTyped={(l, i)=>this.onLineTyped(l, i)}
                 onTypingDone={() => this.onTypingDone()}
-                avgTypingDelay={30} stdTypingDelay={5}
+                avgTypingDelay={50} stdTypingDelay={25}
                 >{mainText}</Typist> : <p key={e}>{mainText}</p>;
             return wrapper;
-            // cursor={{hideWhenDone:true}}
         });
 
-        return <div className='dialoguePanel' ref={elem => this.container = elem}>
+        return <Panel><div className='dialoguePanel' ref={elem => this.container = elem}>
                 {lineElements}
-            </div>;
+            </div></Panel>;
     }
 }
 
