@@ -86,7 +86,7 @@ class ScoreTally extends React.PureComponent {
 
         // return <div><Collapse in={this.state.open} timeout={1000} appear={true}>{scoreTally}</Collapse></div>;
         return <div className="static-modal"><Modal.Dialog>
-                <Modal.Header>GAME OVER</Modal.Header>
+                <Modal.Header><Modal.Title>GAME OVER</Modal.Title></Modal.Header>
                 <Modal.Body>{scoreTally}</Modal.Body>
                 <Modal.Footer>
                     <Button bsStyle={gettingRewards ? "primary" : 'default'} disabled={this.props.claimedRewards} onClick={this.claimCredits}>{claimButtonTitle}</Button>

@@ -35,6 +35,7 @@ class DebugMenu extends React.PureComponent {
             types.FEATURE_AUTOCLICK_SURROUNDED,            
             types.FEATURE_SAFE_FIRST_CLICK,            
             types.FEATURE_ZERO_FIRST_CLICK,
+            "debug-score-tally",
         ];
         const featureButtons = featureList.map( (ft) => {
             return <label key={ft}>

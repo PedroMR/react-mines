@@ -18,7 +18,7 @@ class Status extends React.PureComponent {
         let bottomLine = <span className="status">{nFlags} flag{nFlags===1?"":"s"} / {nHiddenMines} hidden mine{nHiddenMines===1?"":"s"} &mdash; {nUnknown} tiles</span>;
         let scoreArea = null;
 
-        if (nUnknown <= 0) {
+        if (this.props.meta.features["debug-score-tally"] || nUnknown <= 0) {
             if (!Story.hasSeen(this.props.meta, 'first-results'))
                 this.props.dispatch(showDialogueLine('first-results'))
             let nCorrectFlags = 0;

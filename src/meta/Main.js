@@ -69,7 +69,7 @@ class Main extends React.Component {
     render() {
         const backButton = <Button className='backButton' onClick={this.handleBackButton}><Glyphicon glyph='chevron-left'/>Back</Button>;
         return <div
-            ><h1>Remote Mine Disposal Terminal</h1>
+            ><h1>Remote Disposal Terminal</h1>
             <Version/><AudioToggle isMuted={Sound.isMuted()} handleAudioToggle={() => this.handleAudioToggle()}/>
             <DialoguePanel />
             {this.canGoBack() ? backButton : null}
