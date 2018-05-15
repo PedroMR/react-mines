@@ -6,6 +6,7 @@ import {changeScreen}  from './MetaActions';
 import Features from './Features';
 import Items from './Items';
 import Sound from '../sound';
+import { Button, Badge } from 'react-bootstrap';
 
 class ScreenMainMenu extends React.PureComponent {
 
@@ -29,14 +30,17 @@ class ScreenMainMenu extends React.PureComponent {
         const numItemsAvailable = this.countPurchaseableItems();
         const showShop = Features.hasFeature(this.props.meta, types.FEATURE_SHOW_SHOP);
         let rooster = null;
+        let badge = null;
 
         if(numItemsAvailable > 0 && showShop) {
             rooster = <div className="shop rooster">{numItemsAvailable}</div>;
+            badge = <Badge pullRight={true}>{numItemsAvailable}</Badge>;
         }
 
+
         return <div className='mainMenu'>
-            <button className='playMines' onClick={() => this.onPlayMines()}>Hunt for mines</button><br/>
-            {showShop ? <div className="shop roosterContainer">{rooster}<button className='shop' onClick={() => this.onShop()}>Shop</button></div> : null}
+            <Button className='playMines' bsStyle='primary' bsSize='large' onClick={() => this.onPlayMines()}>Hunt for mines</Button><br/>
+            {showShop ? <Button className='shop' onClick={() => this.onShop()}>&nbsp;Shop&nbsp;{badge}</Button> : null}
             </div>;
     }
 }

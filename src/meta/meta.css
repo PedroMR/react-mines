@@ -74,8 +74,8 @@ button.shop {
 }
 
 .version {
-    position: relative;
-    top: -20px;
+    /* position: relative;
+    top: -20px; */
     font-size: 80%;
 }
 .smallVersion {
@@ -109,7 +109,7 @@ button.shop {
 div.audioToggle {
     position: relative;
     left: -10em;
-    top: -2em;
+    top: -1.5em;
     display: inline-block;
     /* background: green; */
 }

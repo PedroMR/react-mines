@@ -15,6 +15,7 @@ import { changeScreen, muteAudio } from './MetaActions';
 import ReactGA from 'react-ga';
 import DialoguePanel from '../story/DialoguePanel';
 import Sound from '../sound';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 class Main extends React.Component {
     constructor(props) {
@@ -66,7 +67,7 @@ class Main extends React.Component {
     }
 
     render() {
-        const backButton = <button className="backButton" onClick={this.handleBackButton}>Back</button>;
+        const backButton = <Button className='backButton' onClick={this.handleBackButton}><Glyphicon glyph='chevron-left'/>Back</Button>;
         return <div
             ><h1>Remote Mine Disposal Terminal</h1>
             <Version/><AudioToggle isMuted={Sound.isMuted()} handleAudioToggle={() => this.handleAudioToggle()}/>
