@@ -35,8 +35,8 @@ class DebugMenu extends React.PureComponent {
             types.FEATURE_AUTOCLICK_SURROUNDED,            
             types.FEATURE_SAFE_FIRST_CLICK,            
             types.FEATURE_ZERO_FIRST_CLICK,
-            "debug-score-tally",
         ];
+        // "debug-score-tally",
         const featureButtons = featureList.map( (ft) => {
             return <label key={ft}>
                 <input type="checkbox"
@@ -45,10 +45,15 @@ class DebugMenu extends React.PureComponent {
                  onChange={(e) => { this.toggleFeature(ft); }}/
                  >{ft.replace('feature.', '')}<br/></label>;
         });
+        const giveAllFeatures = () => featureList.forEach((ft) => this.toggleFeature(ft));
+
+        const allFeaturesButton = <button name='All Powers' key='all-powers' onClick={giveAllFeatures}>All Powers</button>;
+
         const resetButton = <button name="Reset" key="reset" onClick={this.handleResetProfile}>Reset Profile</button>;
         const addCreditsButton = <button key="add100" onClick={() => this.addCredits(100)}>Add 100</button>;
         const testSound = <button name="Sound" key="sound" onClick={() => { Sound.playSound(Sound.COIN) }}>Test Sound</button>;
-        const allButtons = featureButtons.concat([addCreditsButton, resetButton, testSound]);
+
+        const allButtons = [allFeaturesButton, addCreditsButton, resetButton];
         return <div className="debugMenu">
             <a onClick={() => { this.setState(...this.state, {shown: !shown})}}><b>&nbsp;*&nbsp;Debug Menu</b></a>
             <br/>{shown ? allButtons : null}</div>
