@@ -1,3 +1,4 @@
+import dotProp from 'dot-prop-immutable';
 import * as tools from '../Tools';
 import realItems from '../conf/ItemDatabase';
 import realLevels from '../conf/LevelDatabase';
@@ -15,7 +16,25 @@ function useLevelDatabase(levelsDB) {
     levels = levelsDB;
 }
 
+function isFeatureDisabled(meta, featureId) {
+    return dotProp.get(meta, 'features.disabled.'+featureId, false);
+}
+
+function ownsFeature(meta, featureId) {
+    if (hasFeatureInProfile(meta, featureId))
+        return true;
+
+    if (hasFeatureInItems(meta, featureId))
+        return true;
+
+    if (hasFeatureInLevel(meta, featureId))
+        return true;
+}
+
 function hasFeature(meta, featureId) {
+    if (isFeatureDisabled(meta, featureId))
+        return false;
+
     if (hasFeatureInProfile(meta, featureId))
         return true;
 
@@ -64,6 +83,8 @@ function hasFeatureInLevel(meta, featureId) {
 
 let Features = {
     hasFeature,
+    ownsFeature,
+    isFeatureDisabled,
     useItemDatabase,
     useLevelDatabase,
 }

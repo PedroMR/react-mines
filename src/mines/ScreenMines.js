@@ -4,7 +4,7 @@ import Board from "./Board";
 import MinesPowerList from "./MinesPowerList";
 import Status from "./Status";
 import ControlPanel from "./ControlPanel";
-import { startNewGame, setUiMode } from './MinesActions';
+import { startNewGame, setUiMode, toggleDisableFeature } from './MinesActions';
 import * as types from '../types';
 import Features from '../meta/Features';
 
@@ -17,6 +17,12 @@ class ScreenMines extends React.Component {
         this.onKeyDown = this.onKeyDown.bind(this);
         window.onKeyDown = this.onKeyDown;
         window.onKeyPress = this.onKeyPress;
+        this.handleToggleFeature = this.handleToggleFeature.bind(this);
+    }
+
+    handleToggleFeature(feature) {
+        console.log("toggling feature "+feature);
+        this.props.dispatch(toggleDisableFeature(feature));
     }
 
     onToggleFlag() {
@@ -61,7 +67,12 @@ class ScreenMines extends React.Component {
     
     render() {
         return <div  onKeyPress={this.onKeyPress} onKeyUp={this.onKeyUp} onKeyDown={this.onKeyDown}>
-                <MinesPowerList items={this.props.meta.items} hasFeature={(id) => Features.hasFeature(this.props.meta, id)}/>
+                <MinesPowerList 
+                    items={this.props.meta.items}
+                    ownsFeature={(id) => Features.ownsFeature(this.props.meta, id)}
+                    isFeatureDisabled={(id) => Features.isFeatureDisabled(this.props.meta, id)}
+                    onToggleFeature={this.handleToggleFeature}
+                    />
                 <Status />
                 <Board />
                 <ControlPanel

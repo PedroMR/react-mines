@@ -26,3 +26,8 @@ export const setUiMode = (mode) => ({
     type: types.SET_UI_MODE,
     payload: { mode }
 });
+
+export const toggleDisableFeature = (feature) => ({
+    type: types.TOGGLE_DISABLE_FEATURE,
+    payload: { feature },
+})

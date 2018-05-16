@@ -19,19 +19,29 @@ class MinesPowerList extends React.PureComponent {
             {feature:types.FEATURE_ZERO_FIRST_CLICK, name:"Non-zero Mulligan", desc:"You are guaranteed not to hit a zero with your first click." },
         ];
         const iconSize = 20;
+
+        const isFeatureDisabled = (feature) => (feature === types.FEATURE_COLOR_NUMBERS || feature === types.FEATURE_EXPAND);
         
         const powerList = powers.map((power)=> {
+            let canToggleFeature = true;
             if (power.feature) {
-                const hasFeature = this.props.hasFeature(power.feature);
-                if (!hasFeature) {
+                const ownsFeature = this.props.ownsFeature(power.feature);
+                if (!ownsFeature) {
+                    canToggleFeature = false;
                     power.name = '-';
                     power.desc = 'Keep playing to unlock this power.'
                 }
+            } else {
+                canToggleFeature = false;
             }
+            
+            const onFeatureClick = canToggleFeature ? (() => { this.props.onToggleFeature(power.feature); }) : null;
+            const isDisabled = this.props.isFeatureDisabled(power.feature);
+            const label = isDisabled ? "(disabled)" : power.name;         
 
             const popover =  <Popover id='{power.name}' title={power.name}>{power.desc}</Popover>;
             const inside = power.icon ? <img src={power.icon} alt="icon" title={power.desc} width={iconSize} height={iconSize}/> : <div  width={iconSize} height={iconSize} style={{display:'inline-block', width:iconSize,height:iconSize}}/>;
-            return <OverlayTrigger key={power.name+power.feature} placement='left' trigger={['hover','focus','click']} rootClose overlay={popover}><div className="minesPower">{inside}<br/>{power.name}</div></OverlayTrigger>;
+            return <OverlayTrigger key={power.name+power.feature} placement='left' trigger={['hover','focus','click']} rootClose overlay={popover}><div onClick={onFeatureClick} className="minesPower">{inside}<br/>{label}</div></OverlayTrigger>;
         })
 
 

@@ -3,6 +3,7 @@
 export const REVEAL_TILE = "revealTile";
 export const FLAG_TILE = "flagTile";
 export const NEW_GAME = "newGame";
+export const TOGGLE_DISABLE_FEATURE = "toggleDisableFeature";
 
 export const SHOW_DIALOGUE_LINE = "showDialogueLine";
 

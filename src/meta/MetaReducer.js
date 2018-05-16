@@ -36,7 +36,7 @@ export const initialMetaState = Story.enqueueInitialLine({
         visible: {},
     },
     maxLevel: 0,
-    features: {},// { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
+    features: { disabled: {}},// { [types.FEATURE_EXPAND]: true, [types.FEATURE_ZERO_OUT]: true },
     story: {
         read: {},
         queue: [],
@@ -68,12 +68,17 @@ function basicMetaReducer(state = initialMetaState, action) {
             return state;
 
         case types.DEBUG_TOGGLE_FEATURE:
-            const feature = payload.feature;
-            const dotPath = "features."+feature;
+            let feature = payload.feature;
+            let dotPath = "features."+feature;
 
-            const turnOn = payload.turnOn === undefined ? !dotProp.get(state, dotPath) : payload.turnOn;
+            let turnOn = payload.turnOn === undefined ? !dotProp.get(state, dotPath) : payload.turnOn;
             return dotProp.set(state, dotPath, turnOn);
 
+        case types.TOGGLE_DISABLE_FEATURE:
+            dotPath = "features.disabled."+payload.feature;
+            turnOn = !dotProp.get(state, dotPath, false);
+            return dotProp.set(state, dotPath, turnOn);
+            
         case types.RESET_PROFILE:
             return initialMetaState;
 
