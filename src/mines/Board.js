@@ -48,7 +48,7 @@ class Board extends React.Component {
             placingFlag={this.isPlacingFlag()}
             mine={mine}
             seen={seen}
-            resolved={!error && resolved && this.hasFeature(types.FEATURE_COLOR_NUMBERS) && this.hasFeature(types.FEATURE_DONT_COLOR_DONE)}
+            resolved={!error && resolved && this.hasFeature(types.FEATURE_DONT_COLOR_DONE)}
             completelyOkay={!error && okay}
             completelySurrounded={error|| surrounded}
             gameOver={this.props.gameOver}
