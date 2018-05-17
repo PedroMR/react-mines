@@ -75,6 +75,9 @@
 .square-mine:hover {
     background-color: red;
 }
+.square.redClue{
+    background-color: yellow;
+}
 .board-row::after {
     clear:both;
     content: "";

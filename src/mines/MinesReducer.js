@@ -23,6 +23,7 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
             Math.floor(tiles/3));
 
     let nMines = config.mines;
+    let nRedMines = config.redmines;
 
     const getRandomInt = (i) => (Math.floor(i*rand.quick()));
 
@@ -33,6 +34,7 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
     state.around = Array(cols*rows).fill(0);
     state.mines = Array(cols*rows).fill(false);
     state.flags = Array(cols*rows).fill(false);
+    state.special = Array(cols*rows).fill(null);
     state.clicksSoFar = 0;
     state.gameOver = false;
 
@@ -60,6 +62,56 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
             }
         }
     }
+
+    let attempts = 0;
+
+    while (nRedMines > 0) {
+        let randX = getRandomInt(cols);
+        let randY = getRandomInt(rows);
+        const radius = 5;
+        const requiredClues = 5;
+
+        let pos = randX+cols*randY;
+        if (!state.special[pos]) {
+            let candidates = [];
+            for (let dy = -radius; dy <= radius; dy++) {
+                const xRadius = radius-Math.abs(dy);
+                if (randY + dy < 0 || randY + dy >= rows) continue;
+                for (let dx = -xRadius; dx <= xRadius; dx += xRadius*2) {
+                    if (randX + dx < 0 || randX + dx >= cols) continue;                        
+                    let dPos =  pos + dx + dy*cols;
+                    if (!state.special[dPos])
+                        candidates.push(dPos);
+                    if (xRadius === 0)
+                        break;
+                }
+            }
+            if (candidates.length < requiredClues) {
+                attempts++;
+                console.log("attempts", attempts);
+                if (attempts > 10000) {
+                    nRedMines = 0;
+                }
+                continue;
+            }
+            
+            nRedMines--;
+            state.special[pos] = 'red';
+            let nClues = requiredClues;
+            console.log("clues req ",nClues);
+            while (nClues > 0) {
+                let clueIndex = getRandomInt(candidates.length);
+                let cluePos = candidates[clueIndex];
+                console.log(candidates);
+                candidates.splice(clueIndex, 1);
+                console.log(candidates);
+                state.special[cluePos] = 'redClue';
+                nClues--;
+                console.log("clue Pos ", cluePos, "clues req ",nClues);
+            }
+        }
+    }
+    console.log("attempts", attempts);
 
     return state;
 }

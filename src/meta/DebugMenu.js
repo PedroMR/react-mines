@@ -31,8 +31,8 @@ class DebugMenu extends React.PureComponent {
             types.FEATURE_DONT_COLOR_DONE,
             types.FEATURE_ERROR_DETECTION,
             types.FEATURE_CLICK_SURROUNDED,
-            types.FEATURE_AUTOCLICK_SAFE,
-            types.FEATURE_AUTOCLICK_SURROUNDED,            
+            // types.FEATURE_AUTOCLICK_SAFE,
+            // types.FEATURE_AUTOCLICK_SURROUNDED,            
             types.FEATURE_SAFE_FIRST_CLICK,            
             types.FEATURE_ZERO_FIRST_CLICK,
         ];

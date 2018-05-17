@@ -21,7 +21,7 @@ class ScreenMines extends React.Component {
     }
 
     handleToggleFeature(feature) {
-        console.log("toggling feature "+feature);
+        // console.log("toggling feature "+feature);
         this.props.dispatch(toggleDisableFeature(feature));
     }
 
@@ -36,20 +36,20 @@ class ScreenMines extends React.Component {
     }
 
     onKeyPress(e) {
-        console.log("PRESS", e.key, e.altKey);
+        // console.log("PRESS", e.key, e.altKey);
         if (e.key === "f") {
             this.onToggleFlag();
         }
     }
 
     onKeyUp(e) {
-        console.log("UP", e.key, e.altKey);
+        // console.log("UP", e.key, e.altKey);
         if (this.isHoldForFlagKey(e))
              this.onToggleFlag();
     }
 
     onKeyDown(e) {
-        console.log("DOWN", e.key, e.altKey);
+        // console.log("DOWN", e.key, e.altKey);
         if (this.isHoldForFlagKey(e))
              this.onToggleFlag();
     }

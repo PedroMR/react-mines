@@ -17,7 +17,9 @@ function Square(props) {
     if (props.mine) className += " square-mine";
     else if (props.flag) className += " square-flag square-unseen" + (props.placingFlag ? "-flagging" : "");
     else if (!props.seen) className += " square-unseen" + (props.placingFlag ? "-flagging" : "");
-    return <button className={className} onClick={props.onClick} onContextMenu={props.onClick}>{props.value}</button>;
+    if (props.redClue) className += " redClue";
+    let value = props.value;
+    return <button className={className} onClick={props.onClick} onContextMenu={props.onClick}>{value}</button>;
 }
 
 class Board extends React.Component {
@@ -26,7 +28,10 @@ class Board extends React.Component {
         const seen = this.props.seen[pos];
         const around = this.props.around[pos];
         const mine = seen && this.props.mines[pos];
-        const flag = this.props.flags[pos];        
+        const flag = this.props.flags[pos];   
+        const special = this.props.special[pos];     
+        const redClue = seen && special === 'redClue';
+        const redMine = seen && special === 'red';
         let value = seen ? (mine ? "*" : around) : "";
         if (value === 0 && this.hasFeature(types.FEATURE_BLANK_ZEROES)) value = "";
 
@@ -42,6 +47,7 @@ class Board extends React.Component {
             value += "!";
             error = true;
         } 
+        if (redMine) value = "("+value+")";
         // value = safeAround;
         return <Square key={x+","+y} 
              onClick={(e) => this.handleClick(x, y, pos, seen, around, flag, mine, e)}
@@ -53,6 +59,8 @@ class Board extends React.Component {
             completelySurrounded={error|| surrounded}
             gameOver={this.props.gameOver}
             around={around}
+            redClue={redClue}
+            redMine={redMine}
             flag={flag}
             value={value}/>
     }
@@ -254,7 +262,7 @@ class Board extends React.Component {
 
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'mines', 'around', 'flags', 'options', 'gameOver', 'clicksSoFar'];
+    const propNames = [ 'config', 'seen', 'special', 'mines', 'around', 'flags', 'options', 'gameOver', 'clicksSoFar'];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state.mines[name]});
 
