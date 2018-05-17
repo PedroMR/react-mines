@@ -4,13 +4,6 @@ import boom1 from './assets/boom1.wav';
 import coin1 from './assets/coin1.wav';
 import {Howl} from 'howler';
 
-const Assets =  {
-    blip1,
-    blip2,
-    boom1,
-    coin1,
-}
-
 let Sound = {
     playTest,
     playSound,

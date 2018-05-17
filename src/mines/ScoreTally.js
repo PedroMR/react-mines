@@ -7,7 +7,7 @@ import ReactGA from 'react-ga';
 import Features from '../meta/Features';
 import Items from '../meta/Items';
 import Sound from '../sound';
-import { Collapse, Modal, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 class ScoreTally extends React.PureComponent {
     constructor(props) {
@@ -29,7 +29,7 @@ class ScoreTally extends React.PureComponent {
 
         let totalMultiplier = 1;
 
-        this.state.scoreRows = scoreTypes.map(item => {
+        let scoreRows = scoreTypes.map(item => {
             const pointsWorth = item.method ? item.method(props.score, ...item.param) : '';
             this.state.totalScore += pointsWorth;
             const amount = item.param ? item.param[0] : '';
@@ -47,12 +47,13 @@ class ScoreTally extends React.PureComponent {
                 return <tr key={item.name}><td className="scoreTallyNames">{item.name}</td><td>{ratio}</td><td>x{amount}</td><td className="scoreTallyPoints">{tools.formatPrice(pointsWorth)}</td></tr>;
             }
         })
-
         this.state.totalScore = Math.round(this.state.totalScore * totalMultiplier);
+        const totalScore = this.state.totalScore;
+        this.state.scoreRows = scoreRows.concat(
+            <tr key='total' className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{tools.formatPrice(totalScore)}</td></tr>
+        );
 
         this.claimCredits = this.claimCredits.bind(this);
-
-        // setTimeout(()=> { this.setState({open: true})}, 1000);
     }
 
     claimCredits() {
@@ -75,16 +76,13 @@ class ScoreTally extends React.PureComponent {
         const gettingRewards = totalScore > 0;
 
         const claimButtonTitle = gettingRewards ? "Claim Credits" : "Move On";
-        const claimButton = <button name="claim" disabled={this.props.claimedRewards} onClick={this.claimCredits}>{claimButtonTitle}</button>;
         const scoreTally = <div className="scoreTally"><table className="scoreTally"><thead></thead><tbody>
         {/* <tr><th className="scoreTallyNames"/><th/><th/><th className="scoreTallyPoints">$</th></tr> */}
                 {this.state.scoreRows}
-                <tr className="scoreTallyTotal"><td className="scoreTallyNames scoreTallyTotal">Total</td><td/><td/><td className="scoreTallyTotal scoreTallyPoints">{tools.formatPrice(totalScore)}</td></tr>
-                {/* <tr><td colSpan='4' className="scoreTallyClaim">{claimButton}</td></tr> */}
+                
                 </tbody>
             </table></div>;
 
-        // return <div><Collapse in={this.state.open} timeout={1000} appear={true}>{scoreTally}</Collapse></div>;
         return <div className="static-modal"><Modal.Dialog>
                 <Modal.Header><Modal.Title>GAME OVER</Modal.Title></Modal.Header>
                 <Modal.Body>{scoreTally}</Modal.Body>
@@ -92,7 +90,6 @@ class ScoreTally extends React.PureComponent {
                     <Button bsStyle={gettingRewards ? "primary" : 'default'} disabled={this.props.claimedRewards} onClick={this.claimCredits}>{claimButtonTitle}</Button>
                 </Modal.Footer>
             </Modal.Dialog></div>;
-        // return scoreTally;
     }
 }
 

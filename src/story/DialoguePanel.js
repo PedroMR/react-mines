@@ -1,19 +1,11 @@
 import './story.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import * as types from '../types';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
-import Story from './Story';
-import {Well, Panel} from 'react-bootstrap';
 import Sound from '../sound';
 
 class DialoguePanel extends React.PureComponent {
-
-    constructor(props) {
-        super(props);
-    }
-    
     componentDidMount() {
         this.scrollToBottom();
     }
@@ -40,9 +32,6 @@ class DialoguePanel extends React.PureComponent {
 
     render() {
         const story = this.props.story;
-        let text = ''; 
-        let prevText = '';
-
         const lastIndex = story.queue.length-1;
         const lineElements = story.queue.map((e, index) => {
             const mainText = e;
@@ -55,9 +44,9 @@ class DialoguePanel extends React.PureComponent {
             return wrapper;
         });
 
-        return <Panel><div className='dialoguePanel' ref={elem => this.container = elem}>
+        return <div className='dialoguePanel' ref={elem => this.container = elem}>
                 {lineElements}
-            </div></Panel>;
+            </div>;
     }
 }
 

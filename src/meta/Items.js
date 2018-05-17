@@ -1,10 +1,8 @@
 import dotProp from 'dot-prop-immutable';
 import realItems from '../conf/ItemDatabase';
-import realLevels from '../conf/LevelDatabase';
 import {Validate} from './Require';
 
 let items = realItems;
-let levels = realLevels;
 
 function useItemDatabase(itemDB) {
     items = itemDB;

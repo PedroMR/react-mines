@@ -1,4 +1,3 @@
-import React from 'react';
 import * as types from "../types";
 import * as Require from '../meta/Require';
 

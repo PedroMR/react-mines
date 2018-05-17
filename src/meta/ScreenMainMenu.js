@@ -29,11 +29,9 @@ class ScreenMainMenu extends React.PureComponent {
     render() {
         const numItemsAvailable = this.countPurchaseableItems();
         const showShop = Features.hasFeature(this.props.meta, types.FEATURE_SHOW_SHOP);
-        let rooster = null;
         let badge = null;
 
         if(numItemsAvailable > 0 && showShop) {
-            rooster = <div className="shop rooster">{numItemsAvailable}</div>;
             badge = <Badge pullRight={true}>{numItemsAvailable}</Badge>;
         }
 

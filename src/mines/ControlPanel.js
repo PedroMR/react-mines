@@ -11,6 +11,7 @@ class ControlPanel extends React.PureComponent {
         switch(this.props.options.uiMode) {
             case types.UI_MODE_FLAG: mode = "Flags"; break;
             case types.UI_MODE_MARK_RED: mode = "Digging Up"; break;
+            default: mode = "Inspecting"; break;
         }
 
         return <div id="controlPanel">

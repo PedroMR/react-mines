@@ -1,14 +1,10 @@
 import dotProp from 'dot-prop-immutable';
-import * as tools from '../Tools';
-import realItems from '../conf/ItemDatabase';
 import realLevels from '../conf/LevelDatabase';
 import Items from './Items';
 
-let items = realItems;
 let levels = realLevels;
 
 function useItemDatabase(itemDB) {
-    items = itemDB;
     Items.useItemDatabase(itemDB);
 }
 

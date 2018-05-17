@@ -2,7 +2,6 @@ import React from 'react';
 import { resetProfile, debugAddCredits, debugToggleFeature } from './MetaActions';
 import * as types from '../types';
 import { connect } from 'react-redux';
-import Sound from '../sound';
 
 class DebugMenu extends React.PureComponent {
     constructor (props) {
@@ -38,6 +37,7 @@ class DebugMenu extends React.PureComponent {
             types.FEATURE_RED_MINES,
         ];
         // "debug-score-tally",
+        /*
         const featureButtons = featureList.map( (ft) => {
             return <label key={ft}>
                 <input type="checkbox"
@@ -46,13 +46,14 @@ class DebugMenu extends React.PureComponent {
                  onChange={(e) => { this.toggleFeature(ft); }}/
                  >{ft.replace('feature.', '')}<br/></label>;
         });
+        */
         const giveAllFeatures = () => featureList.forEach((ft) => this.toggleFeature(ft, true));
 
         const allFeaturesButton = <button name='All Powers' key='all-powers' onClick={giveAllFeatures}>All Powers</button>;
 
         const resetButton = <button name="Reset" key="reset" onClick={this.handleResetProfile}>Reset Profile</button>;
         const addCreditsButton = <button key="add100" onClick={() => this.addCredits(100)}>Add 100</button>;
-        const testSound = <button name="Sound" key="sound" onClick={() => { Sound.playSound(Sound.COIN) }}>Test Sound</button>;
+        // const testSound = <button name="Sound" key="sound" onClick={() => { Sound.playSound(Sound.COIN) }}>Test Sound</button>;
 
         const allButtons = [allFeaturesButton, addCreditsButton, resetButton];
         return <div className="debugMenu">

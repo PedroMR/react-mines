@@ -1,7 +1,7 @@
 import React from 'react';
 import imgInspect from '../img/magnifying-glass.png';
 import imgFlag from '../img/minefield.png';
-import { Button, Tooltip, OverlayTrigger, Popover } from 'react-bootstrap';
+import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import * as types from '../types';
 import imgBlank from '../img/20x20.png';
 

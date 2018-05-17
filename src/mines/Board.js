@@ -168,7 +168,7 @@ class Board extends React.Component {
         if (e) e.preventDefault();
 
         if (this.isMarkingRed()) {
-            if (special == 'red') {
+            if (special === 'red') {
                 console.log("Woot treasure! WOOT");
             } else {
                 console.log("Nooooooo");                

@@ -1,18 +1,5 @@
 import dotProp from 'dot-prop-immutable';
-import realItems from './conf/ItemDatabase';
-import realLevels from './conf/LevelDatabase';
 import Items from './meta/Items';
-
-let items = realItems;
-let levels = realLevels;
-
-export function useItemDatabase(itemDB) {
-    items = itemDB;
-}
-
-export function useLevelDatabase(levelsDB) {
-    levels = levelsDB;
-}
 
 export function scoreForMinesFound(score, amount) {
     const ratio = scoreMultiplierForMinesFound(score);
