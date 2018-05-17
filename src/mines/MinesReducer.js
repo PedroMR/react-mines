@@ -141,7 +141,7 @@ export function gameReducer(state = initialGameState, action) {
         case types.SET_UI_MODE:
             if (state.gameOver) return state;
 
-            const modes = [ types.UI_MODE_FLAG, types.UI_MODE_REVEAL ];
+            const modes = [ types.UI_MODE_FLAG, types.UI_MODE_REVEAL, types.UI_MODE_MARK_RED ];
             if (modes.indexOf(payload.mode) < 0) {
                 console.log("invalid ui mode. ", action);
                 return state;

@@ -7,7 +7,11 @@ class ControlPanel extends React.PureComponent {
     }
 
     render() {
-        const mode = this.props.options.uiMode === types.UI_MODE_FLAG ? "Flags" : "Inspecting";
+        let mode = "Inspecting";
+        switch(this.props.options.uiMode) {
+            case types.UI_MODE_FLAG: mode = "Flags"; break;
+            case types.UI_MODE_MARK_RED: mode = "Digging Up"; break;
+        }
 
         return <div id="controlPanel">
             <button onClick={()=>this.onClickFlag()} autoFocus

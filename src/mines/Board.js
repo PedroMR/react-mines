@@ -31,7 +31,7 @@ class Board extends React.Component {
         const flag = this.props.flags[pos];   
         const special = this.props.special[pos];     
         const redClue = seen && special === 'redClue';
-        const redMine = seen && special === 'red';
+        const redMine = seen && special === 'redFound';
         let value = seen ? (mine ? "*" : around) : "";
         if (value === 0 && this.hasFeature(types.FEATURE_BLANK_ZEROES)) value = "";
 
@@ -50,7 +50,7 @@ class Board extends React.Component {
         // if (redMine) value = "("+value+")";
 
         return <Square key={x+","+y} 
-             onClick={(e) => this.handleClick(x, y, pos, seen, around, flag, mine, e)}
+             onClick={(e) => this.handleClick(x, y, pos, seen, around, flag, mine, e, special)}
             placingFlag={this.isPlacingFlag()}
             mine={mine}
             seen={seen}
@@ -160,9 +160,22 @@ class Board extends React.Component {
     isPlacingFlag() {
         return this.props.options.uiMode === types.UI_MODE_FLAG;
     }
+    isMarkingRed() {
+        return this.props.options.uiMode === types.UI_MODE_MARK_RED;
+    }
 
-    handleClick(x, y, pos, seen, around, flag, mine, e) {
+    handleClick(x, y, pos, seen, around, flag, mine, e, special) {
         if (e) e.preventDefault();
+
+        if (this.isMarkingRed()) {
+            if (special == 'red') {
+                console.log("Woot treasure! WOOT");
+            } else {
+                console.log("Nooooooo");                
+            }
+            return;
+        }
+
         if (seen) {
             if (mine) return;
 

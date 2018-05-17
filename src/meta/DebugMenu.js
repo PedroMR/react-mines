@@ -16,8 +16,8 @@ class DebugMenu extends React.PureComponent {
     handleResetProfile() {
         this.props.dispatch(resetProfile());
     }
-    toggleFeature(feature) {
-        this.props.dispatch(debugToggleFeature(feature));
+    toggleFeature(feature, turnOn) {
+        this.props.dispatch(debugToggleFeature(feature, turnOn));
     }
     render() {
         const shown = this.state.shown;
@@ -35,6 +35,7 @@ class DebugMenu extends React.PureComponent {
             // types.FEATURE_AUTOCLICK_SURROUNDED,            
             types.FEATURE_SAFE_FIRST_CLICK,            
             types.FEATURE_ZERO_FIRST_CLICK,
+            types.FEATURE_RED_MINES,
         ];
         // "debug-score-tally",
         const featureButtons = featureList.map( (ft) => {
@@ -45,7 +46,7 @@ class DebugMenu extends React.PureComponent {
                  onChange={(e) => { this.toggleFeature(ft); }}/
                  >{ft.replace('feature.', '')}<br/></label>;
         });
-        const giveAllFeatures = () => featureList.forEach((ft) => this.toggleFeature(ft));
+        const giveAllFeatures = () => featureList.forEach((ft) => this.toggleFeature(ft, true));
 
         const allFeaturesButton = <button name='All Powers' key='all-powers' onClick={giveAllFeatures}>All Powers</button>;
 
