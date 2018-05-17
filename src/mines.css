@@ -163,3 +163,14 @@ table.scoreTally {
 .minesPower:hover {
     background-color: #eee;    
 }
+.minesPower img {
+    width: 30px;
+    height: 30px;
+    z-index: 0;
+}
+.minesPowerName {
+    overflow: hidden;
+    line-height: 2em;
+    vertical-align: bottom;
+    font-size: 80%;
+}
