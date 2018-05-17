@@ -28,7 +28,7 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
 
     let state = {}
     state.options = { uiMode: types.UI_MODE_REVEAL, autoClickTimer: 2000 };
-    state.config = {x: cols, y: rows, mines: nMines};
+    state.config = {...config};
     state.seen = Array(cols*rows).fill(false);
     state.around = Array(cols*rows).fill(0);
     state.mines = Array(cols*rows).fill(false);

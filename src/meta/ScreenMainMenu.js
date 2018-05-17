@@ -39,7 +39,7 @@ class ScreenMainMenu extends React.PureComponent {
 
 
         return <div className='mainMenu'>
-            <Button className='playMines' bsStyle='primary' bsSize='large' onClick={() => this.onPlayMines()}>Hunt for mines</Button><br/>
+            <Button className='playMines' bsStyle='primary' bsSize='large' onClick={() => this.onPlayMines()}>Begin Search</Button><br/>
             {showShop ? <Button className='shop' onClick={() => this.onShop()}>&nbsp;Shop&nbsp;{badge}</Button> : null}
             </div>;
     }

@@ -25,7 +25,7 @@ class ScreenCreateMines extends React.Component {
         const config = props.config;
 
         this.state = {
-            newGameConfig: {x: config.x, y: config.y, mines: config.mines},
+            newGameConfig: {...config},
             currentPreset: -1,
             presets: [
                 {x: 10, y: 6, mines: 8, name: "Novice"},
@@ -67,13 +67,11 @@ class ScreenCreateMines extends React.Component {
     }
 
     configMatches(preset) {
-        return (this.state.newGameConfig.x === preset.x && this.state.newGameConfig.y === preset.y && this.state.newGameConfig.mines === preset.mines);
-    }
-
-    handleNumericInputChanged2(propertyName, val) {
-        let newState = dotProp.set(this.state, propertyName, val);
-        newState.currentPreset = newState.customPresetIndex;
-        this.setState(newState);
+        return (this.state.newGameConfig.x === preset.x && 
+            this.state.newGameConfig.y === preset.y &&
+            this.state.newGameConfig.mines === preset.mines &&
+            this.state.newGameConfig.redmines === preset.redmines
+        );
     }
 
     handleNumericInputChanged(target, val) {
@@ -96,6 +94,7 @@ class ScreenCreateMines extends React.Component {
     }
 
     onCreateGameButton() {
+        console.log("new game", this.state.newGameConfig);
         this.props.dispatch(startNewGame(this.state.newGameConfig));
     }
 
@@ -121,9 +120,10 @@ class ScreenCreateMines extends React.Component {
                 {name: "Rows", prop: "y"},
                 {name: "Columns", prop: "x"},
                 {name: "Mines", prop: "mines"},
+                {name: "Red Mines", prop: "redmines"},
             ].map(({name, prop}) => <tr key={prop}><td>{name}:</td><td><NumericInput
                 propertyName={"newGameConfig."+prop}
-                defaultValue={this.state.newGameConfig[prop]}
+                defaultValue={this.state.newGameConfig[prop] || 0}
                 onChange={this.handleNumericInputChanged}
                 enabled={enableCustomValues}/></td></tr>)
                 }</tbody>;

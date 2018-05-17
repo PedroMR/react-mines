@@ -159,6 +159,7 @@ table.scoreTally {
     width: 30%;
     background-color: #fff;
     user-select: none;
+    height: 6em;
 }
 .minesPower:hover {
     background-color: #eee;    
@@ -170,7 +171,7 @@ table.scoreTally {
 }
 .minesPowerName {
     overflow: hidden;
-    line-height: 2em;
+    /* line-height: 2em; */
     vertical-align: bottom;
     font-size: 80%;
 }

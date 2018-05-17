@@ -44,7 +44,7 @@ class Main extends React.Component {
             case types.SCREEN_PLAY_MINES:
                 return <ScreenMines/>;
             case types.SCREEN_CREATE_MINES:
-                return <ScreenCreateMines config={this.props.config} features={this.props.features}/>;
+                return <ScreenCreateMines/>;
             default:
                 return <p>Uh-oh</p>;
         }
