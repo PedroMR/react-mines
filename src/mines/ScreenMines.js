@@ -18,17 +18,21 @@ class ScreenMines extends React.Component {
         window.onKeyDown = this.onKeyDown;
         window.onKeyPress = this.onKeyPress;
         this.handleToggleFeature = this.handleToggleFeature.bind(this);
+        this.handleSetMode = this.handleSetMode.bind(this);
+    }
+
+    handleSetMode(newMode) {
+        this.props.dispatch(setUiMode(newMode));
     }
 
     handleToggleFeature(feature) {
-        // console.log("toggling feature "+feature);
         this.props.dispatch(toggleDisableFeature(feature));
     }
 
     onToggleFlag() {
         const newMode = this.props.options.uiMode === types.UI_MODE_FLAG ? types.UI_MODE_REVEAL : types.UI_MODE_FLAG;
 
-        this.props.dispatch(setUiMode(newMode));
+        this.handleSetMode(newMode);
     }
 
     isHoldForFlagKey(e) {
@@ -72,6 +76,8 @@ class ScreenMines extends React.Component {
                     ownsFeature={(id) => Features.ownsFeature(this.props.meta, id)}
                     isFeatureDisabled={(id) => Features.isFeatureDisabled(this.props.meta, id)}
                     onToggleFeature={this.handleToggleFeature}
+                    onSetMode={this.handleSetMode}
+                    currentMode={this.props.options.uiMode}
                     />
                 <Status />
                 <Board />

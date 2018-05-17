@@ -47,8 +47,8 @@ class Board extends React.Component {
             value += "!";
             error = true;
         } 
-        if (redMine) value = "("+value+")";
-        // value = safeAround;
+        // if (redMine) value = "("+value+")";
+
         return <Square key={x+","+y} 
              onClick={(e) => this.handleClick(x, y, pos, seen, around, flag, mine, e)}
             placingFlag={this.isPlacingFlag()}

@@ -8,8 +8,8 @@ import imgBlank from '../img/20x20.png';
 class MinesPowerList extends React.PureComponent {
     render() {
         const powers = [
-            {name:"Inspect", desc:"Left-click to see the tile's number", icon: imgInspect },
-            {name:"Flag", desc:"Right-click to mark a tile as a mine", icon: imgFlag },
+            {name:"Inspect", desc:"Left-click to see the tile's number", icon: imgInspect, mode: types.UI_MODE_REVEAL },
+            {name:"Flag", desc:"Right-click to mark a tile as a mine", icon: imgFlag, mode: types.UI_MODE_FLAG },
             {feature:types.FEATURE_ZERO_OUT, name:"Auto-zero", desc:"All neighbors of zero tiles are automatically opened." },
             {feature:types.FEATURE_EXPAND, name:"Safe Expansion", desc:"Click a number which can't have any more mines around it to inspect unseen tiles."},
             {feature:types.FEATURE_COLOR_NUMBERS, name:"Colored Numbers", desc:"Green numbers are surrounded by enough flagged mines; all unseen tiles around a red number must be mines."},
@@ -37,14 +37,17 @@ class MinesPowerList extends React.PureComponent {
             }
             power.icon = power.icon || imgBlank;
             
-            const onFeatureClick = canToggleFeature ? (() => { this.props.onToggleFeature(power.feature); }) : null;
+            const onToggleClick = canToggleFeature ? (() => { this.props.onToggleFeature(power.feature); }) : null;
             const isDisabled = this.props.isFeatureDisabled(power.feature);
             const label = <div className='minesPowerName'>{isDisabled ? "(disabled)" : power.name}</div>; 
+            const onFeatureClick = power.mode ? (() => { this.props.onSetMode(power.mode); }) : null; 
+            const isCurrentMode = power.mode && this.props.currentMode === power.mode;
+            const powerClass = isCurrentMode ? "minesPower minesPowerActive" : "minesPower";
 
             const popoverTitle = power.name + (isDisabled ? ' (disabled)' : '');
-            const popover =  <Popover id='{power.name}' title={popoverTitle}>{power.desc}</Popover>;
+            const popover =  <Popover id='{power.name}' title={popoverTitle}>{power.desc}<hr/><Button disabled={!canToggleFeature} onClick={onToggleClick}>Disable</Button></Popover>;
             const inside = power.icon ? <img src={power.icon} alt="icon" title={power.desc} /> : <div  width={iconSize} height={iconSize} style={{display:'inline-block', width:iconSize,height:iconSize}}/>;
-            return <OverlayTrigger key={power.name+power.feature} placement='left' trigger={['hover','focus','click']} rootClose overlay={popover}><div onClick={onFeatureClick} className="minesPower">{inside}<br/>{label}</div></OverlayTrigger>;
+            return <OverlayTrigger key={power.name+power.feature} placement='left' trigger={['click']} rootClose overlay={popover}><div onClick={onFeatureClick} className={powerClass}>{inside}<br/>{label}</div></OverlayTrigger>;
         })
 
 

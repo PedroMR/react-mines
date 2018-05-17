@@ -167,6 +167,10 @@ table.scoreTally {
 .minesPower:hover {
     background-color: #eee;    
 }
+.minesPowerActive {
+    background-color: lightblue;
+    border: 1px solid blue;
+}
 .minesPower img {
     width: 30px;
     height: 30px;
