@@ -17,6 +17,11 @@ export const flagTile = (x, y, val) => ({
     payload: { x, y, val }
 });
 
+export const markTile = (x, y, mark) => ({
+    type: types.MARK_TILE,
+    payload: { x, y, mark }
+});
+
 export const revealTile = (x, y) => ({
     type: types.REVEAL_TILE,
     payload: { x, y }

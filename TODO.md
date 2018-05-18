@@ -1,6 +1,5 @@
 # TODO
 
-- [ ] Powers can be clicked to be used
 - [ ] Power to mark special mines (red, etc)
 - [ ] Highlight "speech" -- maybe modal story panels?
 - [ ] Loads of story and tutorial
@@ -29,6 +28,7 @@
     - [ ] Double-mines
     - [ ] Wrong numbers
     - [ ] Multiple layers (two or three 2D slices of a 3D level)
+    - [ ] Murphy Mode -- if you could be clicking a mine, you WILL click a mine
 - [ ] Power-ups? (help with things like no-info areas)
     - [ ] Limited-use "rewind"
     - [ ] Kill a bomb (so you can see the number)
@@ -62,3 +62,4 @@
 - [X] Rooster for the shop (can afford)
 - [X] Sound toggle
 - [X] List of powers next to board 
+- [X] Powers can be clicked to be used

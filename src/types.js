@@ -2,6 +2,7 @@
 // Actions
 export const REVEAL_TILE = "revealTile";
 export const FLAG_TILE = "flagTile";
+export const MARK_TILE = "markRedTile";
 export const NEW_GAME = "newGame";
 export const TOGGLE_DISABLE_FEATURE = "toggleDisableFeature";
 

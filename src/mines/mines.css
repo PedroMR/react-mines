@@ -31,15 +31,15 @@
     transition: all 0.1s ease-out;
 }
 .square-unseen-flagging:hover {
-    background-image: url('img/minefield.svg');    
+    background-image: url('../img/minefield.svg');    
     background-blend-mode: color-burn;
 }
 .square-unseen:hover {
-     background-image: url('img/magnifying-glass.svg');     
+     background-image: url('../img/magnifying-glass.svg');     
     /* background-blend-mode: color-burn; */
 }
 .square-flag {
-    background-image: url('img/minefield.svg');
+    background-image: url('../img/minefield.svg');
 }
 .square:active {
     border-color: #eea;
@@ -70,13 +70,16 @@
 }
 .square-mine {
     background-color: red;
-    background-image: url('img/mine-explosion.svg');
+    background-image: url('../img/mine-explosion.svg');
 }
 .square-mine:hover {
     background-color: red;
 }
 .square.redClue{
-    background-color: yellow;
+    border: 2px dotted maroon;
+}
+.square.redFound{
+    border: 2px solid maroon;
 }
 .board-row::after {
     clear:both;

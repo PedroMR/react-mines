@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { flagTile, revealTile, startNewGame } from './MinesActions';
+import { flagTile, revealTile, startNewGame, markTile } from './MinesActions';
 import { debugToggleFeature } from '../meta/MetaActions';
 import * as types from '../types';
 import Features from '../meta/Features';
 import Sound from '../sound';
+import './mines.css';
 
 function Square(props) {
     let className = "square " + (props.placingFlag ? " square-mode-flag" : " square-mode-inspect");
@@ -18,6 +19,7 @@ function Square(props) {
     else if (props.flag) className += " square-flag square-unseen" + (props.placingFlag ? "-flagging" : "");
     else if (!props.seen) className += " square-unseen" + (props.placingFlag ? "-flagging" : "");
     if (props.redClue) className += " redClue";
+    if (props.redFound) className += " redFound";
     let value = props.value;
     return <button className={className} onClick={props.onClick} onContextMenu={props.onClick}>{value}</button>;
 }
@@ -31,7 +33,7 @@ class Board extends React.Component {
         const flag = this.props.flags[pos];   
         const special = this.props.special[pos];     
         const redClue = seen && special === 'redClue';
-        const redMine = seen && special === 'redFound';
+        const redFound = special === 'redFound';
         let value = seen ? (mine ? "*" : around) : "";
         if (value === 0 && this.hasFeature(types.FEATURE_BLANK_ZEROES)) value = "";
 
@@ -60,7 +62,7 @@ class Board extends React.Component {
             gameOver={this.props.gameOver}
             around={around}
             redClue={redClue}
-            redMine={redMine}
+            redFound={redFound}
             flag={flag}
             value={value}/>
     }
@@ -168,6 +170,7 @@ class Board extends React.Component {
         if (e) e.preventDefault();
 
         if (this.isMarkingRed()) {
+            this.props.dispatch(markTile(x, y, 'red'));
             if (special === 'red') {
                 console.log("Woot treasure! WOOT");
             } else {
@@ -182,16 +185,19 @@ class Board extends React.Component {
             if (this.hasFeature(types.FEATURE_CLICK_SURROUNDED) && this.isSurrounded(x, y)) {
                 Sound.playSound(Sound.EXPAND_SURROUNDED);
                 this.flagAllTilesAround(x, y);
+                return;
             }
 
             if (this.hasFeature(types.FEATURE_EXPAND) && around === this.countFlagsAndVisibleMinesAround(x, y)) {
                 Sound.playSound(Sound.EXPAND_NUMBER);
                 this.expandAround(x, y);                
+                return;
             }
 
             if (this.hasFeature(types.FEATURE_ZERO_OUT) && around === 0) {
-                Sound.playSound(Sound.EXPAND_SURROUNDED);
+                Sound.playSound(Sound.EXPAND_NUMBER);
                 this.expandAround(x, y);
+                return;
             }            
             return;
         }

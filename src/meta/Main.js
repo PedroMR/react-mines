@@ -1,5 +1,5 @@
 import React from 'react';
-import "../mines.css";
+import "../mines/mines.css";
 import "./meta.css";
 import { connect } from 'react-redux';
 import ScreenMines from "../mines/ScreenMines";

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './mines.css';
 import Main from './meta/Main';
 import registerServiceWorker from './registerServiceWorker';
 import { compose, createStore, applyMiddleware } from 'redux';

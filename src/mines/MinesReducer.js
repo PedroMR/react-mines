@@ -1,6 +1,7 @@
 import seedrandom from 'seedrandom';
 import * as types from '../types';
 import * as tools from '../Tools';
+import dotProp from 'dot-prop-immutable';
 
 const initialConfig = {
     x: 5,
@@ -68,8 +69,8 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
     while (nRedMines > 0) {
         let randX = getRandomInt(cols);
         let randY = getRandomInt(rows);
-        const radius = 5;
-        const requiredClues = 5;
+        const radius = 3;
+        const requiredClues = 4;
 
         let pos = randX+cols*randY;
         if (!state.special[pos]) {
@@ -80,7 +81,7 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
                 for (let dx = -xRadius; dx <= xRadius; dx += xRadius*2) {
                     if (randX + dx < 0 || randX + dx >= cols) continue;                        
                     let dPos =  pos + dx + dy*cols;
-                    if (!state.special[dPos])
+                    if (!state.special[dPos] && !state.mines[dPos])
                         candidates.push(dPos);
                     if (xRadius === 0)
                         break;
@@ -102,12 +103,9 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
             while (nClues > 0) {
                 let clueIndex = getRandomInt(candidates.length);
                 let cluePos = candidates[clueIndex];
-                console.log(candidates);
                 candidates.splice(clueIndex, 1);
-                console.log(candidates);
                 state.special[cluePos] = 'redClue';
                 nClues--;
-                console.log("clue Pos ", cluePos, "clues req ",nClues);
             }
         }
     }
@@ -130,6 +128,11 @@ export function gameReducer(state = initialGameState, action) {
             checkGameOver(flaggedState);
             return flaggedState;
             
+        case types.MARK_TILE:
+            if (state.gameOver) return state;
+            const markedState = handleMarkTile(state,  payload.x, payload.y, payload.mark);
+            return markedState;
+
         case types.REVEAL_TILE:
             if (state.gameOver) return state;
             
@@ -156,6 +159,21 @@ export function gameReducer(state = initialGameState, action) {
         case types.RESET_PROFILE:
             return initialGameState;
 
+        default:
+            return state;
+    }
+}
+
+function handleMarkTile(state, x, y, mark) {
+    const pos = getPos(state, x, y);
+
+    switch (mark) {
+        case 'red':
+            if (state.special[pos] === mark) {
+                return dotProp.set(state, 'special.'+pos, 'redFound');
+            }
+            //todo handle failure here? Decrement attempts available too
+            return state;
         default:
             return state;
     }
