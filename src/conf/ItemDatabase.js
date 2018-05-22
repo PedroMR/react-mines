@@ -84,8 +84,22 @@ function MakeLevelUnlock(num, price, scoreMult) {
     return level;
 }
 
+const toolCatalogue = [
+    {
+        id: types.TOOL_KILL_MINE,
+        name: 'Mine Killer',
+        baseCap: 1,
+    },
+    {
+        id: types.TOOL_MARK_RED,
+        name: "Dig Up",
+        baseCap: 1,
+    },
+]
+
 const allItems = {
     items: itemCatalogue,
+    tools: toolCatalogue,
 }
 
 export default allItems;

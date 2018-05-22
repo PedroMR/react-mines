@@ -79,17 +79,17 @@ class ScreenMines extends React.Component {
                     onToggleFeature={this.handleToggleFeature}
                     onSetMode={this.handleSetMode}
                     currentMode={this.props.options.uiMode}
-                    getToolCount={(toolId) => Items.getToolCount(this.props.meta, toolId)}
+                    getToolAmount={(toolId) => Items.getToolAmount(this.props.meta, toolId)}
                     />
                 <Status />
                 <Board />
                 <ControlPanel
-                options={this.props.options}
-                config={this.props.config}
-                onNewGame={(c) => this.createNewGame(c)}
-                onToggleFlag={() => this.onToggleFlag()}
-                features={this.props.meta.features}
-                />
+                    options={this.props.options}
+                    config={this.props.config}
+                    onNewGame={(c) => this.createNewGame(c)}
+                    onToggleFlag={() => this.onToggleFlag()}
+                    features={this.props.meta.features}
+                    />
             </div>;
     }
 }

@@ -37,7 +37,7 @@ class ScreenShop extends React.PureComponent {
 
     findAvailableItems() {
         const ownedItems = this.props.items;
-        let availableItems = itemConfig.map(elem => {
+        let availableItems =  Items.getItemDefinitions().map(elem => {
             const e2 = tools.newVersionOf(elem);
             e2.alreadyOwned = Items.ownsItemId(ownedItems, e2.id);
             e2.visible = this.canShowItem(e2);

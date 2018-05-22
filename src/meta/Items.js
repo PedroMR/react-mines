@@ -8,6 +8,14 @@ function useItemDatabase(itemDB) {
     items = itemDB;
 }
 
+function getItemDefinitions() {
+    return items.items;
+}
+
+function getToolDefinitions() {
+    return items.tools;
+}
+
 function findItemById(itemId) {
     return items.items.find( e =>  e.id === itemId );
 }
@@ -103,6 +111,10 @@ function getToolAmount(state, itemId) {
     return dotProp.get(state, 'tools.'+itemId, 0);
 }
 
+function setToolAmount(state, itemId, amount) {
+    return dotProp.set(state, 'tools.'+itemId, amount);
+}
+
 function increaseToolAmount(state, itemId, amount = 1) {
     const previousAmount = getToolAmount(state, itemId);
     let newAmount = previousAmount + amount; //TODO check bounds (both min and max)
@@ -146,6 +158,9 @@ let Items = {
     increaseToolAmount,
     decreaseToolAmount,
     getToolAmount,
+    getItemDefinitions,
+    getToolDefinitions,
+    setToolAmount,
 }
 
 export default Items;

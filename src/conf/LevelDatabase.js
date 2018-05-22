@@ -20,7 +20,7 @@ const allLevels = [
         config: {x: 14, y: 10, mineRatio: 0.17},
     },
     {
-        config: {x: 16, y: 12, mineRatio: 0.19},
+        config: {x: 16, y: 12, mineRatio: 0.19, redmines: 2},
     },
 ];
 

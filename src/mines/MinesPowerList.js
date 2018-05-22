@@ -69,7 +69,7 @@ class MinesPowerList extends React.PureComponent {
             const isCurrentMode = power.mode && this.props.currentMode === power.mode;
             const powerClass = isCurrentMode ? "minesPower minesPowerActive" : "minesPower";
             const popoverTitle = power.name + (isDisabled ? ' (disabled)' : '');
-            const usesLeft = power.tool ? 99 : 0;
+            const usesLeft = power.tool ? this.props.getToolAmount(power.tool) : 0;
             const limitedUses = power.tool ? true : false;
             const showUsesLeft = limitedUses && ownsFeature;
 

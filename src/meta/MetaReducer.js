@@ -93,7 +93,9 @@ function basicMetaReducer(state = initialMetaState, action) {
             return dotProp.set(state, "current.level", payload.levelNumber);
 
         case types.NEW_GAME: //TODO rename this to work for multiple games
-            return dotProp.set( state, 'current.screen', types.SCREEN_PLAY_MINES);    
+            let newState = Items.setToolAmount(state, types.TOOL_KILL_MINE, 1);
+            newState = Items.setToolAmount(newState, types.TOOL_MARK_RED, payload.config.redmines);
+            return dotProp.set(newState, 'current.screen', types.SCREEN_PLAY_MINES);    
         
         case types.DEBUG_ADD_CREDITS:
         case types.CLAIM_CREDITS:
