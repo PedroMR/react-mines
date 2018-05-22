@@ -42,7 +42,6 @@ test('Get story flags', () => {
     expect(Story.getFlag(meta, 'flagNotSet')).toBeFalsy();
 
     let newMeta = Story.setFlag(meta, 'flagB');
-    console.log(newMeta);
     expect(Story.getFlag(newMeta, 'flagB')).toBeTruthy();
     expect(Story.getFlag(newMeta, 'flagA')).toBeTruthy();
 

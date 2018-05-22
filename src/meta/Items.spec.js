@@ -82,8 +82,25 @@ test('item score multiplier', ()=> {
 
 describe('tools', () => {
     beforeAll(() => Items.useItemDatabase(itemData));
-    test('check amounts', () => {
+    test('find definition', () => {
+        var tool = Items.findToolById('tool1')
+        expect(tool).not.toBe(undefined);
+        expect(tool.price).toEqual(50);
         
+        expect(Items.findToolById('no-tool-here')).toBe(undefined);
+    })
+
+    test('can buy tool', () => {
+        const meta = { tools: {}, maxLevel: 0, wallet: {credits: 500} };
+        let retVal  = Items.purchaseTool(meta, 'tool1');
+        
+        expect(retVal.wallet).toEqual({credits: 450});
+        expect(retVal.tools.tool1).toEqual(1);
+
+        retVal  = Items.purchaseTool(retVal, 'tool1');
+        
+        expect(retVal.wallet).toEqual({credits: 400});
+        expect(retVal.tools.tool1).toEqual(2);
 
     })
 })

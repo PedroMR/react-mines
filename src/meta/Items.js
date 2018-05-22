@@ -12,6 +12,10 @@ function findItemById(itemId) {
     return items.items.find( e =>  e.id === itemId );
 }
 
+function findToolById(itemId) {
+    return items.tools.find( e =>  e.id === itemId );
+}
+
 function ownsItemId(items, itemId) {
     if (!items) return false;
     if (!itemId || !Array.isArray(items)) {
@@ -28,8 +32,16 @@ function purchaseItem(state, itemId, price) {
         return state;
     }
     price = price || item.price;
+
+    const creditSource = 'wallet.credits';
+    const creditsAvailable = dotProp.get(state, creditSource, 0);
+    if (creditsAvailable < price) {
+        console.error('not enough currency for '+itemId, 'required '+price, 'had only '+creditsAvailable);
+        return state;
+    }
+
     let newState = dotProp.merge(state, 'items', itemId);
-    newState = dotProp.set(newState, 'wallet.credits', state.wallet.credits - price);
+    newState = dotProp.set(newState, 'wallet.credits', creditsAvailable - price);
 
     for(let effect of item.effects) {
         if (effect.feature) {
@@ -41,7 +53,6 @@ function purchaseItem(state, itemId, price) {
         if (!newState.score) {
             newState.score = {};
         }
-        console.log(effect.scoreMultiplier, newState.score.multiplier);
         if (effect.scoreMultiplier) {
             if (!(effect.scoreMultiplier <= newState.score.multiplier)) { // ! <= to avoid undefined
                 newState = dotProp.set(newState, 'score.multiplier', effect.scoreMultiplier);
@@ -87,6 +98,41 @@ function countPurchaseableItems(meta)
     return availableItemsCount;
 }
 
+function getToolAmount(state, itemId) {
+    return dotProp.get(state, 'tools.'+itemId, 0);
+}
+
+function increaseToolAmount(state, itemId, amount = 1) {
+    const previousAmount = getToolAmount(state, itemId);
+    let newAmount = previousAmount + amount; //TODO check bounds (both min and max)
+    return dotProp.set(state, 'tools.'+itemId, newAmount);
+}
+
+function decreaseToolAmount(state, itemId, amount = 1) {
+    return increaseToolAmount(state, itemId, -amount);
+}
+
+function purchaseTool(state, itemId, price) {
+    const item = findToolById(itemId);
+    if (!item) {
+        console.error("item "+itemId+" not found");
+        return state;
+    }
+    price = price || item.price;
+
+    const creditSource = 'wallet.credits';
+    const creditsAvailable = dotProp.get(state, creditSource, 0);
+    if (creditsAvailable < price) {
+        console.error('not enough currency for '+itemId, 'required '+price, 'had only '+creditsAvailable);
+        return state;
+    }
+
+    let newState = increaseToolAmount(state, itemId);
+    newState = dotProp.set(newState, 'wallet.credits', creditsAvailable - price);
+
+    return newState;
+}
+
 let Items = {
     purchaseItem,
     useItemDatabase,
@@ -94,6 +140,11 @@ let Items = {
     ownsItemId,
     getBestMultiplier,
     countPurchaseableItems,
+    findToolById,
+    purchaseTool,
+    increaseToolAmount,
+    decreaseToolAmount,
+    getToolAmount,
 }
 
 export default Items;

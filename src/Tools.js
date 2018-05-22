@@ -27,11 +27,8 @@ export function scoreMultiplier(meta) {
 
 export function totalScoreFor(score, results) {
     let totalScore = 0;
-    console.log(totalScore);
     totalScore += scoreForMinesFound(score, results.nMinesFound);
-    console.log(totalScore);
     totalScore += scoreForMinesDetonated(score, results.nMinesDetonated);
-    console.log(totalScore);
     return totalScore;
 }
 
