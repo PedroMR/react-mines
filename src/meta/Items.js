@@ -40,7 +40,9 @@ function purchaseItem(state, itemId, price) {
         return state;
     }
 
-    let newState = dotProp.merge(state, 'items', itemId);
+    console.log('state items', state.items);
+    let newState = state.items ? state : dotProp.set(state, 'items', []);
+    newState = dotProp.merge(newState, 'items', itemId);
     newState = dotProp.set(newState, 'wallet.credits', creditsAvailable - price);
 
     for(let effect of item.effects) {
@@ -93,8 +95,7 @@ function countPurchaseableItems(meta)
     const canBuyItem = (item) => canSeeItem(item) && canAffordItem(item) && !ownItem(item);
     const countAvailable = (acc, item) => acc = canBuyItem(item) ? (acc+1) : acc;
 
-    const availableItemsCount = items.reduce(countAvailable, 0);
-    console.log("avail ", availableItemsCount)
+    const availableItemsCount = items.items.reduce(countAvailable, 0);
     return availableItemsCount;
 }
 

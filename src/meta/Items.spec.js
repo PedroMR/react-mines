@@ -45,10 +45,19 @@ test('can find items', () => {
     expect(Items.findItemById('non-existant id')).toEqual(undefined);
 })
 
+test('count purchaseable items', () => {
+    Items.useItemDatabase(itemData);
+    const meta = MakeWallet(100);
+    expect(Items.countPurchaseableItems(meta)).toEqual(3);
+    const meta2 = MakeWallet(20);
+    expect(Items.countPurchaseableItems(meta2)).toEqual(1);
+
+})
+
 test('can purchase items', () => {
     Items.useItemDatabase(itemData);
     const itemId = 'expand-safe';
-    const meta = { items: [], wallet: {credits: 100} };
+    const meta = MakeWallet(100);
     const retVal  = Items.purchaseItem(meta, itemId);
 
     expect(retVal.items).toEqual([itemId]);
@@ -104,3 +113,7 @@ describe('tools', () => {
 
     })
 })
+
+function MakeWallet(amount) {
+    return { wallet: {credits: amount} };
+}
