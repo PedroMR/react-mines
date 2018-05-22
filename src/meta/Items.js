@@ -9,7 +9,7 @@ function useItemDatabase(itemDB) {
 }
 
 function findItemById(itemId) {
-    return items.find( e =>  e.id === itemId );
+    return items.items.find( e =>  e.id === itemId );
 }
 
 function ownsItemId(items, itemId) {

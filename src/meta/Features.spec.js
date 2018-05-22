@@ -25,7 +25,7 @@ test('item list feature checking', ()=> {
 })
 
 
-const itemData = [
+const itemData = {items:[
     {
         id: 'auto-zero',
         name: "Auto Zeroes",
@@ -51,7 +51,7 @@ const itemData = [
         description: "More tiles, more mines, more rewards.",
         effects: [{ scoreMultiplier: 2 }]        
     },
-]
+]}
 
 const levelData = [
     {

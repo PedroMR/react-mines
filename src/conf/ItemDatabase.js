@@ -1,7 +1,7 @@
 
 import * as types from "../types";
 
-const allItems = [
+const itemCatalogue = [
     {
         id: 'auto-zero',
         name: "Auto Zeroes",
@@ -84,5 +84,8 @@ function MakeLevelUnlock(num, price, scoreMult) {
     return level;
 }
 
+const allItems = {
+    items: itemCatalogue,
+}
 
 export default allItems;

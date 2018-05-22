@@ -2,7 +2,7 @@ import * as types from '../types';
 import Items from './Items';
 import * as tools from '../Tools';
 
-const itemData = [
+const itemData = {items:[
     {
         id: 'auto-zero',
         name: "Auto Zeroes",
@@ -28,13 +28,20 @@ const itemData = [
         description: "More tiles, more mines, more rewards.",
         effects: [{ scoreMultiplier: 2 }]        
     },
+],tools:[
+    {
+        id: 'tool1',
+        price: 50,
+    }
 ]
+}
+
 
 test('can find items', () => {
     Items.useItemDatabase(itemData);
     const itemId = 'expand-safe';
 
-    expect(Items.findItemById(itemId)).toEqual(itemData[1]);
+    expect(Items.findItemById(itemId)).toEqual(itemData.items[1]);
     expect(Items.findItemById('non-existant id')).toEqual(undefined);
 })
 
@@ -71,4 +78,12 @@ test('item score multiplier', ()=> {
     expect(retVal.wallet).toEqual({credits: 325});
     expect(retVal.items).toContain(itemId);
     expect(tools.scoreMultiplier(retVal)).toBe(2);
+})
+
+describe('tools', () => {
+    beforeAll(() => Items.useItemDatabase(itemData));
+    test('check amounts', () => {
+        
+
+    })
 })
