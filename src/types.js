@@ -25,6 +25,7 @@ export const BUY_ITEM = "buyItem";
 export const UI_MODE_FLAG = "ui.mode.flag";
 export const UI_MODE_REVEAL = "ui.mode.reveal";
 export const UI_MODE_MARK_RED = "ui.mode.markRed";
+export const UI_MODE_KILL_MINE = "ui.mode.killMine";
 
 // Screens
 export const SCREEN_MAIN = "screen-main";
@@ -48,4 +49,9 @@ export const FEATURE_AUTOCLICK_SAFE = "mines-feature-autoclick-safe";
 export const FEATURE_SAFE_FIRST_CLICK = "mines-feature-safe-first";
 export const FEATURE_ZERO_FIRST_CLICK = "mines-feature-zero-first";
 export const FEATURE_RED_MINES = "mines-feature-red-mines";
+export const FEATURE_MINE_KILLER = "mines-feature-mine-killer";
 export const FLAG_DID_HIT_MINE_FIRST_CLICK = "flag-hit-mine-first-click";
+
+// Tools
+export const TOOL_MARK_RED = "mines-tool-red-mines";
+export const TOOL_KILL_MINE = "mines-tool-kill-mine";

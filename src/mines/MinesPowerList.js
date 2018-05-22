@@ -7,10 +7,13 @@ import imgBlank from '../img/20x20.png';
 
 class MinesPowerList extends React.PureComponent {
     render() {
-        const powers = [
+        const tools = [
             {name:"Inspect", desc:"Left-click to see the tile's number", icon: imgInspect, mode: types.UI_MODE_REVEAL },
             {name:"Flag", desc:"Right-click to mark a tile as a mine", icon: imgFlag, mode: types.UI_MODE_FLAG },
-            {feature:types.FEATURE_RED_MINES, name:"Dig Up Treasure", desc:"Dig a tile for treasure.", icon: imgInspect, mode: types.UI_MODE_MARK_RED, noToggle: true },
+            {feature:types.FEATURE_RED_MINES, name:"Dig Up Treasure", desc:"Dig a tile for treasure.", icon: imgInspect, mode: types.UI_MODE_MARK_RED, noToggle: true, tool: types.TOOL_MARK_RED},
+            {feature:types.FEATURE_MINE_KILLER, name:"Kill a Mine", desc:"Kill a mine if there is one there.", icon: imgFlag, mode: types.UI_MODE_KILL_MINE, noToggle: true, tool: types.TOOL_KILL_MINE },
+        ]
+        const powers = [
             {feature:types.FEATURE_ZERO_OUT, name:"Auto-zero", desc:"All neighbors of zero tiles are automatically opened." },
             {feature:types.FEATURE_EXPAND, name:"Safe Expansion", desc:"Click a number which can't have any more mines around it to inspect unseen tiles."},
             {feature:types.FEATURE_COLOR_NUMBERS, name:"Colored Numbers", desc:"Green numbers are surrounded by enough flagged mines; all unseen tiles around a red number must be mines."},
@@ -46,12 +49,41 @@ class MinesPowerList extends React.PureComponent {
             const popoverTitle = power.name + (isDisabled ? ' (disabled)' : '');
             const popover =  <Popover id='{power.name}' title={popoverTitle}>{power.desc}<hr/><Button disabled={!canToggleFeature} onClick={onToggleClick}>Disable</Button></Popover>;
             const inside = power.icon ? <img src={power.icon} alt="icon" title={power.desc} /> : <div  width={iconSize} height={iconSize} style={{display:'inline-block', width:iconSize,height:iconSize}}/>;
-            return <OverlayTrigger key={power.name+power.feature} placement='bottom' trigger={['click']} rootClose overlay={popover}><div onClick={onFeatureClick} className={powerClass}>{inside}<br/>{label}</div></OverlayTrigger>;
-        })
+            return <OverlayTrigger key={power.name+power.feature} placement='bottom' trigger={['hover', 'active']} rootClose overlay={popover}><div onClick={onFeatureClick} className={powerClass}>{inside}<br/>{label}</div></OverlayTrigger>;
+        });
 
+        const toolList = tools.map((power) => {
+            let canToggleFeature = false;
+            let ownsFeature = true;
+            if (power.feature) {
+                ownsFeature = this.props.ownsFeature(power.feature);
+                if (!ownsFeature) {
+                    power.name = '-';
+                    power.desc = 'Keep playing to unlock this tool.'
+                }
+            }
+            const onToggleClick = null;
+            const isDisabled = this.props.isFeatureDisabled(power.feature);
+            const label = <div className='minesPowerName'>{isDisabled ? "(disabled)" : power.name}</div>; 
+            const onFeatureClick = power.mode ? (() => { this.props.onSetMode(power.mode); }) : null; 
+            const isCurrentMode = power.mode && this.props.currentMode === power.mode;
+            const powerClass = isCurrentMode ? "minesPower minesPowerActive" : "minesPower";
+            const popoverTitle = power.name + (isDisabled ? ' (disabled)' : '');
+            const usesLeft = power.tool ? 99 : 0;
+            const limitedUses = power.tool ? true : false;
+            const showUsesLeft = limitedUses && ownsFeature;
 
-        return <div className="minesPowerList">POWERS<br/>
-        {powerList}</div>;
+            const popover =  <Popover id='{power.name}' title={popoverTitle}>
+                {power.desc}<hr/>
+                {showUsesLeft ? ("Uses left: "+usesLeft) : " "}
+            </Popover>;
+            const inside = power.icon ? <img src={power.icon} alt="icon" title={power.desc} /> : <div  width={iconSize} height={iconSize} style={{display:'inline-block', width:iconSize,height:iconSize}}/>;
+            return <OverlayTrigger key={power.name+power.tool} placement='bottom' trigger={['hover', 'active']} rootClose overlay={popover}><div onClick={onFeatureClick} className={powerClass}>{inside}<br/>{label}</div></OverlayTrigger>;
+        });
+
+        return <div className="minesPowerList">
+            TOOLS<br/>{toolList}<br clear='both'/>
+            POWERS<br/>{powerList}</div>;
     }
 }
 

@@ -11,12 +11,12 @@ class ControlPanel extends React.PureComponent {
         switch(this.props.options.uiMode) {
             case types.UI_MODE_FLAG: mode = "Flags"; break;
             case types.UI_MODE_MARK_RED: mode = "Digging Up"; break;
+            case types.UI_MODE_KILL_MINE: mode = "Killing a Mine"; break; //TODO maybe add "8 left"
             default: mode = "Inspecting"; break;
         }
 
         return <div id="controlPanel">
-            <button onClick={()=>this.onClickFlag()} autoFocus
-                >Change Mode [F]</button> {mode} <br/>
+            {mode} <br/>
             {this.props.config.x}x{this.props.config.y}, {this.props.config.mines} mines<br/><br/><br/>
         </div>;
     }

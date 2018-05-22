@@ -1,7 +1,11 @@
 # TODO
 
 - [ ] Power to mark special mines (red, etc)
+- [ ] Power-ups? (help with things like no-info areas)
+    - [ ] Kill a bomb (so you can see the number)
+    - [ ] Limited-use "rewind"  
 - [ ] Highlight "speech" -- maybe modal story panels?
+- [ ] Don't re-Typyst story lines you've seen already
 - [ ] Loads of story and tutorial
     - Remember you can use the button below the grid to change into "flag placement" mode.
     - Or you can "right click" if you have a modern fancy mouse.
@@ -29,9 +33,6 @@
     - [ ] Wrong numbers
     - [ ] Multiple layers (two or three 2D slices of a 3D level)
     - [ ] Murphy Mode -- if you could be clicking a mine, you WILL click a mine
-- [ ] Power-ups? (help with things like no-info areas)
-    - [ ] Limited-use "rewind"
-    - [ ] Kill a bomb (so you can see the number)
 - [ ] Design roadmap for improvements and evolution of the game
 - [ ] Moar g4m3s!
     - [ ] Picross-like

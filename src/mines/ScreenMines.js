@@ -7,6 +7,7 @@ import ControlPanel from "./ControlPanel";
 import { startNewGame, setUiMode, toggleDisableFeature } from './MinesActions';
 import * as types from '../types';
 import Features from '../meta/Features';
+import Items from '../meta/Items';
 
 class ScreenMines extends React.Component {
     constructor(props) {
@@ -78,6 +79,7 @@ class ScreenMines extends React.Component {
                     onToggleFeature={this.handleToggleFeature}
                     onSetMode={this.handleSetMode}
                     currentMode={this.props.options.uiMode}
+                    getToolCount={(toolId) => Items.getToolCount(this.props.meta, toolId)}
                     />
                 <Status />
                 <Board />
