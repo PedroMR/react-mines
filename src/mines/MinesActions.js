@@ -22,6 +22,11 @@ export const markTile = (x, y, mark) => ({
     payload: { x, y, mark }
 });
 
+export const useTool = (x, y, tool) => ({
+    type: types.USE_TOOL,
+    payload: { x, y, tool }
+});
+
 export const revealTile = (x, y) => ({
     type: types.REVEAL_TILE,
     payload: { x, y }

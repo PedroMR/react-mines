@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { flagTile, revealTile, startNewGame, markTile, setUiMode } from './MinesActions';
+import { flagTile, revealTile, startNewGame, markTile, setUiMode, useTool } from './MinesActions';
 import { debugToggleFeature } from '../meta/MetaActions';
 import * as types from '../types';
 import Features from '../meta/Features';
@@ -165,10 +165,22 @@ class Board extends React.Component {
     isMarkingRed() {
         return this.props.options.uiMode === types.UI_MODE_MARK_RED;
     }
+    isUsingTool() {
+        return this.props.options.uiMode === types.UI_MODE_KILL_MINE;
+    }
+    getCurrentTool() {
+        if (this.props.options.uiMode === types.UI_MODE_KILL_MINE)
+            return types.TOOL_KILL_MINE; //TODO grab the info via tool database
+    }
 
     handleClick(x, y, pos, seen, around, flag, mine, e, special) {
         if (e) e.preventDefault();
 
+        if (this.isUsingTool()) {
+            this.props.dispatch(useTool(x, y, this.getCurrentTool()));
+            return;
+        }
+        
         if (this.isMarkingRed()) {
             this.props.dispatch(markTile(x, y, 'red'));
             if (special === 'red') {

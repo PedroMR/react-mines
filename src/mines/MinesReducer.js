@@ -138,6 +138,10 @@ export function gameReducer(state = initialGameState, action) {
             const markedState = handleMarkTile(state,  payload.x, payload.y, payload.mark);
             return markedState;
 
+        case types.USE_TOOL:
+            if (state.gameOver) return state;
+            return handleUseTool(state, payload.x, payload.y, payload.tool);
+
         case types.REVEAL_TILE:
             if (state.gameOver) return state;
             
@@ -148,15 +152,7 @@ export function gameReducer(state = initialGameState, action) {
 
         case types.SET_UI_MODE:
             if (state.gameOver) return state;
-
-            const modes = [ types.UI_MODE_FLAG, types.UI_MODE_REVEAL, types.UI_MODE_MARK_RED ];
-            if (modes.indexOf(payload.mode) < 0) {
-                console.log("invalid ui mode. ", action);
-                return state;
-            }
-            
-            const options = tools.newVersionOf(state.options, {uiMode: payload.mode});
-            return tools.newVersionOf(state, {options});
+            return handleSetUiMode(state, payload.mode);
 
         case types.CLAIM_CREDITS:
             return tools.newVersionOf(state, {claimedRewards: true});
@@ -167,6 +163,59 @@ export function gameReducer(state = initialGameState, action) {
         default:
             return state;
     }
+}
+
+function handleUseTool(state, x, y, tool) {
+    const pos = getPos(state, x, y);
+    if (Items.getToolAmount(state, tool) <= 0)
+        return state;
+    let newState = Items.decreaseToolAmount(state, tool, 1);
+
+    newState = handleSetUiMode(newState, types.UI_MODE_REVEAL);
+
+    switch(tool) {
+        case types.TOOL_KILL_MINE:
+            if (newState.mines[pos]) {
+                newState = removeMine(newState, x, y);
+            }
+            newState = handleRevealTile(newState, x, y);
+            return newState;
+
+        default:
+            console.log("unknown tool ",tool);
+            return newState;
+    }
+}
+
+function removeMine(state, x, y) {
+    const pos = getPos(state, x, y);
+    let newState = dotProp.set(state, 'mines.'+pos, false);
+    let newAround = newState.around.slice();
+    newState.around = newAround;
+
+    const rows = state.config.y; 
+    const cols = state.config.x; 
+    for (let dy=-1; dy <= 1; dy++) {
+        if (y + dy < 0 || y + dy >= rows) continue;
+        for (let dx=-1; dx <= 1; dx++) {
+            if (x + dx < 0 || x + dx >= cols) continue;                        
+            let neighborPos =  pos + dx + dy*cols;
+            newAround[neighborPos]--;
+        }
+    }
+
+    return newState;
+}
+
+function handleSetUiMode(state, mode) {
+    const modes = [ types.UI_MODE_FLAG, types.UI_MODE_REVEAL, types.UI_MODE_MARK_RED, types.UI_MODE_KILL_MINE ];
+    if (modes.indexOf(mode) < 0) {
+        console.log("invalid ui mode. ", mode);
+        return state;
+    }
+    
+    const options = tools.newVersionOf(state.options, {uiMode: mode});
+    return tools.newVersionOf(state, {options});
 }
 
 function handleMarkTile(state, x, y, mark) {

@@ -4,6 +4,8 @@
     - [ ] Kill a bomb (so you can see the number)
     - [ ] Limited-use "rewind"  
 - [ ] hotkeys to switch mode/tool
+- [ ] Visual tracking of how many clicks so far
+- [ ] Rewards when finding treasure (based on number of clicks so far)
 - [ ] Info on "treasure" -- tiles away, how many found / not found
 - [ ] "layer" to look at treasure clues
 - [ ] Items you can buy that unlock and later increase your tool caps

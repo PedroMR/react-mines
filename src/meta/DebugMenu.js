@@ -35,6 +35,7 @@ class DebugMenu extends React.PureComponent {
             types.FEATURE_SAFE_FIRST_CLICK,            
             types.FEATURE_ZERO_FIRST_CLICK,
             types.FEATURE_RED_MINES,
+            types.FEATURE_MINE_KILLER,
         ];
         // "debug-score-tally",
         /*

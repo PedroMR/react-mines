@@ -8,7 +8,7 @@ class Status extends React.PureComponent {
     render() {
         const countDefined = (acc,val) => (val ? acc+1 : acc);
         const nFlags = this.props.flags.reduce(countDefined, 0);
-        const nTotalMines = this.props.config.mines;
+        const nTotalMines = this.props.mines.reduce(countDefined, 0);
         let nHiddenMines = nTotalMines;
         this.props.mines.forEach((val, index) => { if (val && this.props.seen[index]) nHiddenMines--; });
         const nSeen = this.props.seen.reduce(countDefined, 0);
