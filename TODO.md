@@ -1,9 +1,12 @@
 # TODO
 
-- [ ] Power to mark special mines (red, etc)
 - [ ] Power-ups? (help with things like no-info areas)
     - [ ] Kill a bomb (so you can see the number)
     - [ ] Limited-use "rewind"  
+- [ ] hotkeys to switch mode/tool
+- [ ] Info on "treasure" -- tiles away, how many found / not found
+- [ ] "layer" to look at treasure clues
+- [ ] Items you can buy that unlock and later increase your tool caps
 - [ ] Highlight "speech" -- maybe modal story panels?
 - [ ] Don't re-Typyst story lines you've seen already
 - [ ] Loads of story and tutorial
@@ -64,3 +67,4 @@
 - [X] Sound toggle
 - [X] List of powers next to board 
 - [X] Powers can be clicked to be used
+- [X] Power to mark special mines (red, etc)

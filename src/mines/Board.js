@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { flagTile, revealTile, startNewGame, markTile } from './MinesActions';
+import { flagTile, revealTile, startNewGame, markTile, setUiMode } from './MinesActions';
 import { debugToggleFeature } from '../meta/MetaActions';
 import * as types from '../types';
 import Features from '../meta/Features';
@@ -176,6 +176,7 @@ class Board extends React.Component {
             } else {
                 console.log("Nooooooo");                
             }
+            this.props.dispatch(setUiMode(types.UI_MODE_REVEAL));
             return;
         }
 

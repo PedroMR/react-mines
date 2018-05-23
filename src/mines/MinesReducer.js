@@ -2,6 +2,7 @@ import seedrandom from 'seedrandom';
 import * as types from '../types';
 import * as tools from '../Tools';
 import dotProp from 'dot-prop-immutable';
+import Items from '../meta/Items';
 
 const initialConfig = {
     x: 5,
@@ -38,6 +39,10 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
     state.special = Array(cols*rows).fill(null);
     state.clicksSoFar = 0;
     state.gameOver = false;
+    state.tools = {
+        [types.TOOL_KILL_MINE]: 1,
+        [types.TOOL_MARK_RED]: 2,
+    };
 
     while(nMines > 0) {
         let randX = getRandomInt(cols);
@@ -169,11 +174,15 @@ function handleMarkTile(state, x, y, mark) {
 
     switch (mark) {
         case 'red':
-            if (state.special[pos] === mark) {
-                return dotProp.set(state, 'special.'+pos, 'redFound');
+            if (Items.getToolAmount(state, types.TOOL_MARK_RED) <= 0)
+                return state;
+            let newState = Items.decreaseToolAmount(state, types.TOOL_MARK_RED, 1);
+            if (newState.special[pos] === mark) {
+                return dotProp.set(newState, 'special.'+pos, 'redFound');
             }
+            
             //todo handle failure here? Decrement attempts available too
-            return state;
+            return newState;
         default:
             return state;
     }

@@ -79,7 +79,7 @@ class ScreenMines extends React.Component {
                     onToggleFeature={this.handleToggleFeature}
                     onSetMode={this.handleSetMode}
                     currentMode={this.props.options.uiMode}
-                    getToolAmount={(toolId) => Items.getToolAmount(this.props.meta, toolId)}
+                    getToolAmount={(toolId) => Items.getToolAmount(this.props.mines, toolId)}
                     />
                 <Status />
                 <Board />
@@ -100,6 +100,7 @@ function mapStateToProps(state) {
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state.mines[name]});
     retVal.meta = state.meta;
+    retVal.mines = state.mines;
     return retVal;
 }
 

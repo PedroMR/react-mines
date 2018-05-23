@@ -65,20 +65,23 @@ class MinesPowerList extends React.PureComponent {
             const onToggleClick = null;
             const isDisabled = this.props.isFeatureDisabled(power.feature);
             const label = <div className='minesPowerName'>{isDisabled ? "(disabled)" : power.name}</div>; 
-            const onFeatureClick = power.mode ? (() => { this.props.onSetMode(power.mode); }) : null; 
             const isCurrentMode = power.mode && this.props.currentMode === power.mode;
             const powerClass = isCurrentMode ? "minesPower minesPowerActive" : "minesPower";
             const popoverTitle = power.name + (isDisabled ? ' (disabled)' : '');
             const usesLeft = power.tool ? this.props.getToolAmount(power.tool) : 0;
             const limitedUses = power.tool ? true : false;
             const showUsesLeft = limitedUses && ownsFeature;
+            const usesLabel = showUsesLeft ? <div className='minesPowerUses'>{usesLeft}</div> : null;
+            const canBeSelected = ownsFeature && power.mode && (!limitedUses || usesLeft > 0);
+            const onFeatureClick = canBeSelected ? (() => { this.props.onSetMode(power.mode); }) : null; 
 
             const popover =  <Popover id='{power.name}' title={popoverTitle}>
                 {power.desc}<hr/>
                 {showUsesLeft ? ("Uses left: "+usesLeft) : " "}
             </Popover>;
             const inside = power.icon ? <img src={power.icon} alt="icon" title={power.desc} /> : <div  width={iconSize} height={iconSize} style={{display:'inline-block', width:iconSize,height:iconSize}}/>;
-            return <OverlayTrigger key={power.name+power.tool} placement='bottom' trigger={['hover', 'active']} rootClose overlay={popover}><div onClick={onFeatureClick} className={powerClass}>{inside}<br/>{label}</div></OverlayTrigger>;
+            return <OverlayTrigger key={power.name+power.tool} placement='bottom' trigger={['hover', 'active']} rootClose overlay={popover}>
+                <div onClick={onFeatureClick} className={powerClass}>{inside}<br/>{label}<br/>{usesLabel}</div></OverlayTrigger>;
         });
 
         return <div className="minesPowerList">
