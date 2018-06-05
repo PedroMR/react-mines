@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { flagTile, revealTile, startNewGame, markTile, setUiMode, useTool } from './MinesActions';
+import { flagTile, revealTile, revealTiles, startNewGame, markTile, setUiMode, useTool } from './MinesActions';
 import { debugToggleFeature } from '../meta/MetaActions';
 import * as types from '../types';
 import Features from '../meta/Features';
@@ -245,9 +245,10 @@ class Board extends React.Component {
             else
                 Sound.playSound(Sound.REVEAL_NUMBER);
 
-            this.props.dispatch(revealTile(x, y));
             if (this.hasFeature(types.FEATURE_ZERO_OUT) && around === 0) {
                 this.expandAround(x, y);
+            } else {
+                this.props.dispatch(revealTile(x, y));
             }
         }
     }
@@ -265,16 +266,21 @@ class Board extends React.Component {
         return this.countNeighbors(x, y, (pos) => (this.props.flags[pos] || (this.props.mines[pos] && this.props.seen[pos])));
     }
 
-    expandAround(x, y, queued = []) {
-        return this.countNeighbors(x, y, (pos, nx, ny) => {
+    addToExpandableListAround(x, y, queued = []) {
+        this.countNeighbors(x, y, (pos, nx, ny) => {
             if (!this.props.flags[pos] && !this.props.seen[pos] && !queued[pos]) {
                 queued[pos] = true;
-                this.props.dispatch(revealTile(nx, ny));
                 if (this.hasFeature(types.FEATURE_ZERO_OUT) && this.props.around[pos] === 0) {
-                    this.expandAround(nx,ny, queued);
+                    this.addToExpandableListAround(nx,ny, queued);
                 }
             }
         });
+        return queued;
+    }
+
+    expandAround(x, y, queued = []) {
+        this.addToExpandableListAround(x, y, queued);
+        this.props.dispatch(revealTiles(queued));
     }
 
     render() {

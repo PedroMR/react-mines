@@ -32,6 +32,11 @@ export const revealTile = (x, y) => ({
     payload: { x, y }
 });
 
+export const revealTiles = (positions) => ({
+    type: types.REVEAL_TILE,
+    payload: { x: -1, y: -1, positions }
+});
+
 export const setUiMode = (mode) => ({
     type: types.SET_UI_MODE,
     payload: { mode }

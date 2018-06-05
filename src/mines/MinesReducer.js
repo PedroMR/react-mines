@@ -145,7 +145,7 @@ export function gameReducer(state = initialGameState, action) {
         case types.REVEAL_TILE:
             if (state.gameOver) return state;
             
-            const newState = handleRevealTile(state, payload.x, payload.y);
+            const newState = handleRevealTile(state, payload.x, payload.y, payload.positions);
 
             checkGameOver(newState);
             return newState;
@@ -254,12 +254,16 @@ function handleFlagTile(state, x, y, val) {
     return tools.newVersionOf(state, {flags});
 }
 
-function handleRevealTile(state, x, y) {
+function handleRevealTile(state, x, y, positions) {
     const pos = getPos(state, x, y);
-    if (state.seen[pos]) return state; // revealing a seen tile
+    if (state.seen[pos] && !positions && x >= 0) return state; // revealing a seen tile
 
     let seen = state.seen.slice();
-    seen[pos] = true;
+    if (x >= 0)
+        seen[pos] = true;
+    for (var p in positions)
+        seen[p] = true;
+
     return tools.newVersionOf(state, {seen, clicksSoFar: state.clicksSoFar+1});
 }
 
