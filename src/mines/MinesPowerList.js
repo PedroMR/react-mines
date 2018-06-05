@@ -49,7 +49,7 @@ class MinesPowerList extends React.PureComponent {
             const popoverTitle = power.name + (isDisabled ? ' (disabled)' : '');
             const popover =  <Popover id='{power.name}' title={popoverTitle}>{power.desc}<hr/><Button disabled={!canToggleFeature} onClick={onToggleClick}>Disable</Button></Popover>;
             const inside = power.icon ? <img src={power.icon} alt="icon" title={power.desc} /> : <div  width={iconSize} height={iconSize} style={{display:'inline-block', width:iconSize,height:iconSize}}/>;
-            return <OverlayTrigger key={power.name+power.feature} placement='bottom' trigger={['hover', 'active']} rootClose overlay={popover}><div onClick={onFeatureClick} className={powerClass}>{inside}<br/>{label}</div></OverlayTrigger>;
+            return <OverlayTrigger key={power.name+power.feature} placement='bottom' trigger='click' rootClose overlay={popover}><div onClick={onFeatureClick} className={powerClass}>{inside}<br/>{label}</div></OverlayTrigger>;
         });
 
         const toolList = tools.map((power) => {
@@ -80,7 +80,7 @@ class MinesPowerList extends React.PureComponent {
                 {showUsesLeft ? ("Uses left: "+usesLeft) : " "}
             </Popover>;
             const inside = power.icon ? <img src={power.icon} alt="icon" title={power.desc} /> : <div  width={iconSize} height={iconSize} style={{display:'inline-block', width:iconSize,height:iconSize}}/>;
-            return <OverlayTrigger key={power.name+power.tool} placement='bottom' trigger={['hover', 'active']} rootClose overlay={popover}>
+            return <OverlayTrigger key={power.name+power.tool} placement='bottom' trigger={['hover', 'focus']} rootClose overlay={popover}>
                 <div onClick={onFeatureClick} className={powerClass}>{inside}<br/>{label}<br/>{usesLabel}</div></OverlayTrigger>;
         });
 

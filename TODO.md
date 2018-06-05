@@ -1,10 +1,10 @@
 # TODO
 
-- [ ] Power-ups? (help with things like no-info areas)
-    - [ ] Kill a bomb (so you can see the number)
-    - [ ] Limited-use "rewind"  
-- [ ] hotkeys to switch mode/tool
 - [ ] Visual tracking of how many clicks so far
+- [ ] hotkeys to switch mode/tool
+- [ ] Power-ups? (help with things like no-info areas)
+    - [/] Kill a bomb (so you can see the number)
+    - [ ] Limited-use "rewind"  
 - [ ] Rewards when finding treasure (based on number of clicks so far)
 - [ ] Info on "treasure" -- tiles away, how many found / not found
 - [ ] "layer" to look at treasure clues

@@ -13,9 +13,10 @@ class Status extends React.PureComponent {
         this.props.mines.forEach((val, index) => { if (val && this.props.seen[index]) nHiddenMines--; });
         const nSeen = this.props.seen.reduce(countDefined, 0);
         const nUnknown = this.props.seen.length - nSeen - nFlags;
+        const nClicks = this.props.clicksSoFar || 0;
 
         let topLine = <span className="status end">&nbsp;</span>
-        let bottomLine = <span className="status">{nFlags} flag{nFlags===1?"":"s"} / {nHiddenMines} hidden mine{nHiddenMines===1?"":"s"} &mdash; {nUnknown} tiles</span>;
+        let bottomLine = <span className="status">{nFlags} flag{nFlags===1?"":"s"} / {nHiddenMines} hidden mine{nHiddenMines===1?"":"s"} &mdash; {nClicks} clicks, {nUnknown} tiles left</span>;
         let scoreArea = null;
 
         if (this.props.meta.features["debug-score-tally"] || nUnknown <= 0) {
@@ -36,7 +37,7 @@ class Status extends React.PureComponent {
 
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'flags', 'mines' ];
+    const propNames = [ 'config', 'seen', 'flags', 'mines', 'clicksSoFar' ];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state.mines[name]});
 
