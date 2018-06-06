@@ -8,10 +8,10 @@ import imgBlank from '../img/20x20.png';
 class MinesPowerList extends React.PureComponent {
     render() {
         const tools = [
-            {name:"Inspect", desc:"Left-click to see the tile's number", icon: imgInspect, mode: types.UI_MODE_REVEAL },
-            {name:"Flag", desc:"Right-click to mark a tile as a mine", icon: imgFlag, mode: types.UI_MODE_FLAG },
-            {feature:types.FEATURE_RED_MINES, name:"Dig Up Treasure", desc:"Dig a tile for treasure.", icon: imgInspect, mode: types.UI_MODE_MARK_RED, noToggle: true, tool: types.TOOL_MARK_RED},
-            {feature:types.FEATURE_MINE_KILLER, name:"Kill a Mine", desc:"Kill a mine if there is one there.", icon: imgFlag, mode: types.UI_MODE_KILL_MINE, noToggle: true, tool: types.TOOL_KILL_MINE },
+            {name:"Inspect", desc:"Left-click to see the tile's number", icon: imgInspect, mode: types.UI_MODE_REVEAL, hotkey:"Q" },
+            {name:"Flag", desc:"Right-click to mark a tile as a mine", icon: imgFlag, mode: types.UI_MODE_FLAG, hotkey:"W"  },
+            {feature:types.FEATURE_RED_MINES, name:"Dig Up Treasure", desc:"Dig a tile for treasure.", icon: imgInspect, mode: types.UI_MODE_MARK_RED, noToggle: true, tool: types.TOOL_MARK_RED, hotkey:"E" },
+            {feature:types.FEATURE_MINE_KILLER, name:"Kill a Mine", desc:"Kill a mine if there is one there.", icon: imgFlag, mode: types.UI_MODE_KILL_MINE, noToggle: true, tool: types.TOOL_KILL_MINE, hotkey:"R"  },
         ]
         const powers = [
             {feature:types.FEATURE_ZERO_OUT, name:"Auto-zero", desc:"All neighbors of zero tiles are automatically opened." },
@@ -74,9 +74,10 @@ class MinesPowerList extends React.PureComponent {
             const usesLabel = showUsesLeft ? <div className='minesPowerUses'>{usesLeft}</div> : null;
             const canBeSelected = ownsFeature && power.mode && (!limitedUses || usesLeft > 0);
             const onFeatureClick = canBeSelected ? (() => { this.props.onSetMode(power.mode); }) : null; 
+            const { hotkey } = power;
 
             const popover =  <Popover id='{power.name}' title={popoverTitle}>
-                {power.desc}<hr/>
+                (Hotkey: <b>{hotkey}</b>)<br/>{power.desc}<hr/>
                 {showUsesLeft ? ("Uses left: "+usesLeft) : " "}
             </Popover>;
             const inside = power.icon ? <img src={power.icon} alt="icon" title={power.desc} /> : <div  width={iconSize} height={iconSize} style={{display:'inline-block', width:iconSize,height:iconSize}}/>;

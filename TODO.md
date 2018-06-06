@@ -1,6 +1,5 @@
 # TODO
 
-- [ ] Visual tracking of how many clicks so far
 - [ ] hotkeys to switch mode/tool
 - [ ] Power-ups? (help with things like no-info areas)
     - [/] Kill a bomb (so you can see the number)
@@ -70,3 +69,4 @@
 - [X] List of powers next to board 
 - [X] Powers can be clicked to be used
 - [X] Power to mark special mines (red, etc)
+- [X] Visual tracking of how many clicks so far
