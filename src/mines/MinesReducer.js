@@ -225,12 +225,18 @@ function handleMarkTile(state, x, y, mark) {
         case 'red':
             if (Items.getToolAmount(state, types.TOOL_MARK_RED) <= 0)
                 return state;
+
+            const specialAtPos = state.special[pos];
+
+            if (specialAtPos && specialAtPos.startsWith('red') && specialAtPos !== 'red') 
+                return state;
+
             let newState = Items.decreaseToolAmount(state, types.TOOL_MARK_RED, 1);
             if (newState.special[pos] === mark) {
                 return dotProp.set(newState, 'special.'+pos, 'redFound');
             }
             
-            //todo handle failure here? Decrement attempts available too
+            //todo handle failure here? 
             return newState;
         default:
             return state;
