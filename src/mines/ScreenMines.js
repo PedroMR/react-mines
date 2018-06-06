@@ -8,6 +8,7 @@ import { startNewGame, setUiMode, toggleDisableFeature } from './MinesActions';
 import * as types from '../types';
 import Features from '../meta/Features';
 import Items from '../meta/Items';
+import { toolCatalogue } from '../conf/PowerDatabase';
 
 class ScreenMines extends React.Component {
     constructor(props) {
@@ -45,6 +46,15 @@ class ScreenMines extends React.Component {
         if (e.key === "f") {
             this.onToggleFlag();
         }
+
+        for (var tool of toolCatalogue) {
+            if (tool.hotkey.toLowerCase() === e.key) {
+                // FIXME check we unlocked it
+                this.handleSetMode(tool.mode);
+                break;
+            }
+        }
+
     }
 
     onKeyUp(e) {
