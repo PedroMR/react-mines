@@ -1,13 +1,14 @@
 # TODO
 
-- [ ] hotkeys to switch mode/tool
+- [ ] Items you can buy that unlock and later increase your tool caps
+- [ ] Info on "treasure" -- tiles away, how many found / not found
+- [ ] Rewards when finding treasure (based on number of clicks so far)
+- [ ] Bonus for conserving clicks (as item)
+- [ ] Advanced level selector (e.g., for red mines, select easy / hard?)
 - [ ] Power-ups? (help with things like no-info areas)
     - [/] Kill a bomb (so you can see the number)
     - [ ] Limited-use "rewind"  
-- [ ] Rewards when finding treasure (based on number of clicks so far)
-- [ ] Info on "treasure" -- tiles away, how many found / not found
 - [ ] "layer" to look at treasure clues
-- [ ] Items you can buy that unlock and later increase your tool caps
 - [ ] Highlight "speech" -- maybe modal story panels?
 - [ ] Don't re-Typyst story lines you've seen already
 - [ ] Loads of story and tutorial
@@ -21,10 +22,8 @@
 - [ ] Bonus for level danger (mine ratio) 
 - [ ] Maybe requirement for "only after next game"? (staggered item purchase)
 - [ ] Reward tiers for performance (non-linear)?
-- [ ] Bonus for conserving clicks (as item)
 - [ ] Improve score tally aesthetics
 - [ ] Finish the level earlier -- if all unseen spots = num mines - num flags (as feature?)
-- [ ] Advanced level selector
 - [ ] Add more sounds
     - BUY ITEM
     - SELECT and BACK for UI
@@ -70,3 +69,4 @@
 - [X] Powers can be clicked to be used
 - [X] Power to mark special mines (red, etc)
 - [X] Visual tracking of how many clicks so far
+- [X] hotkeys to switch mode/tool

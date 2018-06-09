@@ -6,6 +6,7 @@ import { startNewGame } from '../mines/MinesActions';
 import { selectLevel } from './MetaActions';
 import dotProp from 'dot-prop-immutable';
 import Features from './Features';
+import { Radio, FormGroup } from 'react-bootstrap';
 
 function NumericInput(props) { 
     const {propertyName, onChange, enabled, defaultValue} = props;
@@ -105,16 +106,24 @@ class ScreenCreateMines extends React.Component {
     render() {
         const makeRadioOption = ((preset, index) => {
             const tiles = preset.x * preset.y;
-            const ratio = preset.x ? Number(preset.mines / tiles).toFixed(2)+"%" : "";
+            const ratio = preset.x ? "("+Number(preset.mines / tiles).toFixed(2)+"%)" : "";
             const strKey = "k"+index;
-            return <label key={strKey}><input id="option" type="radio" name="field"
+
+            return <Radio name='gamePresets' 
+                    checked={this.state.currentPreset===index}
+                    onChange={this.handlePresetChanged}
+                    value={preset.name} 
+                    >{preset.name} {ratio}</Radio>;
+
+            return <label key={strKey}><input id="option" type="radio" name="optradio"
                 value={preset.name} 
                 checked={this.state.currentPreset===index} onChange={this.handlePresetChanged} 
                 />{preset.name} {ratio}<br/></label>
             });
         let radioOptions = this.state.presets.map(makeRadioOption);
 
-        const presets =  <tbody><tr className="gamePresets"><td colSpan='2'>{radioOptions}</td></tr></tbody>;
+        const presets =  <tbody><tr className="gamePresets"><td colSpan='2'><FormGroup>
+        {radioOptions}</FormGroup></td></tr></tbody>;
         const enableCustomValues = this.hasFeature(types.FEATURE_CUSTOM_MODE);
         const customValueSelector = <tbody>{[
                 {name: "Rows", prop: "y"},

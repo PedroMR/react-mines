@@ -53,6 +53,7 @@ button.shop {
 }
 .gamePresets {
     text-align: left;
+    display: block;
 }
 #controlPanel {
     float:center;
