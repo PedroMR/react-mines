@@ -1,2 +1,4 @@
 {
+// The path to the Jest binary, or an npm command to run tests prefixed with `--` e.g. `npm test --`
+"jest.pathToJest": "npm test"
 }
