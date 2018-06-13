@@ -62,7 +62,7 @@ const itemCatalogue = [
         effects: [{ feature: types.FEATURE_ZERO_FIRST_CLICK }],
         showIf: [{OwnsItem:'mine-first-click'}],
     },{
-        id: 'unlock-mine-killer',
+        id: 'mine-killer-1',
         name: "Mine Killer!",
         price: 99,
         description: "Once per field you can send this in. It will disable any mine that's possibly there.",
@@ -73,7 +73,26 @@ const itemCatalogue = [
     MakeLevelUnlock(3, 180, 1.5),
     MakeLevelUnlock(4, 250, 2),
     MakeLevelUnlock(5, 400, 3),
+    MakeMineKillerCapIncrease(2, 299),
+    MakeMineKillerCapIncrease(3, 499),
+    MakeMineKillerCapIncrease(4, 799),
 ]
+
+function MakeMineKillerCapIncrease(num, price) {
+    let mineKillerCap = {
+        id: 'mine-killer-'+num,
+        name: "More Mine Killers!",
+        price,
+        description: "An extra Mine Killer per level, increasing cap to "+num+".",
+        effects: [{ tool: types.TOOL_KILL_MINE, toolCap: num }],
+        showIf: [],
+    }
+
+    if (num > 1)
+        mineKillerCap.showIf.push({OwnsItem:'mine-killer-'+(num-1)});
+
+    return mineKillerCap;
+}
 
 function MakeLevelUnlock(num, price, scoreMult) {
     let level = {

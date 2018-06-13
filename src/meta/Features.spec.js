@@ -24,6 +24,14 @@ test('item list feature checking', ()=> {
     expect(Features.hasFeature(meta, types.FEATURE_ZERO_OUT)).toBeFalsy();
 })
 
+test('wrong item list feature checking', ()=> {
+    const meta = { items: ['zzZZZzzzexpand-safe'] };
+    Features.useItemDatabase(itemData);
+
+    expect(Features.hasFeature(meta, types.FEATURE_EXPAND)).toBeFalsy();
+    expect(Features.hasFeature(meta, types.FEATURE_ZERO_OUT)).toBeFalsy();
+})
+
 
 const itemData = {items:[
     {

@@ -51,7 +51,7 @@ function hasFeatureInItems(meta, featureId) {
     if (meta.items) {
         for (let itemId of meta.items) {
             const item = Items.findItemById(itemId);
-            if (!item.effects) continue;
+            if (!item || !item.effects) continue;
             for(let effect of item.effects) {
                 if (effect.feature === featureId)
                     return true;
