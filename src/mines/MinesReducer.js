@@ -39,10 +39,8 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
     state.special = Array(cols*rows).fill(null);
     state.clicksSoFar = 0;
     state.gameOver = false;
-    state.tools = {
-        [types.TOOL_KILL_MINE]: 0,
-        [types.TOOL_MARK_RED]: config.redmines ? config.redmines + 1 : 0,
-    };
+    state.tools = {...config.toolCaps};
+    state.tools[types.TOOL_MARK_RED] = config.redmines ? config.redmines + 1 : 0;
 
     while(nMines > 0) {
         let randX = getRandomInt(cols);

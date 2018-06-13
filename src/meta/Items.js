@@ -165,8 +165,29 @@ function getToolCap(state, toolId) {
     return bestCap;
 }
 
+function getToolCaps(state) {
+    let toolCaps = {};
+
+    const myItems = state.items || [];
+
+    for (let itemId of myItems) {
+        const item = findItemById(itemId);
+        if (!item) continue;
+
+        for (let effect of item.effects) {
+            if (effect.tool) {
+                const prevCap = toolCaps[effect.tool] || 0;
+                toolCaps[effect.tool] = Math.max(prevCap, effect.toolCap);
+            }
+        }
+    }
+
+    return toolCaps;
+}
+
 let Items = {
     getToolCap,
+    getToolCaps,
     purchaseItem,
     useItemDatabase,
     findItemById,

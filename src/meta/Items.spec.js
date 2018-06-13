@@ -126,8 +126,16 @@ describe('tools', () => {
         let retVal = Items.purchaseItem(meta, 'tool1-unlock');
 
         expect(Items.getToolCap(retVal, 'tool1')).toEqual(1);
+    })
 
+    test('can generate tool cap table', ()=>{
+        const meta = { wallet: { credits: 2500 }};
 
+        expect(Items.getToolCaps(meta)).toEqual({});
+
+        let retVal = Items.purchaseItem(meta, 'tool1-unlock');
+
+        expect(Items.getToolCaps(retVal)).toEqual({'tool1': 1});
     })
 
 

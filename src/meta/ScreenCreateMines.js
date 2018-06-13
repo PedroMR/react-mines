@@ -7,6 +7,7 @@ import { selectLevel } from './MetaActions';
 import dotProp from 'dot-prop-immutable';
 import Features from './Features';
 import { Radio, FormGroup } from 'react-bootstrap';
+import Items from './Items';
 
 function NumericInput(props) { 
     const {propertyName, onChange, enabled, defaultValue} = props;
@@ -24,9 +25,10 @@ class ScreenCreateMines extends React.Component {
     constructor(props) {
         super(props);
         const config = props.config;
+        const toolCaps = Items.getToolCaps(props.meta);
 
         this.state = {
-            newGameConfig: {...config},
+            newGameConfig: {...config, toolCaps},
             currentPreset: -1,
             presets: [
                 {x: 10, y: 6, mines: 8, name: "Novice"},
@@ -112,13 +114,14 @@ class ScreenCreateMines extends React.Component {
             return <Radio name='gamePresets' 
                     checked={this.state.currentPreset===index}
                     onChange={this.handlePresetChanged}
+                    key={strKey}
                     value={preset.name} 
                     >{preset.name} {ratio}</Radio>;
 
-            return <label key={strKey}><input id="option" type="radio" name="optradio"
-                value={preset.name} 
-                checked={this.state.currentPreset===index} onChange={this.handlePresetChanged} 
-                />{preset.name} {ratio}<br/></label>
+            // return <label key={strKey}><input id="option" type="radio" name="optradio"
+            //     value={preset.name} 
+            //     checked={this.state.currentPreset===index} onChange={this.handlePresetChanged} 
+            //     />{preset.name} {ratio}<br/></label>
             });
         let radioOptions = this.state.presets.map(makeRadioOption);
 
