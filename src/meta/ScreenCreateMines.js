@@ -92,7 +92,7 @@ class ScreenCreateMines extends React.Component {
             this.setState({currentPreset: this.state.customPresetIndex});
             return; // custom preset, don't change the numbers
         } 
-        let newGameConfig = Object.assign({}, preset);
+        let newGameConfig = Object.assign({}, this.state.newGameConfig, preset);
         this.setState({currentPreset: presetIndex, newGameConfig: newGameConfig});
     }
 

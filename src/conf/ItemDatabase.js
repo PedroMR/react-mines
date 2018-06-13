@@ -88,6 +88,7 @@ function MakeMineKillerCapIncrease(num, price) {
         showIf: [],
     }
 
+    mineKillerCap.showIf = [ {Not:true, OwnsItem:'mine-killer-'+(num+1)} ];
     if (num > 1)
         mineKillerCap.showIf.push({OwnsItem:'mine-killer-'+(num-1)});
 
