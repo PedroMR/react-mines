@@ -1,6 +1,14 @@
 # TODO
 
 - [ ] Items you can buy that unlock and later increase your tool caps
+
+
+
+
+
+
+
+
 - [ ] Info on "treasure" -- tiles away, how many found / not found
 - [ ] Rewards when finding treasure (based on number of clicks so far)
 - [ ] Bonus for conserving clicks (as item)

@@ -27,11 +27,16 @@ const itemData = {items:[
         price: 175,
         description: "More tiles, more mines, more rewards.",
         effects: [{ scoreMultiplier: 2 }]        
-    },
+    },{
+        id: 'tool1-unlock',
+        price: 150,
+        effects: [{ tool: 'tool1', toolCap: 1 }]
+    }
 ],tools:[
     {
         id: 'tool1',
         price: 50,
+        baseCap: 0,
     }
 ]
 }
@@ -112,6 +117,20 @@ describe('tools', () => {
         expect(retVal.tools.tool1).toEqual(2);
 
     })
+
+    test('can increase cap by purchasing item', ()=>{
+        const meta = { wallet: { credits: 2500 }};
+
+        expect(Items.getToolCap(meta, 'tool1')).toEqual(0);
+
+        let retVal = Items.purchaseItem(meta, 'tool1-unlock');
+
+        expect(Items.getToolCap(retVal, 'tool1')).toEqual(1);
+
+
+    })
+
+
 })
 
 function MakeWallet(amount) {

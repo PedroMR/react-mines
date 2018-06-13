@@ -40,8 +40,8 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
     state.clicksSoFar = 0;
     state.gameOver = false;
     state.tools = {
-        [types.TOOL_KILL_MINE]: 5,
-        [types.TOOL_MARK_RED]: config.redmines + 1,
+        [types.TOOL_KILL_MINE]: 0,
+        [types.TOOL_MARK_RED]: config.redmines ? config.redmines + 1 : 0,
     };
 
     while(nMines > 0) {

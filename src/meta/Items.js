@@ -146,7 +146,27 @@ function purchaseTool(state, itemId, price) {
     return newState;
 }
 
+function getToolCap(state, toolId) {
+    let bestCap = 0;
+
+    const myItems = state.items || [];
+
+    for (let itemId of myItems) {
+        const item = findItemById(itemId);
+        if (!item) continue;
+
+        for (let effect of item.effects) {
+            if (effect.tool === toolId) {
+                bestCap = Math.max(bestCap, effect.toolCap);
+            }
+        }
+    }
+
+    return bestCap;
+}
+
 let Items = {
+    getToolCap,
     purchaseItem,
     useItemDatabase,
     findItemById,

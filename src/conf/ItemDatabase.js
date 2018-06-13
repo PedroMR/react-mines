@@ -61,6 +61,12 @@ const itemCatalogue = [
         description: "You know what's better than not starting with a mine? Starting with a blank.",
         effects: [{ feature: types.FEATURE_ZERO_FIRST_CLICK }],
         showIf: [{OwnsItem:'mine-first-click'}],
+    },{
+        id: 'unlock-mine-killer',
+        name: "Mine Killer!",
+        price: 99,
+        description: "Once per field you can send this in. It will disable any mine that's possibly there.",
+        effects: [{ tool: types.TOOL_KILL_MINE, toolCap: 1 }],
     },
     MakeLevelUnlock(1, 50, 1),
     MakeLevelUnlock(2, 110, 1.3),
@@ -88,7 +94,7 @@ const toolCatalogue = [
     {
         id: types.TOOL_KILL_MINE,
         name: 'Mine Killer',
-        baseCap: 1,
+        baseCap: 0,
     },
     {
         id: types.TOOL_MARK_RED,
