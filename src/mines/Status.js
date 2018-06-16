@@ -14,10 +14,19 @@ class Status extends React.PureComponent {
         const nSeen = this.props.seen.reduce(countDefined, 0);
         const nUnknown = this.props.seen.length - nSeen - nFlags;
         const nClicks = this.props.clicksSoFar || 0;
+        let redMinesContent = null;
+        const nTotalRedMines = this.props.config.redmines;
+        if (nTotalRedMines > 0) {
+            const nFoundRed = this.props.special.reduce((acc, val) => (val === 'redFound') ? acc+1 : acc, 0);
+            const notFoundRed = nTotalRedMines - nFoundRed;
+
+            redMinesContent = "Found "+nFoundRed+" treasure"+(nFoundRed>1?"s":"")+", "+notFoundRed+" remain" + (notFoundRed===1?"s":"");
+            if (notFoundRed > 0) redMinesContent += " (away "+this.props.config.redDistance+" from clues)";
+        }
 
         let topLine = <span className="status end">&nbsp;</span>
         let bottomLine = <span className="status">{nFlags} flag{nFlags===1?"":"s"} / {nHiddenMines} hidden mine{nHiddenMines===1?"":"s"} &mdash; {nClicks} clicks, {nUnknown} tiles left</span>;
-        let scoreArea = null;
+        let scoreArea = redMinesContent;
 
         if (this.props.meta.features["debug-score-tally"] || nUnknown <= 0) {
             if (!Story.hasSeen(this.props.meta, 'first-results'))
@@ -37,7 +46,7 @@ class Status extends React.PureComponent {
 
 
 function mapStateToProps(state) {
-    const propNames = [ 'config', 'seen', 'flags', 'mines', 'clicksSoFar' ];
+    const propNames = [ 'config', 'seen', 'flags', 'mines', 'clicksSoFar', 'special' ];
     let retVal = {}
     propNames.forEach(name => { retVal[name] = state.mines[name]});
 

@@ -23,6 +23,7 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
     config.mines = Math.min(
             Math.max(config.mines, Math.ceil(tiles/10)), 
             Math.floor(tiles/3));
+    config.redDistance = 3// ;config.redDistance || 3;
 
     let nMines = config.mines;
     let nRedMines = config.redmines;
@@ -72,7 +73,7 @@ function createGameState(config, seed = Math.random(), safeX = -1, safeY = -1, s
     while (nRedMines > 0) {
         let randX = getRandomInt(cols);
         let randY = getRandomInt(rows);
-        const radius = 3;
+        const radius = config.redDistance;
         const requiredClues = 4;
 
         let pos = randX+cols*randY;
